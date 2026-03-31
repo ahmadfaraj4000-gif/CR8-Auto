@@ -113,7 +113,7 @@
       "name": "What areas does CR8 Autos serve?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "CR8 Autos is based in Watervliet, NY and proudly serves the entire Capital Region including Albany, Troy, Cohoes, Green Island, Colonie, and Schenectady. If you're in the greater Albany area and need auto body, collision repair, or mechanical services, we've got you covered."
+        "text": "CR8 Autos is based in Watervliet, NY and proudly serves the entire Capital Region including Albany, Troy, Cohoes, Green Island, Colonie, and Schenectady. If you're in the greater Albany area and need auto body or collision repair, we've got you covered."
       }
     },
     {
@@ -138,54 +138,6 @@
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Absolutely. CR8 Autos uses computer color-matching technology to precisely blend your vehicle's paint. We apply primer, color coat, and clear coat to achieve a factory-quality finish that is seamless and indistinguishable from the original paint."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Does CR8 Autos do mechanical repairs, or just body work?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "CR8 Autos handles both. In addition to our collision repair and auto body services, we offer a full range of mechanical repairs including brake service, oil changes, engine diagnostics, tire mounting and balancing, battery replacement, exhaust repair, and air and cabin filter replacement. Whether your car needs bodywork after an accident or routine mechanical maintenance, we can handle it all in one place. Visit us at 2603 2nd Ave, Watervliet, NY or call (518) 495-6876."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Can you do a brake inspection or brake repair in Watervliet, NY?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. CR8 Autos provides full brake service and repair in Watervliet, NY. We perform brake inspections, replace brake pads and rotors, repair brake lines, service calipers, and diagnose ABS issues. If your brakes are squealing, grinding, or your brake warning light is on, bring your vehicle in — we offer free diagnostic assessments on brake concerns. Call (518) 495-6876 or stop by 2603 2nd Ave, Watervliet, NY."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do you offer oil changes near Albany, NY?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. CR8 Autos offers conventional and full synthetic oil changes at our Watervliet, NY shop, serving drivers from Albany, Troy, Cohoes, Colonie, and surrounding areas. Every oil change includes a multi-point vehicle inspection at no extra charge. Call (518) 495-6876 or stop by 2603 2nd Ave, Watervliet, NY."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Can CR8 Autos diagnose a check engine light?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. CR8 Autos performs computerized engine diagnostics to read fault codes and pinpoint the cause of check engine lights and other warning indicators. We serve drivers throughout the Capital Region including Albany, Troy, Cohoes, and Schenectady. Don't ignore a warning light — stop by our shop at 2603 2nd Ave, Watervliet, NY or call (518) 495-6876."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Does CR8 Autos do tire services in Watervliet, NY?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. CR8 Autos offers tire mounting, balancing, rotation, and flat repair for all vehicle types. Whether you need seasonal tire swaps or have a flat that needs patching, our team can help. We're located at 2603 2nd Ave, Watervliet, NY 12189 and open Monday through Friday, 9 AM to 6 PM."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Can you replace or program a key fob near Troy or Albany, NY?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes. CR8 Autos programs and replaces key fobs for most makes and models — no dealership required. It's faster and more affordable than going to a dealership. We serve drivers from Watervliet, Albany, Troy, Cohoes, and the entire Capital Region. Call (518) 495-6876 or stop by 2603 2nd Ave, Watervliet, NY."
       }
     }
   ]
@@ -284,8 +236,8 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
 
 /* ===== SERVICES ===== */
 .services{background:var(--dark);}
-.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0;margin-top:2rem;background:var(--dark);border:1px solid var(--border);}
-.service-card{background:var(--dark);padding:2.5rem;transition:all 0.3s;position:relative;overflow:hidden;cursor:default;border:1px solid var(--border);margin:-1px 0 0 -1px;}
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;margin-top:2rem;background:var(--border);}
+.service-card{background:var(--dark);padding:2.5rem;transition:all 0.3s;position:relative;overflow:hidden;cursor:default;}
 .service-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:0;background:var(--red);transition:height 0.4s;}
 .service-card:hover{background:var(--card);}
 .service-card:hover::before{height:100%;}
@@ -1131,6 +1083,21 @@ function submitEstimate(e) {
     details: document.getElementById('eDetails').value,
   };
   inquiries.push(item); save();
+  fetch('https://formspree.io/f/mwvwbpza', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({
+      _subject: 'New Estimate Request — CR8 Autos',
+      Type: 'Estimate Request',
+      Name: item.name,
+      Phone: item.phone,
+      Email: item.email,
+      Vehicle: item.car,
+      Service: item.service,
+      Details: item.details || '—',
+      Submitted: item.date,
+    })
+  });
   document.getElementById('estimateForm').style.display = 'none';
   document.getElementById('estimateSuccess').style.display = 'block';
 }
@@ -1272,6 +1239,21 @@ function submitBook() {
     details: document.getElementById('bDetails').value,
   };
   bookings.push(item); save();
+  fetch('https://formspree.io/f/mwvwbpza', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({
+      _subject: 'New Appointment Booking — CR8 Autos',
+      Type: 'Appointment Booking',
+      Name: item.name,
+      Phone: item.phone,
+      Vehicle: item.car,
+      Service: item.service,
+      Appointment: item.appointmentDisplay,
+      Details: item.details || '—',
+      Submitted: item.date,
+    })
+  });
   document.getElementById('bookStep2').style.display = 'none';
   document.getElementById('bookSuccessMsg').textContent = 'Booked for ' + item.appointmentDisplay + '. We look forward to seeing you!';
   document.getElementById('bookSuccess').style.display = 'block';
@@ -1310,6 +1292,19 @@ function submitContact(e) {
     message: document.getElementById('cMessage').value,
   };
   messages.push(item); save();
+  fetch('https://formspree.io/f/mwvwbpza', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({
+      _subject: 'New Message — CR8 Autos',
+      Type: 'Contact Message',
+      Name: item.name,
+      Phone: item.phone || '—',
+      Email: item.email,
+      Message: item.message,
+      Submitted: item.date,
+    })
+  });
   document.getElementById('contactForm').style.display = 'none';
   document.getElementById('contactSuccess').style.display = 'block';
 }
