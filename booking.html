@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Book an Appointment — CR8 Autos | Watervliet, NY</title>
+<meta name="description" content="Book a service appointment at CR8 Autos in Watervliet, NY. Collision repair, body work, oil changes, brakes and more. Select your date and time online."/>
+<link rel="canonical" href="https://cr8autos.com/booking.html"/>
+<meta property="og:title" content="Book an Appointment — CR8 Autos"/>
+<meta property="og:description" content="Schedule your vehicle service at CR8 Autos. Collision repair, brakes, oil changes, diagnostics & more. Serving Albany, Troy, Cohoes & the Capital Region."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://cr8autos.com/booking.html"/>
+<meta name="robots" content="index, follow"/>
+
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+<style>
+:root {
+  --black: #0a0a0a;
+  --dark: #111111;
+  --card: #161616;
+  --border: #222222;
+  --red: #cc1f1f;
+  --red-light: #e83333;
+  --red-dark: #9a1515;
+  --white: #f5f5f5;
+  --gray: #888888;
+  --light-gray: #cccccc;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);overflow-x:hidden;}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--black);}
+::-webkit-scrollbar-thumb{background:var(--red);}
+
+/* ===== NAVBAR ===== */
+.navbar{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:1rem 3rem;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,10,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(204,31,31,0.2);transition:all 0.3s;}
+.navbar.scrolled{padding:0.7rem 3rem;border-bottom-color:rgba(204,31,31,0.4);}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;cursor:pointer;}
+.logo-text{font-family:'Oswald',sans-serif;font-weight:700;font-size:1.2rem;letter-spacing:2px;text-transform:uppercase;color:var(--white);}
+.logo-text span{color:var(--red);}
+.nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center;}
+.nav-links a{color:var(--light-gray);text-decoration:none;font-family:'Oswald',sans-serif;font-size:0.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:400;transition:color 0.3s;position:relative;}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--red);transition:width 0.3s;}
+.nav-links a:hover{color:var(--white);}
+.nav-links a:hover::after{width:100%;}
+.nav-cta{background:var(--red)!important;color:white!important;padding:0.5rem 1.5rem;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:2px;font-size:0.8rem;border:none;cursor:pointer;text-transform:uppercase;transition:all 0.3s;text-decoration:none;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);}
+.nav-cta:hover{background:var(--red-light)!important;transform:translateY(-2px);}
+.nav-cta::after{display:none!important;}
+.menu-btn{display:none;background:none;border:none;color:var(--white);font-size:1.4rem;cursor:pointer;}
+
+/* ===== BUTTONS ===== */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:0.9rem 2rem;font-family:'Oswald',sans-serif;font-weight:500;font-size:0.85rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border:none;text-decoration:none;transition:all 0.3s;}
+.btn-red{background:var(--red);color:white;clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%);}
+.btn-red:hover{background:var(--red-light);transform:translateY(-3px);}
+.btn-outline{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,0.2);clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%);}
+.btn-outline:hover{border-color:var(--red);color:var(--red);}
+
+/* ===== HERO BANNER ===== */
+.booking-hero{padding:140px 3rem 60px;background:var(--dark);position:relative;overflow:hidden;}
+.booking-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--red),transparent);}
+.booking-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(204,31,31,0.06) 0%,transparent 50%);pointer-events:none;}
+.booking-hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(204,31,31,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(204,31,31,0.05) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse at 50% 0%,black 20%,transparent 70%);}
+.booking-hero-inner{max-width:900px;margin:0 auto;text-align:center;position:relative;z-index:1;}
+.booking-hero-tag{display:inline-flex;align-items:center;gap:10px;margin-bottom:1.2rem;justify-content:center;}
+.booking-hero-tag span{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--red);}
+.booking-hero-tag::before,.booking-hero-tag::after{content:'';width:40px;height:1px;background:var(--red);}
+.booking-hero h1{font-family:'Oswald',sans-serif;font-size:clamp(2.8rem,5vw,4.5rem);font-weight:700;text-transform:uppercase;letter-spacing:1px;line-height:1;margin-bottom:1rem;}
+.booking-hero h1 span{color:var(--red);}
+.booking-hero p{font-size:1.1rem;color:var(--gray);line-height:1.8;font-style:italic;max-width:580px;margin:0 auto;}
+
+/* ===== MAIN CONTENT ===== */
+.booking-section{padding:60px 3rem 100px;background:var(--black);position:relative;}
+.booking-section::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(204,31,31,0.3),transparent);}
+.booking-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1.4fr;gap:4rem;align-items:start;}
+
+/* ===== SIDEBAR INFO ===== */
+.booking-sidebar{}
+.sidebar-block{margin-bottom:2.5rem;}
+.sidebar-label{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:1rem;display:flex;align-items:center;gap:8px;}
+.sidebar-label::after{content:'';flex:1;height:1px;background:rgba(204,31,31,0.2);}
+.contact-row{display:flex;align-items:center;gap:12px;padding:0.8rem 0;border-bottom:1px solid var(--border);}
+.contact-row:last-child{border-bottom:none;}
+.contact-icon{width:36px;height:36px;background:rgba(204,31,31,0.1);border:1px solid rgba(204,31,31,0.2);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:0.85rem;flex-shrink:0;}
+.contact-label{font-family:'Oswald',sans-serif;font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-bottom:2px;}
+.contact-val{color:var(--white);font-size:0.95rem;}
+.contact-val a{color:var(--white);text-decoration:none;transition:color 0.2s;}
+.contact-val a:hover{color:var(--red);}
+.hours-row{display:flex;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.9rem;}
+.hours-row:last-child{border-bottom:none;}
+.hours-row .day{color:var(--gray);}
+.hours-row .time{color:var(--white);}
+.policy-note{background:rgba(204,31,31,0.06);border:1px solid rgba(204,31,31,0.15);border-left:3px solid var(--red);padding:1rem 1.2rem;font-size:0.88rem;color:var(--gray);line-height:1.7;}
+.policy-note strong{color:var(--light-gray);}
+
+/* ===== BOOKING FORM CARD ===== */
+.booking-form-card{background:var(--card);border:1px solid var(--border);border-top:3px solid var(--red);position:relative;}
+.booking-form-card::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(204,31,31,0.03) 0%,transparent 30%);pointer-events:none;}
+.form-header{padding:2rem 2rem 0;border-bottom:1px solid var(--border);padding-bottom:1.5rem;}
+.step-label{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:2px;color:var(--red);margin-bottom:0.3rem;}
+.step-title{font-family:'Oswald',sans-serif;font-size:1.4rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;}
+
+/* ── Progress bar ── */
+.book-progress{height:3px;background:rgba(255,255,255,0.08);margin:1.5rem 2rem 0;border-radius:2px;}
+.book-progress-bar{height:100%;background:var(--red);border-radius:2px;transition:width 0.4s ease;}
+
+.form-body{padding:1.5rem 2rem 2rem;}
+
+.form-group{margin-bottom:1.2rem;}
+.form-label{display:block;font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-bottom:0.5rem;}
+.form-input,.form-select,.form-textarea{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--white);font-family:'Crimson Pro',serif;font-size:1rem;padding:0.8rem 1rem;outline:none;transition:border-color 0.3s;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--red);}
+.form-input::placeholder,.form-textarea::placeholder{color:rgba(255,255,255,0.2);}
+.form-select option{background:var(--dark);}
+.form-textarea{resize:vertical;min-height:100px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.form-success{text-align:center;padding:2.5rem 1rem;color:var(--red);}
+.form-success i{font-size:3rem;display:block;margin-bottom:1rem;}
+.form-success p{color:var(--light-gray);font-size:1.1rem;line-height:1.7;}
+.form-success .appt-details{margin:1.5rem auto 0;background:rgba(204,31,31,0.08);border:1px solid rgba(204,31,31,0.2);padding:1rem 1.5rem;max-width:380px;font-size:1rem;color:var(--white);}
+
+/* ── Calendar nav ── */
+.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
+.cal-nav-btn{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:var(--white);width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.cal-nav-btn:hover{border-color:var(--red);color:var(--red);}
+.cal-month-label{font-family:'Oswald',sans-serif;font-size:1.1rem;letter-spacing:2px;text-transform:uppercase;color:var(--white);}
+
+/* ── Calendar grid ── */
+.cal-grid-header{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;margin-bottom:0.4rem;}
+.cal-grid-header span{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:1px;color:var(--gray);padding:4px 0;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:1.2rem;}
+.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:0.85rem;cursor:pointer;border:1px solid transparent;transition:all 0.2s;border-radius:2px;color:var(--light-gray);}
+.cal-day:hover:not(.cal-day-disabled):not(.cal-day-empty){border-color:var(--red);color:var(--red);}
+.cal-day-today{border-color:rgba(255,255,255,0.2);color:var(--white);}
+.cal-day-selected{background:var(--red);color:white!important;border-color:var(--red)!important;}
+.cal-day-disabled{color:rgba(255,255,255,0.15);cursor:default;pointer-events:none;}
+.cal-day-empty{cursor:default;pointer-events:none;}
+
+/* ── Time slots ── */
+.cal-time-title{font-family:'DM Mono',monospace;font-size:0.75rem;letter-spacing:2px;color:var(--red);text-transform:uppercase;margin-bottom:0.8rem;}
+.cal-time-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1.5rem;}
+.cal-time-slot{padding:0.55rem 0.3rem;text-align:center;font-family:'DM Mono',monospace;font-size:0.78rem;border:1px solid rgba(255,255,255,0.12);color:var(--light-gray);cursor:pointer;transition:all 0.2s;background:transparent;}
+.cal-time-slot:hover:not(.cal-time-booked){border-color:var(--red);color:var(--red);}
+.cal-time-slot.cal-time-selected{background:var(--red);border-color:var(--red);color:white;}
+.cal-time-slot.cal-time-booked{color:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.06);cursor:not-allowed;text-decoration:line-through;}
+
+/* ── Cal footer ── */
+.cal-footer{display:flex;justify-content:space-between;align-items:center;padding-top:0.5rem;border-top:1px solid rgba(255,255,255,0.06);}
+
+/* ===== FOOTER ===== */
+.footer{background:var(--dark);border-top:1px solid var(--border);padding:60px 3rem 30px;}
+.footer-inner{max-width:1300px;margin:0 auto;}
+.footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem;}
+.footer-brand p{color:var(--gray);font-size:0.95rem;line-height:1.8;margin-top:1rem;}
+.footer-col-title{font-family:'Oswald',sans-serif;font-size:0.85rem;letter-spacing:3px;text-transform:uppercase;color:var(--white);margin-bottom:1.2rem;}
+.footer-col ul{list-style:none;}
+.footer-col ul li{margin-bottom:0.7rem;}
+.footer-col ul li a{color:var(--gray);text-decoration:none;font-size:0.95rem;transition:color 0.2s;}
+.footer-col ul li a:hover{color:var(--red);}
+.footer-bottom{border-top:1px solid var(--border);padding-top:2rem;display:flex;justify-content:space-between;align-items:center;color:var(--gray);font-size:0.85rem;}
+.footer-admin-btn{background:none;border:1px solid var(--border);color:var(--gray);padding:0.4rem 1rem;font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:1px;cursor:pointer;transition:all 0.2s;}
+.footer-admin-btn:hover{border-color:var(--red);color:var(--red);}
+
+/* ===== SPINNER ===== */
+.spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+  .booking-inner{grid-template-columns:1fr;gap:2.5rem;}
+  .booking-sidebar{order:2;}
+  .booking-form-card{order:1;}
+}
+@media(max-width:768px){
+  .navbar{padding:1rem 1.5rem;}
+  .nav-links{display:none;}
+  .menu-btn{display:block;}
+  .nav-links.open{display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:rgba(10,10,10,0.98);padding:2rem;gap:1.5rem;border-bottom:1px solid var(--border);}
+  .booking-hero{padding:120px 1.5rem 50px;}
+  .booking-section{padding:40px 1.5rem 80px;}
+  .form-row{grid-template-columns:1fr;}
+  .footer-top{grid-template-columns:1fr 1fr;}
+  .footer-bottom{flex-direction:column;gap:1rem;text-align:center;}
+  .cal-time-grid{grid-template-columns:repeat(3,1fr);}
+}
+@media(max-width:480px){
+  .footer-top{grid-template-columns:1fr;}
+  .cal-time-grid{grid-template-columns:repeat(2,1fr);}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+<img src="logo.png" alt="CR8 Autos" style="height:48px;width:auto;"/>
+  <button class="menu-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#services-section">Services</a></li>
+    <li><a href="whyus.html">Why Us?</a></li>
+    <li><a href="careers.html">Careers</a></li>
+    <li><a href="index.html#contact-section" class="nav-cta">Contact Us</a></li>
+  </ul>
+</nav>
+
+<!-- HERO BANNER -->
+<section class="booking-hero">
+  <div class="booking-hero-grid"></div>
+  <div class="booking-hero-inner">
+    <div class="booking-hero-tag"><span>Watervliet, New York</span></div>
+    <h1>Book Your <span>Appointment</span></h1>
+    <p>Select your service, pick a date and time, and we'll take care of the rest. Walk-ins also welcome — call us anytime.</p>
+  </div>
+</section>
+
+<!-- BOOKING CONTENT -->
+<section class="booking-section">
+  <div class="booking-inner">
+
+    <!-- SIDEBAR -->
+    <div class="booking-sidebar">
+
+      <div class="sidebar-block">
+        <div class="sidebar-label">Contact Us</div>
+        <div class="contact-row">
+          <div class="contact-icon"><i class="fas fa-phone"></i></div>
+          <div>
+            <div class="contact-label">Phone</div>
+            <div class="contact-val"><a href="tel:5184956876">(518) 495-6876</a></div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div>
+            <div class="contact-label">Address</div>
+            <div class="contact-val">
+              <a href="https://www.google.com/maps/search/?api=1&query=2603+2nd+Ave+Watervliet+NY+12189" target="_blank" rel="noopener">
+                2603 2nd Ave, Watervliet, NY 12189
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-block">
+        <div class="sidebar-label">Hours</div>
+        <div class="hours-row"><span class="day">Monday – Friday</span><span class="time">9:00 AM – 6:00 PM</span></div>
+        <div class="hours-row"><span class="day">Saturday</span><span class="time">Closed</span></div>
+        <div class="hours-row"><span class="day">Sunday</span><span class="time">Closed</span></div>
+      </div>
+
+      <div class="sidebar-block">
+        <div class="policy-note">
+          <strong>Walk-ins welcome</strong> for free estimates. Booked appointments get priority scheduling.<br><br>
+          Need immediate help? Call us at <a href="tel:5184956876" style="color:var(--red);">(518) 495-6876</a>.
+        </div>
+      </div>
+
+      <div class="sidebar-block">
+        <div class="sidebar-label">We Serve</div>
+        <p style="color:var(--gray);font-size:0.9rem;line-height:1.8;">Watervliet · Albany · Troy · Cohoes · Green Island · Colonie · Schenectady, NY</p>
+      </div>
+
+    </div>
+
+    <!-- BOOKING FORM CARD -->
+    <div class="booking-form-card" id="bookingCard">
+
+      <div class="form-header">
+        <div class="step-label" id="bookStepLabel">STEP 1 OF 2</div>
+        <div class="step-title" id="bookStepTitle">Your Information</div>
+      </div>
+
+      <div class="book-progress">
+        <div class="book-progress-bar" id="bookProgressBar" style="width:50%"></div>
+      </div>
+
+      <div class="form-body">
+
+        <!-- STEP 1 -->
+        <div id="bookStep1">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Your Name</label>
+              <input class="form-input" type="text" placeholder="John Smith" id="bName"/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Phone Number</label>
+              <input class="form-input" type="tel" placeholder="(518) 000-0000" id="bPhone"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Vehicle (Year, Make, Model)</label>
+            <input class="form-input" type="text" placeholder="e.g. 2019 Toyota Camry" id="bCar"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Service Needed</label>
+            <select class="form-select" id="bService">
+              <option value="">Select a service...</option>
+              <optgroup label="── Collision &amp; Body Repair ──">
+                <option>Collision Damage Repair</option>
+                <option>Frame Straightening</option>
+                <option>Dent Removal</option>
+                <option>Panel Replacement</option>
+                <option>Painting &amp; Refinishing</option>
+                <option>Surface Preparation</option>
+                <option>Glass Replacement</option>
+                <option>Rust Repair</option>
+                <option>Insurance Estimate</option>
+              </optgroup>
+              <optgroup label="── Mechanical Services ──">
+                <option>Auto Engine Diagnostic</option>
+                <option>Brake Service &amp; Repair</option>
+                <option>Oil Change</option>
+                <option>Tires</option>
+                <option>Battery Replacement</option>
+                <option>Air &amp; Cabin Filter Replacement</option>
+                <option>Exhaust Repair</option>
+                <option>Body &amp; Trim</option>
+                <option>Key Fob Replacement</option>
+              </optgroup>
+              <optgroup label="──────────────────">
+                <option>Other</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Additional Details</label>
+            <textarea class="form-textarea" placeholder="Any additional information about your vehicle or the service needed..." id="bDetails" rows="3"></textarea>
+          </div>
+          <button class="btn btn-red" style="width:100%;justify-content:center;" onclick="bookGoStep2()">
+            Next: Pick a Date &amp; Time <i class="fas fa-arrow-right" style="margin-left:8px;"></i>
+          </button>
+        </div>
+
+        <!-- STEP 2: Calendar -->
+        <div id="bookStep2" style="display:none;">
+          <div class="cal-nav">
+            <button class="cal-nav-btn" onclick="calPrevMonth()"><i class="fas fa-chevron-left"></i></button>
+            <span class="cal-month-label" id="calMonthLabel"></span>
+            <button class="cal-nav-btn" onclick="calNextMonth()"><i class="fas fa-chevron-right"></i></button>
+          </div>
+          <div class="cal-grid-header">
+            <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+          <div id="calTimeSection" style="display:none;">
+            <div class="cal-time-title">Available Times — <span id="calSelectedDateLabel"></span></div>
+            <div class="cal-time-grid" id="calTimeGrid"></div>
+          </div>
+          <div class="cal-footer">
+            <button class="btn btn-outline" style="padding:0.6rem 1.5rem;" onclick="bookGoStep1()">
+              <i class="fas fa-arrow-left"></i> Back
+            </button>
+            <button class="btn btn-red" id="bookConfirmBtn" style="padding:0.6rem 1.5rem;display:none;" onclick="submitBook()">
+              <i class="fas fa-calendar-check"></i> Confirm Appointment
+            </button>
+          </div>
+        </div>
+
+        <!-- Success -->
+        <div class="form-success" id="bookSuccess" style="display:none;">
+          <i class="fas fa-check-circle"></i>
+          <p id="bookSuccessMsg">Appointment booked! We'll see you then.</p>
+          <div class="appt-details" id="bookApptDetails"></div>
+          <div style="margin-top:2rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
+            <a href="index.html" class="btn btn-outline" style="padding:0.6rem 1.5rem;">
+              <i class="fas fa-home"></i> Back to Home
+            </a>
+            <button class="btn btn-red" style="padding:0.6rem 1.5rem;" onclick="resetForm()">
+              <i class="fas fa-plus"></i> Book Another
+            </button>
+          </div>
+        </div>
+
+      </div><!-- /form-body -->
+    </div><!-- /booking-form-card -->
+
+  </div><!-- /booking-inner -->
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div style="display:flex;align-items:center;gap:10px;">
+        <img src="logo.png" alt="CR8 Autos" style="height:48px;width:auto;"/>      
+        </div>
+        <p>Full-service auto body and mechanic shop in Watervliet, NY. Collision repair, mechanical services, and honest craftsmanship for the Capital Region.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Collision &amp; Body</div>
+        <ul>
+          <li><a href="index.html#services-section">Collision Repair</a></li>
+          <li><a href="index.html#services-section">Frame Straightening</a></li>
+          <li><a href="index.html#services-section">Dent Removal</a></li>
+          <li><a href="index.html#services-section">Paint &amp; Refinishing</a></li>
+          <li><a href="index.html#services-section">Glass Replacement</a></li>
+          <li><a href="index.html#services-section">Rust Repair</a></li>
+          <li><a href="index.html#services-section">Insurance Estimates</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Mechanic Services</div>
+        <ul>
+          <li><a href="index.html#services-section">Engine Diagnostics</a></li>
+          <li><a href="index.html#services-section">Brake Service</a></li>
+          <li><a href="index.html#services-section">Oil Change</a></li>
+          <li><a href="index.html#services-section">Tires</a></li>
+          <li><a href="index.html#services-section">Battery</a></li>
+          <li><a href="index.html#services-section">Exhaust Repair</a></li>
+          <li><a href="index.html#services-section">Key Fob Programming</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Contact</div>
+        <address style="font-style:normal;">
+          <ul>
+            <li><a href="tel:5184956876">(518) 495-6876</a></li>
+            <li><a href="https://www.google.com/maps/search/?api=1&query=2603+2nd+Ave+Watervliet+NY+12189" target="_blank" rel="noopener">2603 2nd Ave</a></li>
+            <li><a href="https://www.google.com/maps/search/?api=1&query=2603+2nd+Ave+Watervliet+NY+12189" target="_blank" rel="noopener">Watervliet, NY 12189</a></li>
+            <li>Mon–Fri: 9AM–6PM</li>
+          </ul>
+        </address>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="yr"></span> CR8 Autos Body Shop &amp; Repair. All rights reserved.</span>
+      <span style="font-size:0.8rem;">Designed by <a href="https://reimagebs.com" target="_blank" style="color:var(--red);text-decoration:none;">RE IMAGE Business Solutions</a></span>
+      <button class="footer-admin-btn" onclick="window.location.href='admin.html'"><i class="fas fa-lock"></i> Admin</button>
+    </div>
+  </div>
+</footer>
+
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+// ===== SUPABASE =====
+const supabaseUrl = 'https://llrjzyhdphitrjzbstoq.supabase.co';
+const supabaseKey = 'sb_publishable_A80zQldhlrOU_zCG-Csi2g_KdISbolU';
+const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+// ===== NAVBAR =====
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+document.getElementById('menuBtn').addEventListener('click', () => {
+  document.getElementById('navLinks').classList.toggle('open');
+});
+document.getElementById('yr').textContent = new Date().getFullYear();
+
+// ===== CALENDAR STATE =====
+let calYear, calMonth, calSelectedDate = null, calSelectedTime = null;
+const TIME_SLOTS = ['9:00 AM','10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM'];
+let bookedSlotsByDate = {};
+
+// ===== LOAD BOOKED SLOTS =====
+async function loadBookedSlotsForMonth() {
+  const start = `${calYear}-${String(calMonth + 1).padStart(2, '0')}-01`;
+  const end   = `${calYear}-${String(calMonth + 2).padStart(2, '0')}-01`;
+
+  const { data, error } = await supabase
+    .from('bookings')
+    .select('appointment_date, appointment_time')
+    .gte('appointment_date', start)
+    .lt('appointment_date', end);
+
+  bookedSlotsByDate = {};
+  if (error) { console.error('Failed to load booked slots:', error); return; }
+  data.forEach(row => {
+    const key = row.appointment_date;
+    if (!bookedSlotsByDate[key]) bookedSlotsByDate[key] = [];
+    bookedSlotsByDate[key].push(row.appointment_time);
+  });
+}
+
+// ===== STEP NAVIGATION =====
+function bookGoStep1(reset) {
+  if (reset) {
+    ['bName','bPhone','bCar','bDetails'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('bService').selectedIndex = 0;
+    calSelectedDate = null; calSelectedTime = null;
+  }
+  document.getElementById('bookStep1').style.display = 'block';
+  document.getElementById('bookStep2').style.display = 'none';
+  document.getElementById('bookSuccess').style.display = 'none';
+  document.getElementById('bookStepLabel').textContent = 'STEP 1 OF 2';
+  document.getElementById('bookStepTitle').textContent = 'Your Information';
+  document.getElementById('bookProgressBar').style.width = '50%';
+}
+
+async function bookGoStep2() {
+  const name    = document.getElementById('bName').value.trim();
+  const phone   = document.getElementById('bPhone').value.trim();
+  const car     = document.getElementById('bCar').value.trim();
+  const service = document.getElementById('bService').value;
+
+  if (!name || !phone || !car || !service) {
+    alert('Please fill in all required fields before continuing.');
+    return;
+  }
+
+  document.getElementById('bookStep1').style.display = 'none';
+  document.getElementById('bookStep2').style.display = 'block';
+  document.getElementById('bookStepLabel').textContent = 'STEP 2 OF 2';
+  document.getElementById('bookStepTitle').textContent = 'Pick a Date & Time';
+  document.getElementById('bookProgressBar').style.width = '100%';
+
+  const now = new Date();
+  calYear  = now.getFullYear();
+  calMonth = now.getMonth();
+
+  await loadBookedSlotsForMonth();
+  renderCal();
+}
+
+// ===== CALENDAR NAVIGATION =====
+async function calPrevMonth() {
+  calMonth--;
+  if (calMonth < 0) { calMonth = 11; calYear--; }
+  calSelectedDate = null; calSelectedTime = null;
+  document.getElementById('calTimeSection').style.display = 'none';
+  document.getElementById('bookConfirmBtn').style.display = 'none';
+  await loadBookedSlotsForMonth();
+  renderCal();
+}
+
+async function calNextMonth() {
+  calMonth++;
+  if (calMonth > 11) { calMonth = 0; calYear++; }
+  calSelectedDate = null; calSelectedTime = null;
+  document.getElementById('calTimeSection').style.display = 'none';
+  document.getElementById('bookConfirmBtn').style.display = 'none';
+  await loadBookedSlotsForMonth();
+  renderCal();
+}
+
+// ===== RENDER CALENDAR =====
+function renderCal() {
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('calMonthLabel').textContent = months[calMonth] + ' ' + calYear;
+
+  const grid = document.getElementById('calGrid');
+  grid.innerHTML = '';
+
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
+  const firstDay    = new Date(calYear, calMonth, 1).getDay();
+  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+
+  for (let i = 0; i < firstDay; i++) {
+    const el = document.createElement('div');
+    el.className = 'cal-day cal-day-empty';
+    grid.appendChild(el);
+  }
+
+  for (let d = 1; d <= daysInMonth; d++) {
+    const el = document.createElement('div');
+    el.className = 'cal-day';
+    el.textContent = d;
+
+    const thisDate = new Date(calYear, calMonth, d);
+    thisDate.setHours(0,0,0,0);
+
+    const dateKey     = calYear + '-' + String(calMonth + 1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+    const bookedTimes = bookedSlotsByDate[dateKey] || [];
+    const dow         = thisDate.getDay(); // 0=Sun, 6=Sat
+
+    if (thisDate < today || dow === 0 || dow === 6) {
+      el.classList.add('cal-day-disabled');
+    } else {
+      if (thisDate.getTime() === today.getTime()) el.classList.add('cal-day-today');
+      if (calSelectedDate === dateKey) el.classList.add('cal-day-selected');
+      if (bookedTimes.length >= TIME_SLOTS.length) el.classList.add('cal-day-disabled');
+
+      if (!el.classList.contains('cal-day-disabled')) {
+        el.onclick = () => selectCalDate(dateKey, d);
+      }
+    }
+
+    grid.appendChild(el);
+  }
+}
+
+// ===== SELECT DATE =====
+function selectCalDate(dateKey, d) {
+  calSelectedDate = dateKey;
+  calSelectedTime = null;
+  document.getElementById('bookConfirmBtn').style.display = 'none';
+  renderCal();
+
+  const bookedTimes = bookedSlotsByDate[dateKey] || [];
+  const timeGrid    = document.getElementById('calTimeGrid');
+  timeGrid.innerHTML = '';
+
+  const dateObj = new Date(calYear, calMonth, d);
+  const opts    = { weekday:'long', month:'long', day:'numeric' };
+  document.getElementById('calSelectedDateLabel').textContent =
+    dateObj.toLocaleDateString('en-US', opts);
+
+  TIME_SLOTS.forEach(slot => {
+    const el = document.createElement('div');
+    el.className = 'cal-time-slot';
+    el.textContent = slot;
+    if (bookedTimes.includes(slot)) {
+      el.classList.add('cal-time-booked');
+      el.title = 'Already booked';
+    } else {
+      el.onclick = () => selectCalTime(slot, el);
+    }
+    timeGrid.appendChild(el);
+  });
+
+  document.getElementById('calTimeSection').style.display = 'block';
+}
+
+// ===== SELECT TIME =====
+function selectCalTime(slot, el) {
+  calSelectedTime = slot;
+  document.querySelectorAll('.cal-time-slot').forEach(s => s.classList.remove('cal-time-selected'));
+  el.classList.add('cal-time-selected');
+  document.getElementById('bookConfirmBtn').style.display = 'inline-flex';
+}
+
+// ===== SUBMIT BOOKING =====
+async function submitBook() {
+  if (!calSelectedDate || !calSelectedTime) {
+    alert('Please select a date and time.');
+    return;
+  }
+
+  const dateObj = new Date(calSelectedDate + 'T12:00:00');
+  const opts    = { weekday:'long', month:'long', day:'numeric', year:'numeric' };
+
+  const item = {
+    name:               document.getElementById('bName').value.trim(),
+    phone:              document.getElementById('bPhone').value.trim(),
+    car:                document.getElementById('bCar').value.trim(),
+    service:            document.getElementById('bService').value,
+    details:            document.getElementById('bDetails').value.trim(),
+    appointmentDate:    calSelectedDate,
+    appointmentTime:    calSelectedTime,
+    appointmentDisplay: dateObj.toLocaleDateString('en-US', opts) + ' at ' + calSelectedTime,
+  };
+
+  const confirmBtn     = document.getElementById('bookConfirmBtn');
+  const originalBtnHTML = confirmBtn.innerHTML;
+  confirmBtn.disabled  = true;
+  confirmBtn.innerHTML = '<span class="spinner"></span>&nbsp;Booking...';
+
+  try {
+    const { error } = await supabase
+      .from('bookings')
+      .insert([{
+        name:             item.name,
+        phone:            item.phone,
+        email:            null,
+        service:          item.service,
+        appointment_date: item.appointmentDate,
+        appointment_time: item.appointmentTime,
+        notes:            `Vehicle: ${item.car}${item.details ? ' | Details: ' + item.details : ''}`,
+        status:           'new'
+      }]);
+
+    if (error) throw error;
+    await loadBookedSlotsForMonth();
+
+    // Formspree notification
+    fetch('https://formspree.io/f/mwvwbpza', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject:    'New Appointment Booking — CR8 Autos',
+        Type:        'Appointment Booking',
+        Name:        item.name,
+        Phone:       item.phone,
+        Vehicle:     item.car,
+        Service:     item.service,
+        Appointment: item.appointmentDisplay,
+        Details:     item.details || '—',
+        Submitted:   new Date().toLocaleString(),
+        Source:      'booking.html (direct page)',
+      })
+    }).catch(err => console.error('Formspree failed:', err));
+
+    // Show success
+    document.getElementById('bookStep2').style.display = 'none';
+    document.getElementById('bookStepLabel').textContent = 'CONFIRMED';
+    document.getElementById('bookStepTitle').textContent = 'Appointment Booked!';
+    document.getElementById('bookProgressBar').style.width = '100%';
+    document.getElementById('bookSuccessMsg').textContent =
+      'We look forward to seeing you, ' + item.name + '!';
+    document.getElementById('bookApptDetails').innerHTML =
+      '<strong>' + item.service + '</strong><br>' + item.appointmentDisplay + '<br>' + item.car;
+    document.getElementById('bookSuccess').style.display = 'block';
+
+  } catch (err) {
+    console.error('Booking failed:', err);
+    alert('There was a problem saving your appointment. Please try again or call us at (518) 495-6876.');
+  } finally {
+    confirmBtn.disabled  = false;
+    confirmBtn.innerHTML = originalBtnHTML;
+  }
+}
+
+// ===== RESET =====
+function resetForm() {
+  bookGoStep1(true);
+  document.getElementById('bookStep1').style.display = 'block';
+  document.getElementById('bookSuccess').style.display = 'none';
+  document.getElementById('bookStepLabel').textContent = 'STEP 1 OF 2';
+  document.getElementById('bookStepTitle').textContent = 'Your Information';
+  document.getElementById('bookProgressBar').style.width = '50%';
+}
+
+// Auto-init step 1
+bookGoStep1(true);
+</script>
+
+</body>
+</html>
