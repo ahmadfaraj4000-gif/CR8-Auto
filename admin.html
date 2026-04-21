@@ -401,22 +401,24 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
 </div>
 
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const supabaseUrl = 'https://llrjzyhdphitrjzbstoq.supabase.co';
+  const supabaseKey = 'sb_publishable_A80zQldhlrOU_zCG-Csi2g_KdISbolU';
+  const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+</script>
+
 <script>
 // ===== STATE =====
 const ADMIN_USER = 'cr8admin';
 const ADMIN_PASS = 'CR8Autos2025!';
 
-let applications = JSON.parse(localStorage.getItem('cr8_applications') || '[]');
-let inquiries    = JSON.parse(localStorage.getItem('cr8_inquiries')    || '[]');
-let bookings     = JSON.parse(localStorage.getItem('cr8_bookings')     || '[]');
-let messages     = JSON.parse(localStorage.getItem('cr8_messages')     || '[]');
+let applications = [];
+let inquiries    = [];
+let bookings     = [];
+let messages     = [];
 
-function save() {
-  localStorage.setItem('cr8_applications', JSON.stringify(applications));
-  localStorage.setItem('cr8_inquiries',    JSON.stringify(inquiries));
-  localStorage.setItem('cr8_bookings',     JSON.stringify(bookings));
-  localStorage.setItem('cr8_messages',     JSON.stringify(messages));
-}
+function save() { /* no-op: data lives in Supabase now */ }
 
 // ===== PAGE ROUTING =====
 function showPage(page) {
@@ -675,15 +677,30 @@ function submitContact(e) {
 }
 
 // ===== ADMIN =====
-function doAdminLogin() {
+async function doAdminLogin() {
   const u = document.getElementById('adminUser').value;
   const p = document.getElementById('adminPass').value;
   if (u === ADMIN_USER && p === ADMIN_PASS) {
     document.getElementById('adminLoginWrap').style.display = 'none';
     document.getElementById('adminDashWrap').style.display = 'block';
+    document.getElementById('adminCount').textContent = 'Loading...';
+    await loadAdminData();
     renderAdmin();
   } else {
     document.getElementById('adminErr').textContent = 'Invalid credentials.';
+  }
+}
+
+async function loadAdminData() {
+  const { data, error } = await supabase
+    .from('bookings')
+    .select('*')
+    .order('created_at', { ascending: false });
+  if (error) {
+    console.error('Failed to load bookings:', error);
+    bookings = [];
+  } else {
+    bookings = data;
   }
 }
 function doAdminLogout() {
@@ -699,8 +716,7 @@ function switchAdminTab(tab) {
   document.getElementById('tab-' + tab).classList.add('active');
 }
 function renderAdmin() {
-  const total = applications.length + inquiries.length + bookings.length + messages.length;
-  document.getElementById('adminCount').textContent = total + ' total submissions';
+  document.getElementById('adminCount').textContent = bookings.length + ' total bookings';
 
   // Applications
   if (!applications.length) {
@@ -745,20 +761,19 @@ function renderAdmin() {
   if (!bookings.length) {
     document.getElementById('bookingsTable').innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i>No appointments yet.</div>';
   } else {
-    const rows = bookings.slice().reverse().map((b,i) => {
-      const realIdx = i;
+    const rows = bookings.map((b,i) => {
       return `
       <tr>
-        <td><strong>${b.name}</strong><br><span style="color:var(--gray);font-size:0.8rem;">Submitted: ${b.date}</span></td>
-        <td>${b.phone}</td>
-        <td style="color:var(--gray);font-size:0.85rem;">${b.car}</td>
+        <td><strong>${b.name}</strong><br><span style="color:var(--gray);font-size:0.8rem;">Submitted: ${new Date(b.created_at).toLocaleString()}</span></td>
+        <td>${b.phone||'—'}</td>
+        <td style="color:var(--gray);font-size:0.85rem;">${b.notes||'—'}</td>
         <td><span class="badge badge-red">${b.service}</span></td>
-        <td style="color:var(--red);font-size:0.85rem;font-weight:600;white-space:nowrap;">${b.appointmentDisplay||'Not specified'}</td>
-        <td style="color:var(--gray);font-size:0.85rem;max-width:180px;">${b.details||'—'}</td>
-        <td><button class="delete-btn" onclick="deleteEntry('bookings',${realIdx})"><i class="fas fa-trash"></i> Delete</button></td>
+        <td style="color:var(--red);font-size:0.85rem;font-weight:600;white-space:nowrap;">${b.appointment_date} at ${b.appointment_time}</td>
+        <td><span class="badge ${b.status==='new'?'badge-red':'badge-gray'}">${b.status||'new'}</span></td>
+        <td><button class="delete-btn" onclick="deleteBooking('${b.id}')"><i class="fas fa-trash"></i> Delete</button></td>
       </tr>`;
     }).join('');
-    document.getElementById('bookingsTable').innerHTML = `<div style="overflow-x:auto;"><table class="admin-table"><thead><tr><th>Customer</th><th>Phone</th><th>Vehicle</th><th>Service</th><th>Appointment</th><th>Details</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`;
+    document.getElementById('bookingsTable').innerHTML = `<div style="overflow-x:auto;"><table class="admin-table"><thead><tr><th>Customer</th><th>Phone</th><th>Notes</th><th>Service</th><th>Appointment</th><th>Status</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`;
   }
 
   // Messages
@@ -791,18 +806,15 @@ function copyAddress() {
   });
 }
 
-function deleteEntry(key, index) {
-  if (!confirm('Delete this entry? This cannot be undone.')) return;
-  const stored = JSON.parse(localStorage.getItem('cr8_' + key) || '[]');
-  const reversed = stored.slice().reverse();
-  reversed.splice(index, 1);
-  const fixed = reversed.reverse();
-  localStorage.setItem('cr8_' + key, JSON.stringify(fixed));
-  // reload the data arrays and re-render
-  applications = JSON.parse(localStorage.getItem('cr8_applications') || '[]');
-  inquiries = JSON.parse(localStorage.getItem('cr8_inquiries') || '[]');
-  bookings = JSON.parse(localStorage.getItem('cr8_bookings') || '[]');
-  messages = JSON.parse(localStorage.getItem('cr8_messages') || '[]');
+async function deleteBooking(id) {
+  if (!confirm('Delete this booking? This cannot be undone.')) return;
+  const { error } = await supabase.from('bookings').delete().eq('id', id);
+  if (error) {
+    console.error('Delete failed:', error);
+    alert('Failed to delete. Try again.');
+    return;
+  }
+  await loadAdminData();
   renderAdmin();
 }
 </script>
