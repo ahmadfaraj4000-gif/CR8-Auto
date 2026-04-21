@@ -1638,6 +1638,11 @@ function deleteEntry(key, index) {
   messages = JSON.parse(localStorage.getItem('cr8_messages') || '[]');
   renderAdmin();
 }
+
+// Auto-open booking modal if URL has #book
+if (window.location.hash === '#book') {
+  openBookModal();
+}
 </script>
 </body>
 </html>
