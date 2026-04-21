@@ -405,7 +405,9 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
   const supabaseUrl = 'https://llrjzyhdphitrjzbstoq.supabase.co';
-  const supabaseKey = 'sb_publishable_A80zQldhlrOU_zCG-Csi2g_KdISbolU';
+  // ⚠️ REPLACE THIS with your actual anon/public key from Supabase → Settings → API
+  // It should start with "eyJ..." NOT "sb_publishable_..."
+  const supabaseKey = 'PASTE_YOUR_ANON_KEY_HERE';
   const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 </script>
 
@@ -501,12 +503,38 @@ function submitEstimate(e) {
 // ── Calendar booking state ──
 let calYear, calMonth, calSelectedDate = null, calSelectedTime = null;
 const TIME_SLOTS = ['9:00 AM','10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 PM','3:00 PM','4:00 PM','5:00 PM'];
+let bookedSlotsByDate = {};
+
+async function loadBookedSlotsForMonth() {
+  bookedSlotsByDate = {};
+  try {
+    const start = `${calYear}-${String(calMonth + 1).padStart(2, '0')}-01`;
+    const nextMonth = calMonth === 11 ? 1 : calMonth + 2;
+    const nextMonthYear = calMonth === 11 ? calYear + 1 : calYear;
+    const end = `${nextMonthYear}-${String(nextMonth).padStart(2, '0')}-01`;
+    const { data, error } = await supabase
+      .from('bookings')
+      .select('appointment_date, appointment_time')
+      .gte('appointment_date', start)
+      .lt('appointment_date', end);
+    if (error) { console.error('Failed to load booked slots:', error); return; }
+    data.forEach(row => {
+      const key = row.appointment_date;
+      if (!bookedSlotsByDate[key]) bookedSlotsByDate[key] = [];
+      bookedSlotsByDate[key].push(row.appointment_time);
+    });
+  } catch (err) {
+    console.error('Supabase slot error (calendar still usable):', err);
+  }
+}
 
 function bookGoStep1(reset) {
   if (reset) {
     ['bName','bPhone','bCar','bDetails'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('bService').selectedIndex = 0;
     calSelectedDate = null; calSelectedTime = null;
+    document.getElementById('calTimeSection').style.display = 'none';
+    document.getElementById('bookConfirmBtn').style.display = 'none';
   }
   document.getElementById('bookStep1').style.display = 'block';
   document.getElementById('bookStep2').style.display = 'none';
@@ -516,7 +544,7 @@ function bookGoStep1(reset) {
   document.getElementById('bookProgressBar').style.width = '50%';
 }
 
-function bookGoStep2() {
+async function bookGoStep2() {
   const name = document.getElementById('bName').value.trim();
   const phone = document.getElementById('bPhone').value.trim();
   const car = document.getElementById('bCar').value.trim();
@@ -531,23 +559,31 @@ function bookGoStep2() {
   document.getElementById('bookStepTitle').textContent = 'Pick a Date & Time';
   document.getElementById('bookProgressBar').style.width = '100%';
   const now = new Date();
-  calYear = now.getFullYear(); calMonth = now.getMonth();
+  calYear = now.getFullYear();
+  calMonth = now.getMonth();
+  await loadBookedSlotsForMonth();
   renderCal();
 }
 
-function calPrevMonth() {
-  calMonth--; if (calMonth < 0) { calMonth = 11; calYear--; }
+async function calPrevMonth() {
+  calMonth--;
+  if (calMonth < 0) { calMonth = 11; calYear--; }
   calSelectedDate = null; calSelectedTime = null;
   document.getElementById('calTimeSection').style.display = 'none';
   document.getElementById('bookConfirmBtn').style.display = 'none';
+  await loadBookedSlotsForMonth();
   renderCal();
 }
 function calNextMonth() {
-  calMonth++; if (calMonth > 11) { calMonth = 0; calYear++; }
-  calSelectedDate = null; calSelectedTime = null;
-  document.getElementById('calTimeSection').style.display = 'none';
-  document.getElementById('bookConfirmBtn').style.display = 'none';
-  renderCal();
+  return (async () => {
+    calMonth++;
+    if (calMonth > 11) { calMonth = 0; calYear++; }
+    calSelectedDate = null; calSelectedTime = null;
+    document.getElementById('calTimeSection').style.display = 'none';
+    document.getElementById('bookConfirmBtn').style.display = 'none';
+    await loadBookedSlotsForMonth();
+    renderCal();
+  })();
 }
 
 function renderCal() {
@@ -555,9 +591,10 @@ function renderCal() {
   document.getElementById('calMonthLabel').textContent = months[calMonth] + ' ' + calYear;
   const grid = document.getElementById('calGrid');
   grid.innerHTML = '';
-  const today = new Date(); today.setHours(0,0,0,0);
+  const today = new Date();
+  today.setHours(0,0,0,0);
   const firstDay = new Date(calYear, calMonth, 1).getDay();
-  const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
   for (let i = 0; i < firstDay; i++) {
     const el = document.createElement('div');
     el.className = 'cal-day cal-day-empty';
@@ -569,16 +606,18 @@ function renderCal() {
     el.textContent = d;
     const thisDate = new Date(calYear, calMonth, d);
     thisDate.setHours(0,0,0,0);
-    const dateKey = calYear + '-' + String(calMonth+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
-    if (thisDate < today) {
+    const dateKey = calYear + '-' + String(calMonth + 1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+    const bookedTimes = bookedSlotsByDate[dateKey] || [];
+    const dow = thisDate.getDay();
+    if (thisDate < today || dow === 0 || dow === 6) {
       el.classList.add('cal-day-disabled');
     } else {
       if (thisDate.getTime() === today.getTime()) el.classList.add('cal-day-today');
       if (calSelectedDate === dateKey) el.classList.add('cal-day-selected');
-      // Check if fully booked
-      const bookedTimes = bookings.filter(b => b.appointmentDate === dateKey).map(b => b.appointmentTime);
       if (bookedTimes.length >= TIME_SLOTS.length) el.classList.add('cal-day-disabled');
-      el.onclick = () => selectCalDate(dateKey, d);
+      if (!el.classList.contains('cal-day-disabled')) {
+        el.onclick = () => selectCalDate(dateKey, d);
+      }
     }
     grid.appendChild(el);
   }
@@ -589,8 +628,7 @@ function selectCalDate(dateKey, d) {
   calSelectedTime = null;
   document.getElementById('bookConfirmBtn').style.display = 'none';
   renderCal();
-  // Render time slots
-  const bookedTimes = bookings.filter(b => b.appointmentDate === dateKey).map(b => b.appointmentTime);
+  const bookedTimes = bookedSlotsByDate[dateKey] || [];
   const timeGrid = document.getElementById('calTimeGrid');
   timeGrid.innerHTML = '';
   const dateObj = new Date(calYear, calMonth, d);
@@ -618,28 +656,65 @@ function selectCalTime(slot, el) {
   document.getElementById('bookConfirmBtn').style.display = 'inline-flex';
 }
 
-function submitBook() {
-  if (!calSelectedDate || !calSelectedTime) { alert('Please select a date and time.'); return; }
+async function submitBook() {
+  if (!calSelectedDate || !calSelectedTime) {
+    alert('Please select a date and time.');
+    return;
+  }
+
   const dateObj = new Date(calSelectedDate + 'T12:00:00');
   const opts = {weekday:'long',month:'long',day:'numeric',year:'numeric'};
   const item = {
-    id: Date.now(),
-    date: new Date().toLocaleString(),
-    appointmentDate: calSelectedDate,
-    appointmentTime: calSelectedTime,
-    appointmentDisplay: dateObj.toLocaleDateString('en-US', opts) + ' at ' + calSelectedTime,
     name: document.getElementById('bName').value,
     phone: document.getElementById('bPhone').value,
     car: document.getElementById('bCar').value,
     service: document.getElementById('bService').value,
     details: document.getElementById('bDetails').value,
+    appointmentDate: calSelectedDate,
+    appointmentTime: calSelectedTime,
+    appointmentDisplay: dateObj.toLocaleDateString('en-US', opts) + ' at ' + calSelectedTime,
   };
-  bookings.push(item); save();
-  document.getElementById('bookStep2').style.display = 'none';
-  document.getElementById('bookSuccessMsg').textContent = 'Booked for ' + item.appointmentDisplay + '. We look forward to seeing you!';
-  document.getElementById('bookSuccess').style.display = 'block';
-  document.getElementById('bookStepLabel').textContent = 'CONFIRMED';
-  document.getElementById('bookStepTitle').textContent = 'Appointment Booked!';
+
+  const confirmBtn = document.getElementById('bookConfirmBtn');
+  const originalBtnHTML = confirmBtn.innerHTML;
+  confirmBtn.disabled = true;
+  confirmBtn.innerHTML = '<span class="spinner"></span>&nbsp;Booking...';
+
+  try {
+    const { error } = await supabase
+      .from('bookings')
+      .insert([{
+        name: item.name,
+        phone: item.phone,
+        email: null,
+        service: item.service,
+        appointment_date: item.appointmentDate,
+        appointment_time: item.appointmentTime,
+        notes: `Vehicle: ${item.car}${item.details ? ' | Details: ' + item.details : ''}`,
+        status: 'new'
+      }]);
+
+    if (error) throw error;
+
+    await loadBookedSlotsForMonth();
+    await loadAdminData();
+    if (document.getElementById('adminDashWrap').style.display === 'block') {
+      renderAdmin();
+    }
+
+    document.getElementById('bookStep2').style.display = 'none';
+    document.getElementById('bookStepLabel').textContent = 'CONFIRMED';
+    document.getElementById('bookStepTitle').textContent = 'Appointment Booked!';
+    document.getElementById('bookProgressBar').style.width = '100%';
+    document.getElementById('bookSuccessMsg').textContent = 'Booked for ' + item.appointmentDisplay + '. We look forward to seeing you!';
+    document.getElementById('bookSuccess').style.display = 'block';
+  } catch (err) {
+    console.error('Booking failed:', err);
+    alert('There was a problem saving your appointment. Please try again or call us at (518) 495-6876.');
+  } finally {
+    confirmBtn.disabled = false;
+    confirmBtn.innerHTML = originalBtnHTML;
+  }
 }
 
 function submitJob(e) {

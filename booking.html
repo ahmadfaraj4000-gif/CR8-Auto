@@ -445,7 +445,9 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
 <script>
 // ===== SUPABASE =====
 const supabaseUrl = 'https://llrjzyhdphitrjzbstoq.supabase.co';
-const supabaseKey = 'sb_publishable_A80zQldhlrOU_zCG-Csi2g_KdISbolU';
+// ⚠️ REPLACE THIS with your actual anon/public key from Supabase → Settings → API
+// It should start with "eyJ..." NOT "sb_publishable_..."
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxscmp6eWhkcGhpdHJqemJzdG9xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3MTc1NDUsImV4cCI6MjA5MjI5MzU0NX0.3ml84Lp1AqUlwUV8xkgNwmrZ7Bdg1NYtzPq3khcXMHY';
 const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 // ===== NAVBAR =====
@@ -463,23 +465,26 @@ const TIME_SLOTS = ['9:00 AM','10:00 AM','11:00 AM','12:00 PM','1:00 PM','2:00 P
 let bookedSlotsByDate = {};
 
 // ===== LOAD BOOKED SLOTS =====
+// ===== LOAD BOOKED SLOTS =====
 async function loadBookedSlotsForMonth() {
-  const start = `${calYear}-${String(calMonth + 1).padStart(2, '0')}-01`;
-  const end   = `${calYear}-${String(calMonth + 2).padStart(2, '0')}-01`;
-
-  const { data, error } = await supabase
-    .from('bookings')
-    .select('appointment_date, appointment_time')
-    .gte('appointment_date', start)
-    .lt('appointment_date', end);
-
   bookedSlotsByDate = {};
-  if (error) { console.error('Failed to load booked slots:', error); return; }
-  data.forEach(row => {
-    const key = row.appointment_date;
-    if (!bookedSlotsByDate[key]) bookedSlotsByDate[key] = [];
-    bookedSlotsByDate[key].push(row.appointment_time);
-  });
+  try {
+    const start = `${calYear}-${String(calMonth + 1).padStart(2, '0')}-01`;
+    const end   = `${calYear}-${String(calMonth + 2).padStart(2, '0')}-01`;
+    const { data, error } = await supabase
+      .from('bookings')
+      .select('appointment_date, appointment_time')
+      .gte('appointment_date', start)
+      .lt('appointment_date', end);
+    if (error) { console.error('Failed to load booked slots:', error); return; }
+    data.forEach(row => {
+      const key = row.appointment_date;
+      if (!bookedSlotsByDate[key]) bookedSlotsByDate[key] = [];
+      bookedSlotsByDate[key].push(row.appointment_time);
+    });
+  } catch (err) {
+    console.error('Supabase error (calendar still usable):', err);
+  }
 }
 
 // ===== STEP NAVIGATION =====
