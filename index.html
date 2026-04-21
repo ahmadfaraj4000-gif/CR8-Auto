@@ -507,10 +507,12 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
   <button class="menu-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
   <ul class="nav-links" id="navLinks">
     <li><a href="index.html">Home</a></li>
+    <li><a href="booking.html">Book Appointment</a></li>
     <li><a href="index.html#services-section" onclick="setTimeout(()=>document.getElementById('services-section')&&document.getElementById('services-section').scrollIntoView({behavior:'smooth'}),100)">Services</a></li>
     <li><a href="whyus.html">Why Us?</a></li>
     <li><a href="careers.html">Careers</a></li>
     <li><a href="index.html#contact-section" class="nav-cta">Contact Us</a></li>
+    
   </ul>
 </nav>
 
@@ -534,7 +536,7 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
         <p class="hero-sub">From collision repair to flawless refinishing — CR8 Autos restores your vehicle to factory condition with precision craftsmanship and transparent pricing.</p>
         <div class="hero-btns">
           <button class="btn btn-red" onclick="openEstimateModal()"><i class="fas fa-calculator"></i> Get an Estimate</button>
-          <button class="btn btn-red" onclick="openBookModal()"><i class="fas fa-calendar"></i> Book Appointment</button>
+          <a href="booking.html" class="btn btn-red"><i class="fas fa-calendar"></i> Book Appointment</a>
           <button class="btn btn-outline" onclick="document.getElementById('contact-section').scrollIntoView({behavior:'smooth'})"><i class="fas fa-phone"></i> Contact Us</button>
         </div>
         <div class="hero-stats">
