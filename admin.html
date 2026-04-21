@@ -473,11 +473,84 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
     });
   }
 
-  function renderAdmin() {
-    const adminCount = document.getElementById('adminCount');
-    if (adminCount) adminCount.textContent = bookings.length + ' total bookings';
-    // keep the rest of your existing renderAdmin body here
+function renderAdmin() {
+  const adminCount = document.getElementById('adminCount');
+  if (adminCount) adminCount.textContent = bookings.length + ' total bookings';
+
+  const bookingsTable = document.getElementById('bookingsTable');
+
+  if (!bookingsTable) return;
+
+  if (!bookings.length) {
+    bookingsTable.innerHTML = `
+      <div class="empty-state">
+        <i class="fas fa-inbox"></i>
+        No appointments yet.
+      </div>
+    `;
+    return;
   }
+
+  const rows = bookings.map((b) => {
+    return `
+      <tr>
+        <td>
+          <strong>${escapeHtml(b.name)}</strong><br>
+          <span style="color:var(--gray);font-size:0.8rem;">
+            Submitted: ${new Date(b.created_at).toLocaleString()}
+          </span>
+        </td>
+
+        <td>${escapeHtml(b.phone || '—')}</td>
+
+        <td style="color:var(--gray);font-size:0.85rem;">
+          ${escapeHtml(b.notes || '—')}
+        </td>
+
+        <td>
+          <span class="badge badge-red">${escapeHtml(b.service)}</span>
+        </td>
+
+        <td style="color:var(--red);font-size:0.85rem;font-weight:600;">
+          ${b.appointment_date} at ${b.appointment_time}
+        </td>
+
+        <td>
+          <span class="badge ${b.status === 'new' ? 'badge-red' : 'badge-gray'}">
+            ${b.status || 'new'}
+          </span>
+        </td>
+
+        <td>
+          <button class="delete-btn" onclick="deleteBooking('${b.id}')">
+            <i class="fas fa-trash"></i> Delete
+          </button>
+        </td>
+      </tr>
+    `;
+  }).join('');
+
+  bookingsTable.innerHTML = `
+    <div style="overflow-x:auto;">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Customer</th>
+            <th>Phone</th>
+            <th>Notes</th>
+            <th>Service</th>
+            <th>Appointment</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
 
   function deleteEntry(key, index) {
     if (!confirm('Delete this entry? This cannot be undone.')) return;
