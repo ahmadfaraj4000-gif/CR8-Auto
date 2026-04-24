@@ -67,7 +67,7 @@
     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Suspension & Steering Repair", "description": "Inspection and repair of tie rods, sway bars, axles, wheel bearings, and shock mounts." } },
     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Cooling System Repair", "description": "Radiator, fan, thermostat, and hose repair to keep your engine running at the right temperature." } },
     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Air Flow & Sensor Service", "description": "Cabin filters, engine air filters, sensor checks, and O2 sensor service for proper airflow and performance." } },
-    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Fluid Inspection", "description": "Inspection and service for engine oil, transmission fluid, and differential fluids." } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Fluid Inspection & Maintenance", "description": "Inspection and service for engine oil, transmission fluid, and differential fluids." } },
     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "NYS Inspection & Emissions Prep", "description": "Full inspection checks and emissions-related prep to help get your vehicle ready to pass inspection." } },
     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Battery Replacement", "description": "Battery testing and replacement for all makes and models." } },
     { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Exhaust Repair", "description": "Muffler, catalytic converter, and exhaust pipe inspection and repair." } },
@@ -384,23 +384,9 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
 .radio-opt input:checked+label{border-color:var(--red);color:var(--red);background:rgba(204,31,31,0.08);}
 
 /* ===== ADMIN ===== */
-.admin-page{padding:100px 3rem 60px;background:var(--black);min-height:100vh;}
-.admin-inner{max-width:1300px;margin:0 auto;}
-.admin-login-card{max-width:420px;margin:0 auto;background:var(--card);border:1px solid var(--border);border-top:3px solid var(--red);padding:3rem;}
-.admin-tabs{display:flex;gap:0;margin-bottom:2rem;border-bottom:1px solid var(--border);}
-.admin-tab{padding:1rem 2rem;font-family:'Oswald',sans-serif;font-size:0.9rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;color:var(--gray);border-bottom:2px solid transparent;background:none;border-top:none;border-left:none;border-right:none;transition:all 0.2s;}
-.admin-tab.active{color:var(--red);border-bottom-color:var(--red);}
-.admin-tab-content{display:none;}
-.admin-tab-content.active{display:block;}
-.admin-table{width:100%;border-collapse:collapse;font-size:0.9rem;}
-.admin-table th{text-align:left;padding:0.8rem 1rem;border-bottom:1px solid var(--border);font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--red);}
-.admin-table td{padding:1rem;border-bottom:1px solid rgba(255,255,255,0.05);color:var(--light-gray);vertical-align:top;}
-.admin-table tr:hover td{background:rgba(255,255,255,0.02);}
 .badge{display:inline-block;padding:2px 8px;font-size:0.7rem;font-family:'DM Mono',monospace;letter-spacing:1px;text-transform:uppercase;}
 .badge-red{background:rgba(204,31,31,0.15);color:var(--red);border:1px solid rgba(204,31,31,0.3);}
 .badge-gray{background:rgba(255,255,255,0.05);color:var(--gray);border:1px solid var(--border);}
-.admin-header-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;}
-.admin-count{font-family:'DM Mono',monospace;font-size:0.75rem;letter-spacing:1px;color:var(--gray);}
 .logout-btn{background:none;border:1px solid var(--border);color:var(--gray);padding:0.5rem 1rem;font-family:'Oswald',sans-serif;font-size:0.8rem;letter-spacing:1px;cursor:pointer;text-transform:uppercase;transition:all 0.2s;}
 .logout-btn:hover{border-color:var(--red);color:var(--red);}
 .empty-state{text-align:center;padding:4rem;color:var(--gray);}
@@ -417,8 +403,6 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
 .footer-col ul li a{color:var(--gray);text-decoration:none;font-size:0.95rem;transition:color 0.2s;}
 .footer-col ul li a:hover{color:var(--red);}
 .footer-bottom{border-top:1px solid var(--border);padding-top:2rem;display:flex;justify-content:space-between;align-items:center;color:var(--gray);font-size:0.85rem;}
-.footer-admin-btn{background:none;border:1px solid var(--border);color:var(--gray);padding:0.4rem 1rem;font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:1px;cursor:pointer;transition:all 0.2s;}
-.footer-admin-btn:hover{border-color:var(--red);color:var(--red);}
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:1024px){
@@ -493,24 +477,542 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
 .cal-footer{display:flex;justify-content:space-between;align-items:center;padding-top:0.5rem;border-top:1px solid rgba(255,255,255,0.06);}
 .delete-btn{background:none;border:1px solid rgba(204,31,31,0.3);color:rgba(204,31,31,0.6);padding:4px 10px;font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:1px;cursor:pointer;transition:all 0.2s;text-transform:uppercase;margin-top:6px;display:inline-block;}
 .delete-btn:hover{background:rgba(204,31,31,0.1);border-color:var(--red);color:var(--red);}
+
+
+/* ===== PUBLIC SITE NAV REFRESH — PEP BOYS INSPIRED ===== */
+.navbar{min-height:86px !important;padding:0 2.8rem !important;background:#ffffff !important;border-bottom:4px solid var(--red) !important;box-shadow:0 10px 30px rgba(0,0,0,.18) !important;backdrop-filter:none !important;gap:24px !important;}
+.navbar.scrolled{padding:0 2.8rem !important;border-bottom-color:var(--red) !important;}
+.nav-logo{align-self:stretch !important;min-width:210px !important;display:flex !important;align-items:center !important;justify-content:center !important;padding:0 22px !important;background:#070707 !important;border-right:4px solid var(--red) !important;}
+.nav-logo img{height:74px !important;width:auto !important;max-width:180px !important;object-fit:contain !important;}
+.nav-links{flex:1 !important;justify-content:center !important;gap:0 !important;background:#050505 !important;border:1px solid rgba(0,0,0,.88) !important;border-radius:0 !important;overflow:hidden !important;box-shadow:0 10px 22px rgba(0,0,0,.12) !important;}
+.nav-links li{display:flex !important;}
+.nav-links a{min-height:58px !important;display:flex !important;align-items:center !important;justify-content:center !important;padding:0 28px !important;color:#ffffff !important;font-size:1rem !important;letter-spacing:1.4px !important;font-weight:700 !important;border-left:1px solid rgba(255,255,255,.22) !important;white-space:nowrap !important;}
+.nav-links li:first-child a{border-left:none !important;}
+.nav-links a::after{display:none !important;}
+.nav-links a:hover{background:#191919 !important;color:#ffffff !important;}
+.nav-links .nav-cta,.nav-cta{min-height:58px !important;clip-path:none !important;background:linear-gradient(180deg,var(--red-light),var(--red)) !important;color:#ffffff !important;box-shadow:none !important;}
+.menu-btn{color:#111111 !important;border:1px solid rgba(0,0,0,.15) !important;width:46px !important;height:46px !important;border-radius:8px !important;align-items:center !important;justify-content:center !important;}
+@media(max-width:1100px){.navbar{padding:0 1.5rem !important;}.nav-logo{min-width:170px !important;padding:0 14px !important;}.nav-logo img{height:64px !important;max-width:150px !important;}.nav-links a{padding:0 16px !important;font-size:.88rem !important;letter-spacing:1px !important;}}
+@media(max-width:900px){.navbar{min-height:76px !important;padding:.6rem 1rem !important;}.nav-logo{min-width:auto !important;align-self:auto !important;height:58px !important;border-right:none !important;border-radius:8px !important;}.nav-logo img{height:52px !important;}.menu-btn{display:flex !important;}.nav-links.open{display:flex !important;flex-direction:column !important;position:fixed !important;top:76px !important;left:0 !important;right:0 !important;background:#ffffff !important;padding:12px !important;gap:8px !important;border-bottom:4px solid var(--red) !important;box-shadow:0 18px 35px rgba(0,0,0,.18) !important;}.nav-links.open li{width:100% !important;}.nav-links.open a{width:100% !important;min-height:50px !important;border-left:none !important;border-radius:8px !important;background:#050505 !important;}.nav-links.open .nav-cta{background:linear-gradient(180deg,var(--red-light),var(--red)) !important;}}
+
+
+
+/* ===== PROFESSIONAL HEADER / NAV POLISH ===== */
+.navbar{
+  position:fixed !important;
+  top:0 !important;
+  left:0 !important;
+  width:100% !important;
+  z-index:1000 !important;
+  min-height:88px !important;
+  padding:10px clamp(18px,3vw,48px) !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:24px !important;
+  background:#f7f7f7 !important;
+  border-bottom:4px solid var(--red) !important;
+  box-shadow:0 12px 30px rgba(0,0,0,.18) !important;
+  backdrop-filter:none !important;
+}
+.navbar.scrolled{
+  min-height:88px !important;
+  padding:10px clamp(18px,3vw,48px) !important;
+  background:#f7f7f7 !important;
+  border-bottom:4px solid var(--red) !important;
+}
+.nav-logo{
+  flex:0 0 178px !important;
+  height:68px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding:7px 16px !important;
+  background:#050505 !important;
+  border:1px solid rgba(204,31,31,.28) !important;
+  border-radius:0 !important;
+  box-shadow:0 10px 22px rgba(0,0,0,.18) !important;
+  text-decoration:none !important;
+}
+.nav-logo img{
+  display:block !important;
+  height:auto !important;
+  max-height:56px !important;
+  width:auto !important;
+  max-width:148px !important;
+  object-fit:contain !important;
+}
+.nav-links{
+  flex:1 1 auto !important;
+  max-width:990px !important;
+  min-height:58px !important;
+  display:flex !important;
+  justify-content:center !important;
+  align-items:stretch !important;
+  gap:0 !important;
+  list-style:none !important;
+  margin:0 !important;
+  padding:0 !important;
+  background:#050505 !important;
+  border:1px solid rgba(255,255,255,.16) !important;
+  box-shadow:0 10px 24px rgba(0,0,0,.18) !important;
+}
+.nav-links li{
+  display:flex !important;
+  min-width:0 !important;
+}
+.nav-links a{
+  min-height:58px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  padding:0 clamp(18px,2vw,31px) !important;
+  color:#fff !important;
+  text-decoration:none !important;
+  font-family:'Oswald',sans-serif !important;
+  font-size:clamp(.86rem,1.05vw,1rem) !important;
+  line-height:1 !important;
+  font-weight:700 !important;
+  letter-spacing:2px !important;
+  text-transform:uppercase !important;
+  border-left:1px solid rgba(255,255,255,.22) !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  transition:background .2s ease,color .2s ease,transform .2s ease !important;
+  white-space:nowrap !important;
+}
+.nav-links li:first-child a{border-left:none !important;}
+.nav-links a::after{display:none !important;}
+.nav-links a:hover,
+.nav-links a.current{
+  background:#171717 !important;
+  color:#fff !important;
+}
+.nav-links .nav-cta{
+  background:linear-gradient(180deg,var(--red-light),var(--red)) !important;
+  color:#fff !important;
+  min-width:152px !important;
+  box-shadow:none !important;
+  clip-path:none !important;
+}
+.nav-links .nav-cta:hover{
+  background:linear-gradient(180deg,#ff3c3c,var(--red-dark)) !important;
+  color:#fff !important;
+  transform:none !important;
+}
+.menu-btn{
+  display:none !important;
+  align-items:center !important;
+  justify-content:center !important;
+  width:48px !important;
+  height:48px !important;
+  background:#050505 !important;
+  border:1px solid rgba(204,31,31,.36) !important;
+  color:#fff !important;
+  border-radius:0 !important;
+}
+@media(max-width:1180px){
+  .navbar{gap:16px !important;padding:10px 18px !important;}
+  .nav-logo{flex-basis:154px !important;}
+  .nav-logo img{max-height:50px !important;max-width:126px !important;}
+  .nav-links a{padding:0 16px !important;letter-spacing:1.45px !important;font-size:.82rem !important;}
+  .nav-links .nav-cta{min-width:130px !important;}
+}
+@media(max-width:900px){
+  .navbar{
+    min-height:76px !important;
+    padding:9px 14px !important;
+    justify-content:space-between !important;
+    gap:12px !important;
+  }
+  .navbar.scrolled{min-height:76px !important;padding:9px 14px !important;}
+  .nav-logo{
+    flex:0 0 142px !important;
+    width:142px !important;
+    height:56px !important;
+    padding:5px 12px !important;
+  }
+  .nav-logo img{max-height:46px !important;max-width:118px !important;}
+  .menu-btn{display:flex !important;}
+  .nav-links{display:none !important;}
+  .nav-links.open{
+    display:flex !important;
+    flex-direction:column !important;
+    position:fixed !important;
+    top:76px !important;
+    left:0 !important;
+    right:0 !important;
+    max-width:none !important;
+    min-height:0 !important;
+    padding:12px !important;
+    gap:8px !important;
+    background:#f7f7f7 !important;
+    border:0 !important;
+    border-bottom:4px solid var(--red) !important;
+    box-shadow:0 22px 36px rgba(0,0,0,.24) !important;
+  }
+  .nav-links.open li{width:100% !important;display:block !important;}
+  .nav-links.open a{
+    width:100% !important;
+    min-height:50px !important;
+    justify-content:center !important;
+    border-left:none !important;
+    border:1px solid rgba(255,255,255,.1) !important;
+    background:#050505 !important;
+    color:#fff !important;
+    border-radius:0 !important;
+  }
+  .nav-links.open .nav-cta{background:linear-gradient(180deg,var(--red-light),var(--red)) !important;}
+}
+@media(max-width:520px){
+  .navbar{min-height:70px !important;padding:7px 10px !important;}
+  .navbar.scrolled{min-height:70px !important;padding:7px 10px !important;}
+  .nav-logo{flex-basis:126px !important;width:126px !important;height:52px !important;}
+  .nav-logo img{max-height:42px !important;max-width:106px !important;}
+  .nav-links.open{top:70px !important;}
+}
+
+
+
+/* ==========================================================
+   CR8 AUTOS — PROFESSIONAL BLACK HEADER / CENTERED NAV UPDATE
+   Header polish only. Content, forms, SEO, and page sections untouched.
+   ========================================================== */
+.navbar{
+  position:fixed !important;
+  top:0 !important;
+  left:0 !important;
+  width:100% !important;
+  min-height:86px !important;
+  padding:0 34px !important;
+  display:grid !important;
+  grid-template-columns:190px minmax(0,1fr) 190px !important;
+  align-items:center !important;
+  background:#000000 !important;
+  background-color:#000000 !important;
+  backdrop-filter:none !important;
+  -webkit-backdrop-filter:none !important;
+  border-bottom:1px solid rgba(204,31,31,.55) !important;
+  box-shadow:0 14px 34px rgba(0,0,0,.62) !important;
+  transition:min-height .25s ease, box-shadow .25s ease, border-color .25s ease !important;
+}
+.navbar::after{
+  content:'' !important;
+  position:absolute !important;
+  left:0 !important;
+  right:0 !important;
+  bottom:-2px !important;
+  height:2px !important;
+  background:linear-gradient(90deg,transparent 0%,rgba(204,31,31,.35) 20%,rgba(232,51,51,.95) 50%,rgba(204,31,31,.35) 80%,transparent 100%) !important;
+  pointer-events:none !important;
+}
+.navbar.scrolled{
+  min-height:76px !important;
+  padding:0 34px !important;
+  background:#000000 !important;
+  border-bottom-color:rgba(204,31,31,.72) !important;
+  box-shadow:0 12px 28px rgba(0,0,0,.72) !important;
+}
+.nav-logo{
+  grid-column:1 !important;
+  justify-self:start !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  height:72px !important;
+  min-width:0 !important;
+  padding:0 !important;
+  gap:0 !important;
+  background:transparent !important;
+  border:0 !important;
+  border-right:0 !important;
+  border-radius:0 !important;
+  text-decoration:none !important;
+}
+.nav-logo img{
+  display:block !important;
+  height:64px !important;
+  max-height:64px !important;
+  width:auto !important;
+  max-width:168px !important;
+  object-fit:contain !important;
+}
+.nav-links{
+  grid-column:2 !important;
+  justify-self:center !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  flex-wrap:nowrap !important;
+  gap:10px !important;
+  margin:0 !important;
+  padding:0 !important;
+  list-style:none !important;
+}
+.nav-links li{display:flex !important;align-items:center !important;}
+.nav-links a{
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  min-height:42px !important;
+  padding:0 17px !important;
+  border:1px solid rgba(255,255,255,.16) !important;
+  border-radius:999px !important;
+  background:rgba(255,255,255,.025) !important;
+  color:rgba(245,245,245,.88) !important;
+  font-family:'Oswald',sans-serif !important;
+  font-size:.78rem !important;
+  font-weight:600 !important;
+  letter-spacing:1.35px !important;
+  line-height:1 !important;
+  text-transform:uppercase !important;
+  text-decoration:none !important;
+  white-space:nowrap !important;
+  clip-path:none !important;
+  transition:background .22s ease,border-color .22s ease,color .22s ease,box-shadow .22s ease,transform .22s ease !important;
+}
+.nav-links a::after{display:none !important;content:none !important;}
+.nav-links a:hover,
+.nav-links a.current{
+  color:#ffffff !important;
+  border-color:rgba(232,51,51,.78) !important;
+  background:rgba(204,31,31,.16) !important;
+  box-shadow:0 0 0 1px rgba(204,31,31,.18),0 8px 22px rgba(204,31,31,.14) !important;
+  transform:translateY(-1px) !important;
+}
+.nav-cta{
+  border:1px solid rgba(232,51,51,.95) !important;
+  background:linear-gradient(180deg,rgba(204,31,31,.95),rgba(154,21,21,.95)) !important;
+  color:#ffffff !important;
+  box-shadow:0 9px 22px rgba(204,31,31,.22) !important;
+}
+.nav-cta:hover{
+  background:linear-gradient(180deg,#e83333,#cc1f1f) !important;
+  color:#ffffff !important;
+  border-color:#ff4a4a !important;
+  transform:translateY(-1px) !important;
+}
+.menu-btn{
+  grid-column:3 !important;
+  justify-self:end !important;
+  width:46px !important;
+  height:42px !important;
+  display:none !important;
+  align-items:center !important;
+  justify-content:center !important;
+  background:#000000 !important;
+  border:1px solid rgba(204,31,31,.65) !important;
+  border-radius:999px !important;
+  color:#ffffff !important;
+  font-size:1.05rem !important;
+  cursor:pointer !important;
+}
+.menu-btn:hover{background:rgba(204,31,31,.14) !important;border-color:var(--red-light) !important;}
+
+@media(max-width:1180px){
+  .navbar{grid-template-columns:170px minmax(0,1fr) 80px !important;padding:0 22px !important;}
+  .navbar.scrolled{padding:0 22px !important;}
+  .nav-logo img{height:58px !important;max-height:58px !important;max-width:146px !important;}
+  .nav-links{gap:7px !important;}
+  .nav-links a{min-height:40px !important;padding:0 12px !important;font-size:.72rem !important;letter-spacing:1px !important;}
+}
+@media(max-width:900px){
+  .navbar,
+  .navbar.scrolled{
+    min-height:76px !important;
+    padding:0 16px !important;
+    display:grid !important;
+    grid-template-columns:auto auto !important;
+    justify-content:space-between !important;
+    background:#000000 !important;
+    border-bottom:1px solid rgba(204,31,31,.65) !important;
+  }
+  .nav-logo{grid-column:1 !important;height:64px !important;justify-self:start !important;}
+  .nav-logo img{height:54px !important;max-height:54px !important;max-width:138px !important;}
+  .menu-btn{grid-column:2 !important;display:flex !important;}
+  .nav-links{display:none !important;}
+  .nav-links.open{
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:stretch !important;
+    justify-content:flex-start !important;
+    position:fixed !important;
+    top:76px !important;
+    left:0 !important;
+    right:0 !important;
+    width:100% !important;
+    max-height:calc(100vh - 76px) !important;
+    overflow:auto !important;
+    padding:16px !important;
+    gap:10px !important;
+    background:#000000 !important;
+    border-top:1px solid rgba(255,255,255,.08) !important;
+    border-bottom:2px solid rgba(204,31,31,.88) !important;
+    box-shadow:0 22px 44px rgba(0,0,0,.72) !important;
+  }
+  .nav-links.open li{width:100% !important;display:block !important;}
+  .nav-links.open a{
+    width:100% !important;
+    min-height:52px !important;
+    padding:0 18px !important;
+    border-radius:14px !important;
+    border:1px solid rgba(255,255,255,.14) !important;
+    background:#050505 !important;
+    color:#ffffff !important;
+    font-size:.86rem !important;
+    letter-spacing:1.4px !important;
+  }
+  .nav-links.open a:hover,
+  .nav-links.open a.current{background:rgba(204,31,31,.18) !important;border-color:rgba(232,51,51,.82) !important;}
+  .nav-links.open .nav-cta{background:linear-gradient(180deg,var(--red-light),var(--red)) !important;border-color:var(--red-light) !important;}
+}
+@media(max-width:480px){
+  .navbar,
+  .navbar.scrolled{min-height:72px !important;padding:0 12px !important;}
+  .nav-logo{height:60px !important;}
+  .nav-logo img{height:48px !important;max-height:48px !important;max-width:120px !important;}
+  .menu-btn{width:42px !important;height:40px !important;}
+  .nav-links.open{top:72px !important;max-height:calc(100vh - 72px) !important;padding:12px !important;}
+}
+
+
+
+/* ==========================================================
+   CR8 AUTOS — FINAL NAV CLEANUP
+   Removes boxed outlines around nav tabs and keeps Contact Us
+   the same size/alignment as every other nav item.
+   ========================================================== */
+.nav-links{
+  gap:18px !important;
+  background:transparent !important;
+  border:0 !important;
+  box-shadow:none !important;
+  overflow:visible !important;
+}
+.nav-links li{
+  display:flex !important;
+  align-items:center !important;
+}
+.nav-links a,
+.nav-links .nav-cta,
+.nav-cta{
+  min-height:42px !important;
+  height:42px !important;
+  padding:0 15px !important;
+  border:0 !important;
+  outline:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  box-shadow:none !important;
+  clip-path:none !important;
+  color:rgba(245,245,245,.88) !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  line-height:1 !important;
+}
+.nav-links a::after,
+.nav-links .nav-cta::after,
+.nav-cta::after{
+  content:'' !important;
+  display:block !important;
+  position:absolute !important;
+  left:15px !important;
+  right:15px !important;
+  bottom:6px !important;
+  width:auto !important;
+  height:2px !important;
+  background:var(--red) !important;
+  transform:scaleX(0) !important;
+  transform-origin:center !important;
+  transition:transform .22s ease !important;
+}
+.nav-links a:hover,
+.nav-links a.current,
+.nav-links .nav-cta:hover,
+.nav-cta:hover{
+  background:transparent !important;
+  border:0 !important;
+  box-shadow:none !important;
+  color:#ffffff !important;
+  transform:none !important;
+}
+.nav-links a:hover::after,
+.nav-links a.current::after,
+.nav-links .nav-cta:hover::after,
+.nav-cta:hover::after{
+  transform:scaleX(1) !important;
+}
+.nav-links .nav-cta,
+.nav-cta{
+  font-size:.78rem !important;
+  font-weight:600 !important;
+  letter-spacing:1.35px !important;
+  min-width:auto !important;
+  color:#ffffff !important;
+}
+.nav-links .nav-cta::before,
+.nav-cta::before{
+  content:'' !important;
+  position:absolute !important;
+  inset:5px 4px !important;
+  background:rgba(204,31,31,.92) !important;
+  z-index:-1 !important;
+  transform:skewX(-10deg) !important;
+  transition:background .22s ease !important;
+}
+.nav-links .nav-cta:hover::before,
+.nav-cta:hover::before{
+  background:var(--red-light) !important;
+}
+@media(max-width:1180px){
+  .nav-links{gap:10px !important;}
+  .nav-links a,
+  .nav-links .nav-cta,
+  .nav-cta{height:40px !important;min-height:40px !important;padding:0 11px !important;font-size:.72rem !important;letter-spacing:1px !important;}
+  .nav-links a::after,.nav-links .nav-cta::after,.nav-cta::after{left:11px !important;right:11px !important;bottom:5px !important;}
+}
+@media(max-width:900px){
+  .nav-links.open{
+    gap:6px !important;
+    background:#000000 !important;
+    border-top:1px solid rgba(255,255,255,.08) !important;
+    border-bottom:2px solid rgba(204,31,31,.88) !important;
+    box-shadow:0 22px 44px rgba(0,0,0,.72) !important;
+  }
+  .nav-links.open a,
+  .nav-links.open .nav-cta,
+  .nav-links.open .nav-cta:hover{
+    width:100% !important;
+    min-height:50px !important;
+    height:50px !important;
+    padding:0 18px !important;
+    border:0 !important;
+    outline:0 !important;
+    border-radius:0 !important;
+    background:transparent !important;
+    box-shadow:none !important;
+    color:#ffffff !important;
+  }
+  .nav-links.open .nav-cta::before{inset:7px 12px !important;}
+}
 </style>
 </head>
 <body>
 
 <!-- NAVBAR -->
 <nav class="navbar" id="navbar">
-  <a class="nav-logo" href="index.html">
-<img src="logo.png" alt="CR8 Autos" style="height:48px;width:auto;"/>
+  <a class="nav-logo" href="index.html" aria-label="CR8 Autos Home">
+    <img src="logo.png" alt="CR8 Autos"/>
   </a>
-  <button class="menu-btn" id="menuBtn"><i class="fas fa-bars"></i></button>
+  <button class="menu-btn" id="menuBtn" aria-label="Open navigation"><i class="fas fa-bars"></i></button>
   <ul class="nav-links" id="navLinks">
-    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html" class="current">Home</a></li>
     <li><a href="booking.html">Book Appointment</a></li>
-    <li><a href="index.html#services-section" onclick="setTimeout(()=>document.getElementById('services-section')&&document.getElementById('services-section').scrollIntoView({behavior:'smooth'}),100)">Services</a></li>
+    <li><a href="index.html#services-section">Services</a></li>
     <li><a href="whyus.html">Why Us?</a></li>
     <li><a href="careers.html">Careers</a></li>
     <li><a href="index.html#contact-section" class="nav-cta">Contact Us</a></li>
-    
   </ul>
 </nav>
 
@@ -687,7 +1189,7 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
           <div class="service-card fade-up">
             <div class="service-num">06</div>
             <div class="service-icon"><i class="fas fa-oil-can"></i></div>
-            <div class="service-name">Fluid Inspection</div>
+            <div class="service-name">Fluid Inspection &amp; Maintenance</div>
             <div class="service-desc">We inspect and service differential oil, regular engine oil, and transmission fluid so nothing gets overlooked during routine maintenance.</div>
           </div>
           <div class="service-card fade-up">
@@ -845,7 +1347,6 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
     <div class="footer-bottom">
   <span>© <span id="yr"></span> CR8 Autos Body Shop & Repair. All rights reserved.</span>
   <span style="font-size:0.8rem;">Designed by <a href="https://reimagebs.com" target="_blank" style="color:var(--red);text-decoration:none;">RE IMAGE Business Solutions</a></span>
-  <button class="footer-admin-btn" onclick="window.location.href='admin.html'"><i class="fas fa-lock"></i> Admin</button>
 </div>
   </div>  
 </footer>
@@ -904,7 +1405,7 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
               <option>Suspension &amp; Steering Repair</option>
               <option>Cooling System Repair</option>
               <option>Air Flow &amp; Sensor Service</option>
-              <option>Fluid Inspection</option>
+              <option>Fluid Inspection &amp; Maintenance</option>
               <option>NYS Inspection &amp; Emissions Prep</option>
               <option>Battery Replacement</option>
               <option>Exhaust Repair</option>
@@ -988,8 +1489,6 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
 
 <script>
 // ===== STATE =====
-const ADMIN_USER = 'cr8admin';
-const ADMIN_PASS = 'CR8Autos2025!';
 
 let applications = JSON.parse(localStorage.getItem('cr8_applications') || '[]');
 let inquiries    = JSON.parse(localStorage.getItem('cr8_inquiries')    || '[]');
@@ -1009,13 +1508,6 @@ function showPage(page) {
   document.getElementById('page-' + page).classList.add('active');
   window.scrollTo({top:0, behavior:'smooth'});
   document.getElementById('navLinks').classList.remove('open');
-  if (page === 'admin') {
-    document.getElementById('adminLoginWrap').style.display = 'block';
-    document.getElementById('adminDashWrap').style.display = 'none';
-    document.getElementById('adminUser').value = '';
-    document.getElementById('adminPass').value = '';
-    document.getElementById('adminErr').textContent = '';
-  }
 }
 
 function scrollToServices() {
@@ -1139,109 +1631,10 @@ function submitContact(e) {
 }
 
 // ===== ADMIN =====
-function doAdminLogin() {
-  const u = document.getElementById('adminUser').value;
-  const p = document.getElementById('adminPass').value;
-  if (u === ADMIN_USER && p === ADMIN_PASS) {
-    document.getElementById('adminLoginWrap').style.display = 'none';
-    document.getElementById('adminDashWrap').style.display = 'block';
-    renderAdmin();
-  } else {
-    document.getElementById('adminErr').textContent = 'Invalid credentials.';
-  }
-}
-function doAdminLogout() {
-  document.getElementById('adminLoginWrap').style.display = 'block';
-  document.getElementById('adminDashWrap').style.display = 'none';
-}
-function switchAdminTab(tab) {
-  document.querySelectorAll('.admin-tab').forEach((t,i) => {
-    const tabs = ['applications','inquiries','bookings','messages'];
-    t.classList.toggle('active', tabs[i] === tab);
-  });
-  document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
-  document.getElementById('tab-' + tab).classList.add('active');
-}
-function renderAdmin() {
-  const total = applications.length + inquiries.length + bookings.length + messages.length;
-  document.getElementById('adminCount').textContent = total + ' total submissions';
 
-  // Applications
-  if (!applications.length) {
-    document.getElementById('applicationsTable').innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i>No applications yet.</div>';
-  } else {
-    const rows = applications.slice().reverse().map((a,i) => {
-      const realIdx = i;
-      return `
-      <tr>
-        <td><strong>${a.name}</strong><br><span style="color:var(--gray);font-size:0.8rem;">${a.date}</span></td>
-        <td>${a.phone}<br><span style="color:var(--gray);font-size:0.8rem;">${a.email}</span></td>
-        <td><span class="badge ${a.type==='Full Time'?'badge-red':'badge-gray'}">${a.type}</span></td>
-        <td style="color:var(--gray);font-size:0.85rem;">${a.experience}</td>
-        <td style="color:var(--gray);font-size:0.85rem;">${a.certs||'—'}</td>
-        <td style="color:var(--gray);font-size:0.85rem;">${a.startDate}</td>
-        <td><button class="delete-btn" onclick="deleteEntry('applications',${realIdx})"><i class="fas fa-trash"></i> Delete</button></td>
-      </tr>`;
-    }).join('');
-    document.getElementById('applicationsTable').innerHTML = `<div style="overflow-x:auto;"><table class="admin-table"><thead><tr><th>Applicant</th><th>Contact</th><th>Type</th><th>Experience</th><th>Certifications</th><th>Start Date</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`;
-  }
 
-  // Inquiries
-  if (!inquiries.length) {
-    document.getElementById('inquiriesTable').innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i>No estimate requests yet.</div>';
-  } else {
-    const rows = inquiries.slice().reverse().map((inq,i) => {
-      const realIdx = i;
-      return `
-      <tr>
-        <td><strong>${inq.name}</strong><br><span style="color:var(--gray);font-size:0.8rem;">${inq.date}</span></td>
-        <td>${inq.phone}<br><span style="color:var(--gray);font-size:0.8rem;">${inq.email||'—'}</span></td>
-        <td style="color:var(--gray);font-size:0.85rem;">${inq.car}</td>
-        <td><span class="badge badge-red">${inq.service}</span></td>
-        <td style="color:var(--gray);font-size:0.85rem;max-width:200px;">${inq.details||'—'}</td>
-        <td><button class="delete-btn" onclick="deleteEntry('inquiries',${realIdx})"><i class="fas fa-trash"></i> Delete</button></td>
-      </tr>`;
-    }).join('');
-    document.getElementById('inquiriesTable').innerHTML = `<div style="overflow-x:auto;"><table class="admin-table"><thead><tr><th>Customer</th><th>Contact</th><th>Vehicle</th><th>Service</th><th>Details</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`;
-  }
 
-  // Bookings
-  if (!bookings.length) {
-    document.getElementById('bookingsTable').innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i>No appointments yet.</div>';
-  } else {
-    const rows = bookings.slice().reverse().map((b,i) => {
-      const realIdx = i;
-      return `
-      <tr>
-        <td><strong>${b.name}</strong><br><span style="color:var(--gray);font-size:0.8rem;">Submitted: ${b.date}</span></td>
-        <td>${b.phone}</td>
-        <td style="color:var(--gray);font-size:0.85rem;">${b.car}</td>
-        <td><span class="badge badge-red">${b.service}</span></td>
-        <td style="color:var(--red);font-size:0.85rem;font-weight:600;white-space:nowrap;">${b.appointmentDisplay||'Not specified'}</td>
-        <td style="color:var(--gray);font-size:0.85rem;max-width:180px;">${b.details||'—'}</td>
-        <td><button class="delete-btn" onclick="deleteEntry('bookings',${realIdx})"><i class="fas fa-trash"></i> Delete</button></td>
-      </tr>`;
-    }).join('');
-    document.getElementById('bookingsTable').innerHTML = `<div style="overflow-x:auto;"><table class="admin-table"><thead><tr><th>Customer</th><th>Phone</th><th>Vehicle</th><th>Service</th><th>Appointment</th><th>Details</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`;
-  }
 
-  // Messages
-  if (!messages.length) {
-    document.getElementById('messagesTable').innerHTML = '<div class="empty-state"><i class="fas fa-inbox"></i>No messages yet.</div>';
-  } else {
-    const rows = messages.slice().reverse().map((m,i) => {
-      const realIdx = i;
-      return `
-      <tr>
-        <td><strong>${m.name}</strong><br><span style="color:var(--gray);font-size:0.8rem;">${m.date}</span></td>
-        <td>${m.phone||'—'}<br><span style="color:var(--gray);font-size:0.8rem;">${m.email}</span></td>
-        <td style="color:var(--gray);font-size:0.85rem;max-width:300px;">${m.message}</td>
-        <td><button class="delete-btn" onclick="deleteEntry('messages',${realIdx})"><i class="fas fa-trash"></i> Delete</button></td>
-      </tr>`;
-    }).join('');
-    document.getElementById('messagesTable').innerHTML = `<div style="overflow-x:auto;"><table class="admin-table"><thead><tr><th>Contact</th><th>Info</th><th>Message</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`;
-  }
-}
 
 function copyAddress() {
   navigator.clipboard.writeText('2603 2nd Ave, Watervliet, NY 12189').then(() => {
@@ -1255,20 +1648,7 @@ function copyAddress() {
   });
 }
 
-function deleteEntry(key, index) {
-  if (!confirm('Delete this entry? This cannot be undone.')) return;
-  const stored = JSON.parse(localStorage.getItem('cr8_' + key) || '[]');
-  const reversed = stored.slice().reverse();
-  reversed.splice(index, 1);
-  const fixed = reversed.reverse();
-  localStorage.setItem('cr8_' + key, JSON.stringify(fixed));
-  // reload the data arrays and re-render
-  applications = JSON.parse(localStorage.getItem('cr8_applications') || '[]');
-  inquiries = JSON.parse(localStorage.getItem('cr8_inquiries') || '[]');
-  bookings = JSON.parse(localStorage.getItem('cr8_bookings') || '[]');
-  messages = JSON.parse(localStorage.getItem('cr8_messages') || '[]');
-  renderAdmin();
-}
+
 
 </script>
 </body>
