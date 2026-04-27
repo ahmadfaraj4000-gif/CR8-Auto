@@ -1162,7 +1162,14 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
 </div>
 
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+// ===== SUPABASE CONNECTION =====
+// Replace these two values with the same Supabase Project URL and anon public key used by your admin/client portal.
+const SUPABASE_URL = 'https://llrjzyhdphitrjzbstoq.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxscmp6eWhkcGhpdHJqemJzdG9xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3MTc1NDUsImV4cCI6MjA5MjI5MzU0NX0.3ml84Lp1AqUlwUV8xkgNwmrZ7Bdg1NYtzPq3khcXMHY';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
 // ===== STATE =====
 
 let applications = JSON.parse(localStorage.getItem('cr8_applications') || '[]');
@@ -1391,22 +1398,44 @@ function submitBook() {
   document.getElementById('bookStepTitle').textContent = 'Appointment Booked!';
 }
 
-function submitJob(e) {
+async function submitJob(e) {
   e.preventDefault();
+
+  const submitBtn = e.target.querySelector('button[type="submit"]');
+  const originalBtnText = submitBtn ? submitBtn.innerHTML : '';
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+  }
+
   const start = document.querySelector('input[name="startDate"]:checked');
   const item = {
-    id: Date.now(),
-    date: new Date().toLocaleString(),
-    type: document.getElementById('jobType').value,
-    name: document.getElementById('jName').value,
-    phone: document.getElementById('jPhone').value,
-    email: document.getElementById('jEmail').value,
+    job_type: document.getElementById('jobType').value,
+    name: document.getElementById('jName').value.trim(),
+    phone: document.getElementById('jPhone').value.trim(),
+    email: document.getElementById('jEmail').value.trim(),
     experience: document.getElementById('jExperience').value,
-    certs: document.getElementById('jCerts').value,
-    startDate: start ? start.value : 'Not specified',
-    message: document.getElementById('jMessage').value,
+    certifications: document.getElementById('jCerts').value.trim(),
+    start_date: start ? start.value : 'Not specified',
+    message: document.getElementById('jMessage').value.trim(),
+    status: 'new'
   };
-  applications.push(item); save();
+
+  const { error } = await supabaseClient
+    .from('job_applications')
+    .insert([item]);
+
+  if (error) {
+    console.error('Job application submit error:', error);
+    alert('Application failed to submit. Please call us directly at 860-953-1966.');
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalBtnText;
+    }
+    return;
+  }
+
+  e.target.reset();
   document.getElementById('jobForm').style.display = 'none';
   document.getElementById('jobSuccess').style.display = 'block';
 }
