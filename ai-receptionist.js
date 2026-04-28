@@ -29,8 +29,8 @@
     hoursText: "Monday to Friday, 8:30 AM to 4:30 PM",
     hoursTextEs: "Lunes a viernes, 8:30 AM a 4:30 PM",
 
-    SUPABASE_URL: "YOUR_SUPABASE_URL",
-    SUPABASE_ANON_KEY: "YOUR_SUPABASE_ANON_KEY",
+    SUPABASE_URL: "https://llrjzyhdphitrjzbstoq.supabase.co",
+    SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxscmp6eWhkcGhpdHJqemJzdG9xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3MTc1NDUsImV4cCI6MjA5MjI5MzU0NX0.3ml84Lp1AqUlwUV8xkgNwmrZ7Bdg1NYtzPq3khcXMHY",
 
     bookingsTable: "bookings",
     unknownTable: "receptionist_unknown_messages",
