@@ -1452,7 +1452,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 const supabaseUrl = 'https://llrjzyhdphitrjzbstoq.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxscmp6eWhkcGhpdHJqemJzdG9xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3MTc1NDUsImV4cCI6MjA5MjI5MzU0NX0.3ml84Lp1AqUlwUV8xkgNwmrZ7Bdg1NYtzPq3khcXMHY';
-const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+window.cr8Supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 let applications = JSON.parse(localStorage.getItem('cr8_applications') || '[]');
 let inquiries    = JSON.parse(localStorage.getItem('cr8_inquiries')    || '[]');
@@ -1522,7 +1522,7 @@ async function submitEstimate(e) {
   };
 
   try {
-    const { error } = await supabase
+    const { error } = await window.cr8Supabase
       .from('bookings')
       .insert([{
         name: item.name,
