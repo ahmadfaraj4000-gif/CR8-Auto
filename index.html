@@ -1037,7 +1037,7 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
         <div class="hero-btns">
           <button class="btn btn-red" onclick="openEstimateModal()"><i class="fas fa-calculator"></i> Get an Estimate</button>
           <a href="booking.html" class="btn btn-red"><i class="fas fa-calendar"></i> Book Appointment</a>
-          <button class="btn btn-outline" onclick="document.getElementById('contact-section').scrollIntoView({behavior:'smooth'})"><i class="fas fa-phone"></i> Contact Us</button>
+          <a href="tel:+15184956876" class="btn btn-outline"><i class="fas fa-phone"></i> Contact Us</a>
         </div>
         <div class="hero-stats">
           <div><div class="hero-stat-num">10+</div><div class="hero-stat-label">Years Experience</div></div>
@@ -1219,73 +1219,6 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
         </div>
       </div>
 
-    </div>
-  </section>
-
-  <!-- CONTACT SECTION -->
-  <section class="section estimate-section" id="contact-section">
-    <div class="section-inner">
-      <div class="estimate-inner">
-        <div class="estimate-text fade-up">
-          <div class="section-tag"><span>Get In Touch</span></div>
-          <h2>Ready to <span>Restore</span><br>Your Vehicle?</h2>
-          <p>Bring your car in for a free estimate or give us a call. We work with all major insurance companies and offer transparent pricing with no hidden fees.</p>
-          <div class="contact-info">
-            <div class="contact-row">
-              <div class="contact-icon"><i class="fas fa-phone"></i></div>
-              <div><div class="contact-label">Phone</div><div class="contact-val"><a href="tel:5184956876">(518) 495-6876</a></div></div>
-            </div>
-            <div class="contact-row">
-              <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
-              <div><div class="contact-label">Address</div><div class="contact-val">2603 2nd Ave, Watervliet, NY 12189</div></div>
-            </div>
-            <div class="contact-row">
-              <div class="contact-icon"><i class="fas fa-clock"></i></div>
-              <div><div class="contact-label">Hours</div><div class="contact-val">Mon–Fri: 9AM–6PM</div></div>
-            </div>
-            <div class="contact-row">
-              <div class="contact-icon"><i class="fas fa-car"></i></div>
-              <div><div class="contact-label">Serving</div><div class="contact-val">Watervliet, Albany, Troy, Cohoes, Green Island, Colonie & Schenectady, NY</div></div>
-            </div>
-          </div>
-          <div style="display:flex;gap:1rem;margin-top:2rem;flex-wrap:wrap;">
-            <button class="btn btn-red" onclick="openEstimateModal()"><i class="fas fa-calculator"></i> Get an Estimate</button>
-            <a href="booking.html" class="btn btn-outline"><i class="fas fa-calendar-check"></i> Book Appointment</a>
-          </div>
-        </div>
-        <div class="fade-up" style="transition-delay:0.2s">
-          <div class="form-card">
-            <div class="form-title">Send a Message</div>
-            <form id="contactForm" onsubmit="submitContact(event)">
-              <div class="form-row">
-                <div class="form-group">
-                  <label class="form-label">Your Name</label>
-                  <input class="form-input" type="text" placeholder="John Smith" required id="cName"/>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Phone Number</label>
-                  <input class="form-input" type="tel" placeholder="(518) 000-0000" id="cPhone"/>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Email Address</label>
-                <input class="form-input" type="email" placeholder="john@email.com" required id="cEmail"/>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Message</label>
-                <textarea class="form-textarea" placeholder="Tell us about your vehicle and what happened..." id="cMessage" required></textarea>
-              </div>
-              <button type="submit" class="btn btn-red" style="width:100%;justify-content:center;">
-                <i class="fas fa-paper-plane"></i> Send Message
-              </button>
-            </form>
-            <div class="form-success" id="contactSuccess">
-              <i class="fas fa-check-circle"></i>
-              <p>Message received! We'll be in touch within 24 hours.</p>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -1487,8 +1420,39 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
   </div>
 </div>
 
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const fadeItems = document.querySelectorAll('.fade-up');
+
+  if (!('IntersectionObserver' in window)) {
+    fadeItems.forEach(el => el.classList.add('visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.12,
+    rootMargin: '0px 0px -40px 0px'
+  });
+
+  fadeItems.forEach(el => observer.observe(el));
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 // ===== STATE =====
+
+const supabaseUrl = 'https://llrjzyhdphitrjzbstoq.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxscmp6eWhkcGhpdHJqemJzdG9xIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3MTc1NDUsImV4cCI6MjA5MjI5MzU0NX0.3ml84Lp1AqUlwUV8xkgNwmrZ7Bdg1NYtzPq3khcXMHY';
+const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 let applications = JSON.parse(localStorage.getItem('cr8_applications') || '[]');
 let inquiries    = JSON.parse(localStorage.getItem('cr8_inquiries')    || '[]');
@@ -1523,12 +1487,6 @@ document.getElementById('menuBtn').addEventListener('click', () => {
 });
 document.getElementById('yr').textContent = new Date().getFullYear();
 
-// ===== SCROLL ANIMATIONS =====
-const obs = new IntersectionObserver(entries => {
-  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, {threshold: 0.1});
-document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
-
 // ===== MODALS =====
 function openEstimateModal() {
   document.getElementById('estimateForm').style.display = 'block';
@@ -1550,36 +1508,59 @@ function closeModal(id) {
 }
 
 // ===== FORM SUBMISSIONS =====
-function submitEstimate(e) {
+async function submitEstimate(e) {
   e.preventDefault();
+
   const item = {
-    id: Date.now(),
     date: new Date().toLocaleString(),
-    name: document.getElementById('eName').value,
-    phone: document.getElementById('ePhone').value,
-    email: document.getElementById('eEmail').value,
-    car: document.getElementById('eCar').value,
+    name: document.getElementById('eName').value.trim(),
+    phone: document.getElementById('ePhone').value.trim(),
+    email: document.getElementById('eEmail').value.trim(),
+    car: document.getElementById('eCar').value.trim(),
     service: document.getElementById('eService').value,
-    details: document.getElementById('eDetails').value,
+    details: document.getElementById('eDetails').value.trim(),
   };
-  inquiries.push(item); save();
-  fetch('https://formspree.io/f/mwvwbpza', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-    body: JSON.stringify({
-      _subject: 'New Estimate Request — CR8 Autos',
-      Type: 'Estimate Request',
-      Name: item.name,
-      Phone: item.phone,
-      Email: item.email,
-      Vehicle: item.car,
-      Service: item.service,
-      Details: item.details || '—',
-      Submitted: item.date,
-    })
-  });
-  document.getElementById('estimateForm').style.display = 'none';
-  document.getElementById('estimateSuccess').style.display = 'block';
+
+  try {
+    const { error } = await supabase
+      .from('bookings')
+      .insert([{
+        name: item.name,
+        phone: item.phone,
+        email: item.email || null,
+        service: `ESTIMATE — ${item.service}`,
+        appointment_date: new Date().toISOString().split('T')[0],
+        appointment_time: 'Estimate Request',
+        notes: `Vehicle: ${item.car || '—'}\nDetails: ${item.details || '—'}`,
+        status: 'new'
+      }]);
+
+    if (error) throw error;
+
+    fetch('https://formspree.io/f/mwvwbpza', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject: 'New Estimate Request — CR8 Autos',
+        Type: 'Estimate Request',
+        Name: item.name,
+        Phone: item.phone,
+        Email: item.email,
+        Vehicle: item.car,
+        Service: item.service,
+        Details: item.details || '—',
+        Submitted: item.date,
+      })
+    });
+
+    document.getElementById('estimateForm').style.display = 'none';
+    document.getElementById('estimateSuccess').style.display = 'block';
+    e.target.reset();
+
+  } catch (err) {
+    console.error('Estimate request failed:', err);
+    alert('There was a problem submitting your estimate. Please call us at (518) 495-6876.');
+  }
 }
 
 function submitJob(e) {
@@ -1654,5 +1635,63 @@ function copyAddress() {
 
 <!-- CR8 Smart Receptionist: bilingual rules-based assistant + Supabase booking -->
 <script src="ai-receptionist.js"></script>
+<script>
+(function () {
+  function safeGet(id) {
+    return document.getElementById(id);
+  }
+
+  // MODAL FUNCTIONS — always available to inline onclick buttons
+  window.openEstimateModal = function () {
+    const form = safeGet('estimateForm');
+    const success = safeGet('estimateSuccess');
+    const overlay = safeGet('estimateOverlay');
+
+    if (form) form.style.display = 'block';
+    if (success) success.style.display = 'none';
+    if (overlay) overlay.classList.add('active');
+
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closeModal = function (id) {
+    const modal = safeGet(id);
+    if (modal) modal.classList.remove('active');
+    document.body.style.overflow = '';
+  };
+
+  // ANIMATION — separate from modal/forms
+  function initFadeAnimations() {
+    const items = document.querySelectorAll('.fade-up');
+
+    if (!items.length) return;
+
+    if (!('IntersectionObserver' in window)) {
+      items.forEach(el => el.classList.add('visible'));
+      return;
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -30px 0px'
+    });
+
+    items.forEach(el => observer.observe(el));
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initFadeAnimations);
+  } else {
+    initFadeAnimations();
+  }
+})();
+</script>
 </body>
 </html>
