@@ -16,6 +16,7 @@
 <meta name="geo.placename" content="Watervliet, New York"/>
 <meta name="geo.position" content="42.7284;-73.7071"/>
 <meta name="ICBM" content="42.7284, -73.7071"/>
+<meta name="robots" content="noindex, nofollow, noarchive">
 <meta name="google-site-verification" content="fhP5BYQSp53nKggDX-Fmkhk-ZHEsExAjgZS-J_gHEd4" />
 
 <script type="application/ld+json">
@@ -996,6 +997,91 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
   }
   .nav-links.open .nav-cta::before{inset:7px 12px !important;}
 }
+/* ===== LOCAL SEO SERVICE PAGES SECTION ===== */
+.local-seo-section{
+  background:var(--black);
+  position:relative;
+  padding-top:70px;
+  padding-bottom:70px;
+}
+.local-seo-section::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(204,31,31,0.45),transparent);
+}
+.local-seo-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:1px;
+  background:var(--border);
+  margin-top:2.2rem;
+  border:1px solid var(--border);
+}
+.local-seo-card{
+  background:var(--dark);
+  padding:2.1rem;
+  text-decoration:none;
+  color:var(--white);
+  position:relative;
+  overflow:hidden;
+  transition:all .3s ease;
+}
+.local-seo-card::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  width:3px;
+  height:0;
+  background:var(--red);
+  transition:height .35s ease;
+}
+.local-seo-card:hover{
+  background:var(--card);
+}
+.local-seo-card:hover::before{
+  height:100%;
+}
+.local-seo-num{
+  font-family:'DM Mono',monospace;
+  font-size:.7rem;
+  color:var(--red);
+  letter-spacing:2px;
+  margin-bottom:1rem;
+}
+.local-seo-card h3{
+  font-family:'Oswald',sans-serif;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  font-size:1.35rem;
+  line-height:1.1;
+  margin-bottom:.8rem;
+}
+.local-seo-card p{
+  color:var(--gray);
+  line-height:1.7;
+  font-size:.98rem;
+  margin-bottom:1.2rem;
+}
+.local-seo-card span{
+  font-family:'Oswald',sans-serif;
+  font-size:.78rem;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--red);
+}
+@media(max-width:768px){
+  .local-seo-grid{
+    grid-template-columns:1fr;
+  }
+  .local-seo-card{
+    padding:1.7rem;
+  }
+}
 </style>
 </head>
 <body>
@@ -1222,6 +1308,38 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
     </div>
   </section>
 
+  <!-- LOCAL SEO SERVICE PAGES -->
+<section class="section local-seo-section" id="local-service-pages">
+  <div class="section-inner">
+    <div class="section-tag"><span>Local Service Pages</span></div>
+
+    <h2 class="section-title fade-up">
+      Auto Body & Mechanic<br>
+      <span style="color:var(--red);">Services in Watervliet</span>
+    </h2>
+
+    <p class="section-sub fade-up">
+      Explore CR8 Autos service pages built around the work customers are searching for across Watervliet, Albany, Troy, Cohoes, Green Island, Colonie, Schenectady, and the Capital Region.
+    </p>
+
+    <div class="local-seo-grid fade-up">
+      <a class="local-seo-card" href="auto-body-work-watervliet-ny.html">
+        <div class="local-seo-num">SEO PAGE / 01</div>
+        <h3>Auto Body Work in Watervliet, NY</h3>
+        <p>Collision repair, rust repair, rocker panel replacement, welding, undercoating, frame straightening, truck bed restoration, refinishing, and insurance estimates.</p>
+        <span>View Auto Body Page <i class="fas fa-arrow-right"></i></span>
+      </a>
+
+      <a class="local-seo-card" href="mechanic-services-watervliet-ny.html">
+        <div class="local-seo-num">SEO PAGE / 02</div>
+        <h3>Mechanic Services in Watervliet, NY</h3>
+        <p>Brake repair, diagnostics, suspension and steering work, cooling system repair, battery replacement, exhaust repair, emissions prep, tires, and key fob programming.</p>
+        <span>View Mechanic Page <i class="fas fa-arrow-right"></i></span>
+      </a>
+    </div>
+  </div>
+</section>
+
 </div><!-- end home page -->
 
 <!-- ============ FOOTER ============ -->
@@ -1279,7 +1397,7 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
     </div>
     <div class="footer-bottom">
   <span>© <span id="yr"></span> CR8 Autos Body Shop & Repair. All rights reserved.</span>
-  <span style="font-size:0.8rem;">Designed by <a href="https://reimagebs.com" target="_blank" style="color:var(--red);text-decoration:none;">RE IMAGE Business Solutions</a></span>
+  <span style="font-size:0.8rem;">Powered by <a href="https://reimagebs.com" target="_blank" style="color:var(--red);text-decoration:none;">RE IMAGE Business Solutions</a></span>
 </div>
   </div>  
 </footer>
