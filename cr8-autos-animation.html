@@ -162,6 +162,175 @@ canvas#bg{position:fixed;inset:0;z-index:0;}
 .sl{width:14px;height:24px;background:var(--red);clip-path:polygon(25% 0,100% 0,75% 100%,0 100%);}
 .sl:nth-child(2){opacity:0.6;}
 .sl:nth-child(3){opacity:0.3;}
+
+/* ===== MOBILE RESPONSIVE CLEANUP ===== */
+#skip-nav{display:none !important;}
+
+@media (max-width: 700px){
+  body{cursor:auto;}
+  #cursor,#cursor-ring{display:none !important;}
+  #hud{top:16px;left:16px;font-size:9px;letter-spacing:2px;}
+  #hud .hud-num{font-size:14px;}
+  #hud-logo{top:16px;right:16px;font-size:12px;}
+  #dots{right:12px;gap:8px;}
+  .dot{width:7px;height:7px;}
+
+  .scene{padding:22px 18px 32px;}
+
+  #s0 .big-cr8{
+    font-size:clamp(54px,16vw,84px);
+    letter-spacing:-2px;
+  }
+  #s0 .tagline{
+    font-size:10px;
+    letter-spacing:3px;
+    line-height:1.7;
+    padding:0 18px;
+  }
+  #s0 .sub{
+    font-size:9px;
+    letter-spacing:2px;
+  }
+  #s0 .slash-decor{display:none;}
+
+  #s1 .car-stage{
+    width:94vw;
+    height:270px;
+  }
+  #s1 .scene-title,
+  #s2 .scene-title,
+  #s3 .scene-title,
+  #s4 .scene-title{
+    font-size:clamp(24px,8vw,38px);
+    letter-spacing:2px;
+    line-height:1.05;
+  }
+  #s1 .scene-sub{
+    font-size:9px;
+    letter-spacing:2px;
+    line-height:1.6;
+    padding:0 16px;
+  }
+  #s1 .car-svg svg{
+    width:94vw;
+    height:auto;
+  }
+  #s1 .stat-pills{
+    bottom:-48px;
+    width:92vw;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:8px;
+    white-space:normal;
+  }
+  .pill{
+    padding:7px 10px;
+    font-size:9px;
+    letter-spacing:1.4px;
+    text-align:center;
+  }
+
+  #s2 .rust-canvas-wrap{
+    width:92vw;
+    height:150px;
+    margin:20px auto;
+  }
+  #s2 canvas{
+    width:100%;
+    height:150px;
+  }
+  #s2 .badges{
+    width:92vw;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    margin-top:18px;
+  }
+  .badge{
+    justify-content:center;
+    padding:8px 8px;
+    font-size:9px;
+    letter-spacing:1.2px;
+    text-align:center;
+  }
+
+  #s3 .swatches{
+    max-width:92vw;
+    gap:9px;
+    margin-top:22px;
+  }
+  #s3 .swatch{
+    width:46px;
+    height:46px;
+  }
+  #s3 .match-label{
+    font-size:9px;
+    letter-spacing:1.6px;
+    line-height:1.8;
+    max-width:92vw;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  #s3 .precision-bar-wrap{
+    width:78vw;
+  }
+
+  #s4 .mech-scene{
+    width:100%;
+    max-width:92vw;
+  }
+  #s4 .services-grid{
+    width:100%;
+    max-width:92vw;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:22px;
+  }
+  .svc-card{
+    min-height:104px;
+    padding:14px 8px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+  }
+  .svc-icon{
+    font-size:26px;
+    margin-bottom:8px;
+  }
+  .svc-name{
+    font-size:9px;
+    letter-spacing:1.7px;
+    line-height:1.35;
+  }
+
+  #s5 .big-word{
+    font-size:clamp(52px,16vw,86px);
+  }
+  #s5 .phone{
+    font-size:clamp(20px,7vw,34px);
+    letter-spacing:3px;
+  }
+  #s5 .address{
+    font-size:9px;
+    letter-spacing:2px;
+    line-height:1.7;
+    padding:0 18px;
+  }
+  #s5 .pulse-ring{
+    width:260px;
+    height:260px;
+  }
+}
+
+@media (max-width: 390px){
+  #s4 .services-grid{gap:8px;}
+  .svc-card{min-height:92px;padding:10px 6px;}
+  .svc-icon{font-size:22px;}
+  .svc-name{font-size:8px;letter-spacing:1.4px;}
+  #s3 .swatch{width:40px;height:40px;}
+}
+
 </style>
 </head>
 <body>
@@ -274,7 +443,7 @@ canvas#bg{position:fixed;inset:0;z-index:0;}
   <!-- SCENE 4: ESTIMATE / INSURANCE -->
   <div class="scene" id="s4">
     <div class="mech-scene">
-      <div class="scene-title">ESTIMATES &amp; INSURANCE</div>
+      <div class="scene-title">AUTO BODY SERVICES</div>
       <div class="services-grid" id="svc-grid"></div>
     </div>
   </div>
@@ -375,8 +544,8 @@ function gotoScene(n){
   if(cur_s===0)initScene0();
 }
 
-document.getElementById('next-btn').onclick=()=>gotoScene(cur_s+1);
-document.getElementById('prev-btn').onclick=()=>gotoScene(cur_s-1);
+const nextBtn=document.getElementById('next-btn'); if(nextBtn) nextBtn.onclick=()=>gotoScene(cur_s+1);
+const prevBtn=document.getElementById('prev-btn'); if(prevBtn) prevBtn.onclick=()=>gotoScene(cur_s-1);
 document.addEventListener('keydown',e=>{
   if(e.key==='ArrowRight'||e.key==='ArrowDown')gotoScene(cur_s+1);
   if(e.key==='ArrowLeft'||e.key==='ArrowUp')gotoScene(cur_s-1);
