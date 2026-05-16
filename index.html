@@ -1306,82 +1306,142 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
 @media(max-width:700px){.damage-ai-shell{padding:70px 1.25rem}.damage-ai-main,.damage-ai-side{padding:1.35rem}.damage-ai-badges,.damage-form-row,.damage-result-grid{grid-template-columns:1fr}.damage-ai-progress{grid-template-columns:1fr 1fr}.damage-actions{flex-direction:column}.damage-result-hero{grid-template-columns:1fr}.damage-confidence{text-align:left}.damage-result-buttons .btn{width:100%;justify-content:center}}
 
 
-/* ===== MOBILE MENU + HERO MOBILE FIX ===== */
-@media (max-width: 900px){
+/* ==========================================================
+   FINAL MOBILE NAV + HERO RESPONSIVE PATCH
+   ========================================================== */
+@media(max-width:900px){
+  .navbar{
+    z-index:9999 !important;
+  }
+
   .menu-btn{
     display:flex !important;
-    align-items:center !important;
-    justify-content:center !important;
-    position:relative !important;
-    z-index:3001 !important;
+    pointer-events:auto !important;
+    z-index:10001 !important;
   }
+
   .nav-links{
     display:none !important;
   }
+
   .nav-links.open{
     display:flex !important;
+    flex-direction:column !important;
     position:fixed !important;
     top:76px !important;
     left:0 !important;
     right:0 !important;
-    z-index:3000 !important;
-    flex-direction:column !important;
-    gap:10px !important;
-    padding:16px !important;
-    background:#050505 !important;
-    border-bottom:2px solid var(--red) !important;
-    box-shadow:0 18px 35px rgba(0,0,0,.55) !important;
-  }
-  .nav-links.open li{
     width:100% !important;
-    display:block !important;
+    max-width:none !important;
+    background:#050505 !important;
+    border-top:1px solid rgba(204,31,31,.45) !important;
+    border-bottom:3px solid var(--red) !important;
+    padding:14px !important;
+    gap:9px !important;
+    z-index:10000 !important;
+    box-shadow:0 20px 35px rgba(0,0,0,.75) !important;
   }
+
+  .nav-links.open li{
+    display:block !important;
+    width:100% !important;
+  }
+
   .nav-links.open a{
     width:100% !important;
     min-height:48px !important;
     display:flex !important;
     align-items:center !important;
     justify-content:center !important;
-    border:1px solid rgba(255,255,255,.12) !important;
     background:#111 !important;
+    border:1px solid rgba(255,255,255,.12) !important;
+    color:#fff !important;
+    border-radius:0 !important;
   }
 
+  .nav-links.open .nav-cta{
+    background:linear-gradient(180deg,var(--red-light),var(--red)) !important;
+    border-color:rgba(232,51,51,.9) !important;
+  }
+}
+
+@media(max-width:700px){
   .hero{
-    min-height:auto !important;
+    min-height:126svh !important;
   }
+
   .hero-animation-frame{
-    height:62svh !important;
-    min-height:460px !important;
-    flex:none !important;
+    flex:1 1 auto !important;
+    min-height:72svh !important;
   }
+
   .hero-action-bar{
-    position:relative !important;
+    box-shadow:0 -8px 28px rgba(0,0,0,.7) !important;
   }
+
   .hero-quick-stats{
     grid-template-columns:1fr 1fr !important;
-    max-width:100% !important;
   }
+
   .hero-quick-stat{
-    padding:18px 10px !important;
+    padding:16px 10px !important;
   }
+
   .hero-quick-stat:last-child{
     grid-column:1 / -1 !important;
   }
+
   .hero-action-row{
-    grid-template-columns:1fr !important;
+    padding:22px 22px 26px !important;
     gap:14px !important;
-    padding:20px 22px 28px !important;
   }
+
   .hero-contact-cluster,
   .hero-cta-cluster{
     grid-template-columns:1fr !important;
     width:100% !important;
+    gap:12px !important;
   }
+
   .hero-address-link,
   .hero-phone-link,
   .hero-action-row .btn{
     width:100% !important;
+    min-height:54px !important;
     justify-content:center !important;
+    text-align:center !important;
+  }
+
+  .hero-address-link{
+    flex-wrap:wrap !important;
+    padding:18px 14px !important;
+  }
+
+  .hero-address-link span:first-of-type{
+    width:100% !important;
+    line-height:1.45 !important;
+  }
+
+  .address-open-maps{
+    margin-left:0 !important;
+  }
+}
+
+@media(max-width:390px){
+  .hero{
+    min-height:132svh !important;
+  }
+
+  .hero-animation-frame{
+    min-height:75svh !important;
+  }
+
+  .hero-quick-num{
+    font-size:1.3rem !important;
+  }
+
+  .hero-quick-label{
+    font-size:.58rem !important;
   }
 }
 
@@ -1394,7 +1454,7 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
   <a class="nav-logo" href="index.html" aria-label="CR8 Autos Home">
     <img src="logo.png" alt="CR8 Autos"/>
   </a>
-  <button class="menu-btn" id="menuBtn" aria-label="Open navigation"><i class="fas fa-bars"></i></button>
+  <button class="menu-btn" id="menuBtn" aria-label="Open navigation" aria-expanded="false"><i class="fas fa-bars"></i></button>
   <ul class="nav-links" id="navLinks">
     <li><a href="index.html" class="current">Home</a></li>
     <li><a href="booking.html">Book Appointment</a></li>
@@ -1411,7 +1471,7 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
 <div class="page active" id="page-home">
 
   <!-- HERO — Animation + Stable Action Bar -->
-  <section class="hero" style="min-height:100vh;display:flex;flex-direction:column;padding:0;overflow:hidden;align-items:stretch;">
+  <section class="hero" style="min-height:115vh;display:flex;flex-direction:column;padding:0;overflow:hidden;align-items:stretch;">
 
     <!-- Animation iframe fills the upper area -->
     <div class="hero-animation-frame">
@@ -1459,9 +1519,9 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
 
         <!-- Right: CTA buttons -->
         <div class="hero-cta-cluster">
-          <button class="btn btn-outline" onclick="openEstimateModal()">
-            <i class="fas fa-calculator"></i> Upload Photos
-          </button>
+          <a class="btn btn-outline" href="#damage-estimator">
+            <i class="fas fa-camera"></i> Upload Photos
+          </a>
           <a href="booking.html" class="btn btn-red">
             <i class="fas fa-calendar-check"></i> Book Appointment
           </a>
@@ -1474,7 +1534,7 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
 
 
   <!-- AI DAMAGE ESTIMATE TOOL V1 -->
-  <section class="damage-ai-section" id="damage-photo-review">
+  <section class="damage-ai-section" id="damage-estimator">
     <div class="damage-ai-shell">
       <div class="damage-ai-header">
         <div>
@@ -2297,47 +2357,49 @@ function submitContact(e) {
 </script>
 
 <script>
-(function () {
-  function initCR8MobileMenu() {
+(function(){
+  function initCr8MobileMenu(){
     const menuBtn = document.getElementById('menuBtn');
     const navLinks = document.getElementById('navLinks');
-    if (!menuBtn || !navLinks) return;
+    if(!menuBtn || !navLinks || menuBtn.dataset.cr8Bound === 'true') return;
 
-    menuBtn.setAttribute('type', 'button');
+    menuBtn.dataset.cr8Bound = 'true';
 
-    menuBtn.addEventListener('click', function (e) {
+    menuBtn.addEventListener('click', function(e){
       e.preventDefault();
       e.stopPropagation();
       navLinks.classList.toggle('open');
       const isOpen = navLinks.classList.contains('open');
       menuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
       const icon = menuBtn.querySelector('i');
-      if (icon) icon.className = isOpen ? 'fas fa-times' : 'fas fa-bars';
+      if(icon){
+        icon.className = isOpen ? 'fas fa-times' : 'fas fa-bars';
+      }
     });
 
-    navLinks.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', function () {
+    navLinks.querySelectorAll('a').forEach(function(link){
+      link.addEventListener('click', function(){
         navLinks.classList.remove('open');
-        menuBtn.setAttribute('aria-expanded', 'false');
+        menuBtn.setAttribute('aria-expanded','false');
         const icon = menuBtn.querySelector('i');
-        if (icon) icon.className = 'fas fa-bars';
+        if(icon) icon.className = 'fas fa-bars';
       });
     });
 
-    document.addEventListener('click', function (e) {
-      if (!navLinks.classList.contains('open')) return;
-      if (navLinks.contains(e.target) || menuBtn.contains(e.target)) return;
+    document.addEventListener('click', function(e){
+      if(!navLinks.classList.contains('open')) return;
+      if(navLinks.contains(e.target) || menuBtn.contains(e.target)) return;
       navLinks.classList.remove('open');
-      menuBtn.setAttribute('aria-expanded', 'false');
+      menuBtn.setAttribute('aria-expanded','false');
       const icon = menuBtn.querySelector('i');
-      if (icon) icon.className = 'fas fa-bars';
+      if(icon) icon.className = 'fas fa-bars';
     });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initCR8MobileMenu);
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initCr8MobileMenu);
   } else {
-    initCR8MobileMenu();
+    initCr8MobileMenu();
   }
 })();
 </script>

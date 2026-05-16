@@ -163,172 +163,354 @@ canvas#bg{position:fixed;inset:0;z-index:0;}
 .sl:nth-child(2){opacity:0.6;}
 .sl:nth-child(3){opacity:0.3;}
 
-/* ===== MOBILE RESPONSIVE CLEANUP ===== */
-#skip-nav{display:none !important;}
+/* ==========================================================
+   MOBILE RESPONSIVE CLEANUP — CR8 AUTOS ANIMATION
+   ========================================================== */
+#skip-nav{
+  display:none !important;
+}
 
-@media (max-width: 700px){
-  body{cursor:auto;}
+@media (hover:none), (pointer:coarse){
+  body{cursor:auto !important;}
   #cursor,#cursor-ring{display:none !important;}
-  #hud{top:16px;left:16px;font-size:9px;letter-spacing:2px;}
-  #hud .hud-num{font-size:14px;}
-  #hud-logo{top:16px;right:16px;font-size:12px;}
-  #dots{right:12px;gap:8px;}
-  .dot{width:7px;height:7px;}
+}
 
-  .scene{padding:22px 18px 32px;}
-
-  #s0 .big-cr8{
-    font-size:clamp(54px,16vw,84px);
-    letter-spacing:-2px;
-  }
-  #s0 .tagline{
-    font-size:10px;
-    letter-spacing:3px;
-    line-height:1.7;
-    padding:0 18px;
-  }
-  #s0 .sub{
-    font-size:9px;
-    letter-spacing:2px;
-  }
-  #s0 .slash-decor{display:none;}
-
-  #s1 .car-stage{
-    width:94vw;
-    height:270px;
-  }
-  #s1 .scene-title,
-  #s2 .scene-title,
-  #s3 .scene-title,
-  #s4 .scene-title{
-    font-size:clamp(24px,8vw,38px);
-    letter-spacing:2px;
-    line-height:1.05;
-  }
-  #s1 .scene-sub{
-    font-size:9px;
-    letter-spacing:2px;
-    line-height:1.6;
-    padding:0 16px;
-  }
-  #s1 .car-svg svg{
-    width:94vw;
-    height:auto;
-  }
-  #s1 .stat-pills{
-    bottom:-48px;
-    width:92vw;
-    display:grid;
-    grid-template-columns:1fr;
-    gap:8px;
-    white-space:normal;
-  }
-  .pill{
-    padding:7px 10px;
-    font-size:9px;
-    letter-spacing:1.4px;
-    text-align:center;
-  }
-
-  #s2 .rust-canvas-wrap{
-    width:92vw;
-    height:150px;
-    margin:20px auto;
-  }
-  #s2 canvas{
+@media(max-width:760px){
+  html,body{
     width:100%;
-    height:150px;
-  }
-  #s2 .badges{
-    width:92vw;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:8px;
-    margin-top:18px;
-  }
-  .badge{
-    justify-content:center;
-    padding:8px 8px;
-    font-size:9px;
-    letter-spacing:1.2px;
-    text-align:center;
+    height:100%;
+    overflow:hidden;
   }
 
-  #s3 .swatches{
-    max-width:92vw;
-    gap:9px;
-    margin-top:22px;
+  #stage{
+    inset:0;
+    width:100%;
+    height:100%;
+    padding:0 14px;
+    justify-content:center;
   }
-  #s3 .swatch{
-    width:46px;
-    height:46px;
+
+  .scene{
+    padding:34px 14px 22px;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
   }
-  #s3 .match-label{
-    font-size:9px;
-    letter-spacing:1.6px;
+
+  #dots{
+    display:none !important;
+  }
+
+  #hud,
+  #hud-logo{
+    display:none !important;
+  }
+
+  #progress-bar{
+    height:4px;
+  }
+
+  /* Intro */
+  #s0 .big-cr8{
+    font-size:clamp(52px,16vw,86px);
+    letter-spacing:-1px;
+  }
+
+  #s0 .tagline{
+    font-size:11px;
+    letter-spacing:4px;
     line-height:1.8;
     max-width:92vw;
     margin-left:auto;
     margin-right:auto;
   }
-  #s3 .precision-bar-wrap{
-    width:78vw;
+
+  #s0 .sub{
+    font-size:10px;
+    letter-spacing:2.2px;
   }
 
-  #s4 .mech-scene{
+  /* Collision slide: center car + center pills */
+  #s1 .car-stage{
     width:100%;
-    max-width:92vw;
+    max-width:440px;
+    height:auto;
+    min-height:560px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:0;
+    margin:0 auto;
   }
-  #s4 .services-grid{
+
+  #s1 .label-top{
+    position:relative;
+    top:auto;
+    left:auto;
+    right:auto;
     width:100%;
+    margin-bottom:22px;
+    text-align:center;
+  }
+
+  #s1 .scene-title{
+    font-size:clamp(38px,12vw,62px);
+    line-height:.95;
+    letter-spacing:2px;
+    max-width:94vw;
+    margin:0 auto;
+  }
+
+  #s1 .scene-sub{
+    font-size:10px;
+    letter-spacing:3px;
+    line-height:1.8;
     max-width:92vw;
+    margin:12px auto 0;
+  }
+
+  #s1 .car-svg{
+    position:relative !important;
+    left:auto !important;
+    bottom:auto !important;
+    transform:none !important;
+    width:100%;
+    max-width:430px;
+    display:flex;
+    justify-content:center;
+    opacity:0;
+    animation:fadeUp 0.8s ease 0.4s forwards !important;
+    margin:8px auto 8px;
+  }
+
+  #s1 .car-svg svg{
+    width:min(94vw,430px) !important;
+    height:auto !important;
+    max-height:220px;
+  }
+
+  #s1 .impact{
+    left:18%;
+    bottom:210px;
+    transform:none;
+  }
+
+  #s1 .repair-line{
+    position:relative;
+    left:auto;
+    bottom:auto;
+    width:0;
+    margin:2px auto 18px;
+    animation:mobileLineGrow 0.8s ease 1.2s forwards !important;
+  }
+
+  @keyframes mobileLineGrow{
+    to{width:min(280px,72vw);}
+  }
+
+  #s1 .stat-pills{
+    position:relative !important;
+    left:auto !important;
+    right:auto !important;
+    bottom:auto !important;
+    transform:none !important;
+    width:min(92vw,430px);
+    margin:8px auto 0;
+    display:grid !important;
+    grid-template-columns:1fr;
+    gap:10px;
+    white-space:normal !important;
+    opacity:0;
+    animation:fadeUp 0.6s ease 1.7s forwards !important;
+  }
+
+  #s1 .pill{
+    width:100%;
+    text-align:center;
+    padding:11px 12px;
+    font-size:10px;
+    letter-spacing:1.8px;
+    line-height:1.35;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  /* Rust / undercoating slide */
+  #s2 .rust-scene{
+    width:100%;
+    max-width:440px;
+  }
+
+  #s2 .scene-title{
+    font-size:clamp(38px,11vw,58px);
+    line-height:1;
+    letter-spacing:2px;
+    max-width:96vw;
+    margin:0 auto 18px;
+  }
+
+  #s2 .rust-canvas-wrap{
+    width:min(92vw,430px);
+    height:185px;
+    margin:18px auto 20px;
+  }
+
+  #s2 canvas{
+    width:100% !important;
+    height:100% !important;
+  }
+
+  #s2 .protect-bar{
+    height:6px;
+    max-width:82vw;
+  }
+
+  #s2 .badges{
+    width:min(92vw,430px);
+    display:grid;
     grid-template-columns:1fr 1fr;
     gap:10px;
-    margin-top:22px;
+    margin:22px auto 0;
   }
+
+  .badge{
+    justify-content:center;
+    text-align:center;
+    padding:10px 8px;
+    font-size:10px;
+    letter-spacing:1.4px;
+  }
+
+  /* Paint slide */
+  #s3 .paint-scene{
+    width:100%;
+    max-width:440px;
+  }
+
+  #s3 .scene-title{
+    font-size:clamp(38px,11vw,58px);
+    line-height:1;
+    letter-spacing:2px;
+    max-width:96vw;
+    margin:0 auto;
+  }
+
+  #s3 .swatches{
+    width:min(92vw,430px);
+    gap:9px;
+    margin:24px auto 0;
+  }
+
+  #s3 .swatch{
+    width:44px;
+    height:44px;
+  }
+
+  #s3 .match-label{
+    font-size:10px;
+    letter-spacing:2px;
+    line-height:1.8;
+    max-width:90vw;
+    margin:18px auto 0;
+  }
+
+  #s3 .precision-bar-wrap{
+    width:min(76vw,330px);
+  }
+
+  /* Services grid slide */
+  #s4 .mech-scene{
+    width:100%;
+    max-width:440px;
+  }
+
+  #s4 .scene-title{
+    font-size:clamp(34px,10vw,54px);
+    line-height:1;
+    letter-spacing:2px;
+    max-width:96vw;
+    margin:0 auto 20px;
+  }
+
+  #s4 .services-grid{
+    width:min(92vw,430px);
+    max-width:430px;
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:10px;
+    margin:18px auto 0;
+  }
+
   .svc-card{
-    min-height:104px;
-    padding:14px 8px;
+    min-height:112px;
+    padding:16px 8px;
     display:flex;
     flex-direction:column;
     align-items:center;
     justify-content:center;
   }
+
   .svc-icon{
     font-size:26px;
-    margin-bottom:8px;
-  }
-  .svc-name{
-    font-size:9px;
-    letter-spacing:1.7px;
-    line-height:1.35;
+    margin-bottom:10px;
   }
 
+  .svc-name{
+    font-size:10px;
+    line-height:1.45;
+    letter-spacing:1.9px;
+    word-break:normal;
+  }
+
+  /* CTA */
   #s5 .big-word{
-    font-size:clamp(52px,16vw,86px);
+    font-size:clamp(52px,15vw,86px);
+    line-height:.95;
   }
+
   #s5 .phone{
-    font-size:clamp(20px,7vw,34px);
-    letter-spacing:3px;
-  }
-  #s5 .address{
-    font-size:9px;
+    font-size:clamp(22px,7vw,34px);
     letter-spacing:2px;
-    line-height:1.7;
-    padding:0 18px;
   }
+
+  #s5 .address{
+    font-size:10px;
+    letter-spacing:2px;
+    line-height:1.8;
+    max-width:90vw;
+    margin-left:auto;
+    margin-right:auto;
+  }
+
   #s5 .pulse-ring{
-    width:260px;
-    height:260px;
+    width:240px;
+    height:240px;
   }
 }
 
-@media (max-width: 390px){
-  #s4 .services-grid{gap:8px;}
-  .svc-card{min-height:92px;padding:10px 6px;}
-  .svc-icon{font-size:22px;}
-  .svc-name{font-size:8px;letter-spacing:1.4px;}
-  #s3 .swatch{width:40px;height:40px;}
+@media(max-width:390px){
+  #s4 .services-grid{
+    gap:8px;
+  }
+
+  .svc-card{
+    min-height:104px;
+  }
+
+  .svc-name{
+    font-size:9px;
+    letter-spacing:1.4px;
+  }
+
+  #s2 .badges{
+    grid-template-columns:1fr;
+  }
+
+  #s3 .swatch{
+    width:40px;
+    height:40px;
+  }
 }
 
 </style>
@@ -357,13 +539,6 @@ canvas#bg{position:fixed;inset:0;z-index:0;}
 
 <!-- Scene Dots -->
 <div id="dots"></div>
-
-<!-- Skip Nav -->
-<div id="skip-nav">
-  <button class="nav-btn" id="prev-btn">◀ PREV</button>
-  <span id="scene-name">INTRO</span>
-  <button class="nav-btn" id="next-btn">NEXT ▶</button>
-</div>
 
 <!-- ===== SCENES ===== -->
 <div id="stage">
@@ -406,7 +581,7 @@ canvas#bg{position:fixed;inset:0;z-index:0;}
       <div class="stat-pills">
         <div class="pill">Bumper & Fender Repair</div>
         <div class="pill">Frame & Panel Straightening</div>
-        <div class="pill">Insurance Estimates</div>
+        <div class="pill">Insurance Help</div>
       </div>
     </div>
   </div>
@@ -544,8 +719,8 @@ function gotoScene(n){
   if(cur_s===0)initScene0();
 }
 
-const nextBtn=document.getElementById('next-btn'); if(nextBtn) nextBtn.onclick=()=>gotoScene(cur_s+1);
-const prevBtn=document.getElementById('prev-btn'); if(prevBtn) prevBtn.onclick=()=>gotoScene(cur_s-1);
+document.getElementById('next-btn').onclick=()=>gotoScene(cur_s+1);
+document.getElementById('prev-btn').onclick=()=>gotoScene(cur_s-1);
 document.addEventListener('keydown',e=>{
   if(e.key==='ArrowRight'||e.key==='ArrowDown')gotoScene(cur_s+1);
   if(e.key==='ArrowLeft'||e.key==='ArrowUp')gotoScene(cur_s-1);
@@ -732,7 +907,7 @@ function initScene4(){
   {icon:'🚚',name:'Truck Bed Restore'},
   {icon:'🎨',name:'Paint & Refinishing'},
   {icon:'🪟',name:'Glass Replacement'},
-  {icon:'📋',name:'Insurance Estimates'},
+  {icon:'📋',name:'Insurance Help'},
   ];
   const grid=document.getElementById('svc-grid');
   if(!grid)return;
