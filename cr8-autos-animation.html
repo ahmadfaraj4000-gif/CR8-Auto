@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CR8 Autos — Motion Graphics</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --red: #cc1f1f;
+  --red-l: #e83333;
+  --red-d: #9a1515;
+  --black: #080808;
+  --dark: #101010;
+  --white: #f0f0f0;
+  --gray: #b8b8b8;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--black);}
+body{font-family:'Oswald',sans-serif;cursor:none;color:var(--white);}
+
+/* ── Custom cursor ── */
+#cursor{position:fixed;width:12px;height:12px;background:var(--red);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform 0.1s,width 0.2s,height 0.2s;}
+#cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(204,31,31,0.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all 0.15s ease;}
+
+/* ── Canvas / Scene ── */
+canvas#bg{position:fixed;inset:0;z-index:0;}
+
+/* ── Main stage ── */
+#stage{position:fixed;inset:0;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;}
+
+/* ── Scan lines overlay ── */
+#scanlines{position:fixed;inset:0;z-index:50;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.07) 2px,rgba(0,0,0,0.07) 4px);}
+
+/* ── Vignette ── */
+#vignette{position:fixed;inset:0;z-index:49;pointer-events:none;background:radial-gradient(ellipse at center,transparent 40%,rgba(0,0,0,0.85) 100%);}
+
+/* ── Noise grain ── */
+#grain{position:fixed;inset:0;z-index:51;pointer-events:none;opacity:0.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px 200px;animation:grainShift 0.4s steps(1) infinite;}
+@keyframes grainShift{0%{background-position:0 0;}25%{background-position:-50px 30px;}50%{background-position:20px -40px;}75%{background-position:-30px 50px;}100%{background-position:50px -20px;}}
+
+/* ── Scene panels ── */
+.scene{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:none;}
+.scene.active{opacity:1;pointer-events:all;}
+
+/* ── Scene 0: INTRO ── */
+#s0 .logo-wrap{text-align:center;position:relative;}
+#s0 .big-cr8{font-size:clamp(80px,18vw,200px);font-weight:700;letter-spacing:-4px;color:var(--white);line-height:1;position:relative;overflow:hidden;}
+#s0 .big-cr8 .fill{position:absolute;inset:0;background:linear-gradient(90deg,var(--red-d),var(--red),var(--red-l));-webkit-background-clip:text;-webkit-text-fill-color:transparent;clip-path:inset(0 100% 0 0);animation:revealText 1s cubic-bezier(0.77,0,0.18,1) 0.3s forwards;}
+@keyframes revealText{to{clip-path:inset(0 0% 0 0);}}
+#s0 .tagline{font-size:clamp(12px,2vw,20px);letter-spacing:8px;color:var(--gray);margin-top:12px;text-transform:uppercase;opacity:0;animation:fadeUp 0.8s ease 1.1s forwards;}
+#s0 .sub{font-size:clamp(10px,1.5vw,14px);letter-spacing:4px;color:var(--red);margin-top:8px;font-family:'DM Mono',monospace;opacity:0;animation:fadeUp 0.6s ease 1.5s forwards;}
+#s0 .bar-line{width:0;height:3px;background:linear-gradient(90deg,var(--red),var(--red-l));margin:24px auto 0;animation:barGrow 0.8s ease 0.8s forwards;}
+@keyframes barGrow{to{width:180px;}}
+#s0 .corner{position:absolute;width:30px;height:30px;border-color:var(--red);border-style:solid;opacity:0;animation:fadeIn 0.5s ease 1.8s forwards;}
+#s0 .c-tl{top:-20px;left:-20px;border-width:2px 0 0 2px;}
+#s0 .c-tr{top:-20px;right:-20px;border-width:2px 2px 0 0;}
+#s0 .c-bl{bottom:-20px;left:-20px;border-width:0 0 2px 2px;}
+#s0 .c-br{bottom:-20px;right:-20px;border-width:0 2px 2px 0;}
+
+/* ── Scene 1: COLLISION REPAIR ── */
+#s1{background:var(--black);}
+#s1 .car-stage{position:relative;width:min(700px,90vw);height:300px;}
+#s1 .label-top{position:absolute;top:0;left:0;right:0;text-align:center;}
+#s1 .scene-title{font-size:clamp(28px,5vw,56px);font-weight:700;letter-spacing:4px;text-transform:uppercase;opacity:0;transform:translateY(30px);animation:fadeUp 0.7s ease 0.2s forwards;}
+#s1 .scene-sub{font-family:'DM Mono',monospace;font-size:clamp(10px,1.5vw,13px);color:var(--red);letter-spacing:4px;text-transform:uppercase;margin-top:6px;opacity:0;animation:fadeUp 0.6s ease 0.5s forwards;}
+#s1 .car-svg{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);opacity:0;animation:carSlide 1s cubic-bezier(0.22,1,0.36,1) 0.4s forwards;}
+@keyframes carSlide{from{opacity:0;transform:translateX(calc(-50% + 100px));}to{opacity:1;transform:translateX(-50%);}}
+#s1 .impact{position:absolute;bottom:60px;left:50%;transform:translateX(-50%);opacity:0;animation:impactPop 0.5s cubic-bezier(0.36,0.07,0.19,0.97) 1.4s forwards;}
+@keyframes impactPop{0%{opacity:0;transform:translateX(-50%) scale(0);}50%{opacity:1;transform:translateX(-50%) scale(1.3);}100%{opacity:1;transform:translateX(-50%) scale(1);}}
+#s1 .repair-line{width:0;height:2px;background:var(--red);position:absolute;bottom:30px;left:50%;animation:lineGrow 0.8s ease 2s forwards;}
+@keyframes lineGrow{to{width:200px;left:calc(50% - 100px);}}
+#s1 .stat-pills{position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);display:flex;gap:20px;opacity:0;animation:fadeUp 0.6s ease 2.5s forwards;white-space:nowrap;}
+.pill{background:rgba(204,31,31,0.12);border:1px solid rgba(204,31,31,0.4);padding:6px 16px;font-size:11px;font-family:'DM Mono',monospace;letter-spacing:2px;color:var(--white);text-transform:uppercase;}
+
+/* ── Scene 2: RUST / UNDERCOATING ── */
+#s2 .rust-scene{text-align:center;position:relative;}
+#s2 .scene-title{font-size:clamp(28px,5vw,56px);font-weight:700;letter-spacing:4px;opacity:0;animation:fadeUp 0.7s ease 0.2s forwards;}
+#s2 .rust-canvas-wrap{width:min(500px,85vw);height:220px;margin:30px auto;position:relative;opacity:0;animation:fadeIn 0.8s ease 0.5s forwards;}
+#s2 canvas{border-radius:4px;}
+#s2 .protect-bar{width:0;height:6px;background:linear-gradient(90deg,var(--red-d),var(--red),var(--red-l),#ff6b6b);border-radius:3px;margin:0 auto;animation:barGrow2 1.2s ease 1s forwards;box-shadow:0 0 20px rgba(204,31,31,0.6);}
+@keyframes barGrow2{to{width:min(400px,80vw);}}
+#s2 .badges{display:flex;gap:16px;justify-content:center;margin-top:24px;flex-wrap:wrap;opacity:0;animation:fadeUp 0.6s ease 1.8s forwards;}
+.badge{display:flex;align-items:center;gap:8px;padding:8px 18px;border:1px solid rgba(204,31,31,0.35);background:rgba(204,31,31,0.08);font-size:12px;letter-spacing:2px;color:var(--white);text-transform:uppercase;}
+.badge-dot{width:8px;height:8px;background:var(--red);border-radius:50%;box-shadow:0 0 8px var(--red);}
+
+/* ── Scene 3: PAINT / COLOR MATCH ── */
+#s3 .paint-scene{text-align:center;}
+#s3 .scene-title{font-size:clamp(28px,5vw,56px);font-weight:700;letter-spacing:4px;opacity:0;animation:fadeUp 0.7s ease 0.2s forwards;}
+#s3 .swatches{display:flex;gap:12px;justify-content:center;margin-top:30px;flex-wrap:wrap;}
+#s3 .swatch{width:70px;height:70px;border-radius:50%;position:relative;transform:scale(0);opacity:0;}
+.swatch-glow{box-shadow:0 0 30px 8px currentColor;}
+#s3 .match-label{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:3px;color:var(--red);margin-top:20px;opacity:0;animation:fadeUp 0.6s ease 2s forwards;text-transform:uppercase;}
+#s3 .precision-bar-wrap{width:min(400px,80vw);margin:20px auto 0;background:rgba(255,255,255,0.06);height:4px;border-radius:2px;overflow:hidden;opacity:0;animation:fadeIn 0.4s ease 1.6s forwards;}
+#s3 .precision-bar{height:100%;width:0;background:linear-gradient(90deg,var(--red),var(--red-l));animation:precisionFill 1.5s ease 1.8s forwards;}
+@keyframes precisionFill{to{width:98%;}}
+
+/* ── Scene 4: ESTIMATE / INSURANCE ── */
+#s4 .mech-scene{text-align:center;}
+#s4 .scene-title{font-size:clamp(28px,5vw,56px);font-weight:700;letter-spacing:4px;opacity:0;animation:fadeUp 0.7s ease 0.2s forwards;}
+#s4 .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px;max-width:600px;}
+@media(max-width:480px){#s4 .services-grid{grid-template-columns:repeat(2,1fr);}}
+.svc-card{border:1px solid rgba(204,31,31,0.2);background:rgba(204,31,31,0.05);padding:14px 10px;text-align:center;opacity:0;transform:translateY(20px);}
+.svc-icon{font-size:28px;margin-bottom:8px;}
+.svc-name{font-size:10px;font-family:'DM Mono',monospace;letter-spacing:2px;color:var(--white);text-transform:uppercase;}
+
+/* ── Scene 5: CTA ── */
+#s5 .cta-wrap{text-align:center;position:relative;}
+#s5 .big-word{font-size:clamp(60px,14vw,160px);font-weight:700;letter-spacing:-2px;line-height:1;opacity:0;animation:fadeUp 0.8s ease 0.2s forwards;}
+#s5 .big-word span{color:var(--red);}
+#s5 .phone{font-size:clamp(22px,4vw,48px);font-weight:300;letter-spacing:6px;color:var(--gray);margin-top:16px;opacity:0;animation:fadeUp 0.6s ease 0.8s forwards;font-family:'DM Mono',monospace;}
+#s5 .phone strong{color:var(--red);}
+#s5 .address{font-size:clamp(10px,1.5vw,14px);letter-spacing:4px;color:var(--gray);margin-top:12px;opacity:0;animation:fadeUp 0.5s ease 1.2s forwards;}
+#s5 .pulse-ring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:400px;height:400px;border:1px solid rgba(204,31,31,0.15);border-radius:50%;animation:pulseRing 2s ease infinite;pointer-events:none;}
+#s5 .pulse-ring:nth-child(2){animation-delay:0.7s;}
+#s5 .pulse-ring:nth-child(3){animation-delay:1.4s;}
+@keyframes pulseRing{0%{transform:translate(-50%,-50%) scale(0.5);opacity:0.6;}100%{transform:translate(-50%,-50%) scale(1.5);opacity:0;}}
+
+/* ── Progress bar ── */
+#progress-bar{position:fixed;bottom:0;left:0;height:3px;background:linear-gradient(90deg,var(--red-d),var(--red),var(--red-l));z-index:100;transition:width 0.6s cubic-bezier(0.4,0,0.2,1);}
+
+/* ── Scene indicators ── */
+#dots{position:fixed;right:30px;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:10px;}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.1);cursor:pointer;transition:all 0.3s;}
+.dot.active{background:var(--red);box-shadow:0 0 12px var(--red);transform:scale(1.3);}
+
+/* ── Scene label HUD ── */
+#hud{position:fixed;top:30px;left:30px;z-index:100;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:3px;color:rgba(255,255,255,0.25);text-transform:uppercase;}
+#hud .hud-num{color:var(--red);font-size:18px;font-weight:500;display:block;line-height:1.2;}
+#hud-logo{position:fixed;top:30px;right:30px;z-index:100;font-family:'Oswald',sans-serif;font-size:14px;font-weight:700;letter-spacing:3px;color:var(--white);}
+#hud-logo span{color:var(--red);}
+
+/* ── Skip nav ── */
+#skip-nav{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);z-index:100;display:flex;align-items:center;gap:20px;}
+.nav-btn{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.4);font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:8px 20px;cursor:pointer;transition:all 0.3s;}
+.nav-btn:hover{border-color:var(--red);color:var(--red);}
+#scene-name{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;color:rgba(255,255,255,0.2);text-transform:uppercase;min-width:120px;text-align:center;}
+
+/* ── Shared helpers ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+@keyframes popIn{0%{opacity:0;transform:scale(0);}60%{transform:scale(1.15);}100%{opacity:1;transform:scale(1);}}
+
+/* ── Glitch effect ── */
+@keyframes glitch1{0%,100%{clip-path:inset(0 0 95% 0);}20%{clip-path:inset(45% 0 40% 0);}40%{clip-path:inset(80% 0 5% 0);}60%{clip-path:inset(15% 0 70% 0);}80%{clip-path:inset(60% 0 20% 0);}}
+@keyframes glitch2{0%,100%{clip-path:inset(5% 0 90% 0);}20%{clip-path:inset(55% 0 30% 0);}40%{clip-path:inset(10% 0 82% 0);}60%{clip-path:inset(75% 0 10% 0);}80%{clip-path:inset(30% 0 55% 0);}}
+.glitch-wrap{position:relative;}
+.glitch-wrap::before,.glitch-wrap::after{content:attr(data-text);position:absolute;inset:0;opacity:0;}
+.glitch-wrap.glitching::before{opacity:0.7;color:var(--red-l);left:2px;animation:glitch1 0.15s linear;}
+.glitch-wrap.glitching::after{opacity:0.5;color:#00ffff;left:-2px;animation:glitch2 0.15s linear;}
+
+/* ── Spark particles ── */
+.spark{position:absolute;width:4px;height:4px;background:var(--red-l);border-radius:50%;pointer-events:none;animation:sparkFly var(--dur, 0.8s) ease-out forwards;box-shadow:0 0 6px var(--red);}
+@keyframes sparkFly{0%{opacity:1;transform:translate(0,0) scale(1);}100%{opacity:0;transform:translate(var(--tx,50px),var(--ty,-80px)) scale(0);}}
+
+/* ── Typewriter ── */
+.typewriter{overflow:hidden;border-right:2px solid var(--red);white-space:nowrap;animation:typeCaret 0.8s step-end infinite;}
+@keyframes typeCaret{50%{border-color:transparent;}}
+
+/* ── Red diagonal slashes (brand) ── */
+.slash-decor{display:flex;gap:5px;position:absolute;}
+.sl{width:14px;height:24px;background:var(--red);clip-path:polygon(25% 0,100% 0,75% 100%,0 100%);}
+.sl:nth-child(2){opacity:0.6;}
+.sl:nth-child(3){opacity:0.3;}
+</style>
+</head>
+<body>
+
+<!-- FX Layers -->
+<canvas id="bg"></canvas>
+<div id="scanlines"></div>
+<div id="vignette"></div>
+<div id="grain"></div>
+
+<!-- Custom Cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- HUD -->
+<div id="hud">
+  <span class="hud-num" id="hud-num">01</span>
+  CR8 AUTOS
+</div>
+<div id="hud-logo">CR<span>8</span></div>
+
+<!-- Progress -->
+<div id="progress-bar" style="width:0%"></div>
+
+<!-- Scene Dots -->
+<div id="dots"></div>
+
+<!-- Skip Nav -->
+<div id="skip-nav">
+  <button class="nav-btn" id="prev-btn">◀ PREV</button>
+  <span id="scene-name">INTRO</span>
+  <button class="nav-btn" id="next-btn">NEXT ▶</button>
+</div>
+
+<!-- ===== SCENES ===== -->
+<div id="stage">
+
+  <!-- SCENE 0: INTRO -->
+  <div class="scene active" id="s0">
+    <div class="logo-wrap">
+      <div class="corner c-tl"></div>
+      <div class="corner c-tr"></div>
+      <div class="corner c-bl"></div>
+      <div class="corner c-br"></div>
+      <div class="big-cr8 glitch-wrap" data-text="CR8 AUTOS">
+        CR8 AUTOS
+        <span class="fill">CR8 AUTOS</span>
+      </div>
+      <div class="bar-line"></div>
+      <div class="tagline">Auto Body · Collision Repair · Refinishing</div>
+      <div class="sub">Watervliet, NY · Capital Region</div>
+      <div class="slash-decor" style="top:50%;left:-60px;transform:translateY(-50%);opacity:0;animation:fadeIn 0.5s ease 2s forwards;">
+        <div class="sl"></div><div class="sl"></div><div class="sl"></div>
+      </div>
+      <div class="slash-decor" style="top:50%;right:-60px;transform:translateY(-50%) scaleX(-1);opacity:0;animation:fadeIn 0.5s ease 2s forwards;">
+        <div class="sl"></div><div class="sl"></div><div class="sl"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENE 1: COLLISION REPAIR -->
+  <div class="scene" id="s1">
+    <div class="car-stage">
+      <div class="label-top">
+        <div class="scene-title">COLLISION REPAIR</div>
+        <div class="scene-sub">
+          Collision · Rust Repair · Welding · Refinishing
+          </div>
+      </div>
+      <div class="car-svg" id="car-svg-1"></div>
+      <div class="impact" id="impact-star"></div>
+      <div class="repair-line" id="repair-line"></div>
+      <div class="stat-pills">
+        <div class="pill">Bumper & Fender Repair</div>
+        <div class="pill">Frame & Panel Straightening</div>
+        <div class="pill">Insurance Estimates</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENE 2: RUST & UNDERCOATING -->
+  <div class="scene" id="s2">
+    <div class="rust-scene">
+      <div class="scene-title">RUST · UNDERCOATING</div>
+      <div class="rust-canvas-wrap">
+        <canvas id="rust-canvas" width="500" height="200"></canvas>
+      </div>
+      <div class="protect-bar"></div>
+      <div class="badges">
+       <div class="badge"><div class="badge-dot"></div>Rust Removal</div>
+        <div class="badge"><div class="badge-dot"></div>Undercoating</div>
+        <div class="badge"><div class="badge-dot"></div>Metal Fabrication</div>
+        <div class="badge"><div class="badge-dot"></div>Rocker Panel Repair</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCENE 3: PAINT -->
+  <div class="scene" id="s3">
+    <div class="paint-scene">
+      <div class="scene-title">PAINT &amp; REFINISHING</div>
+      <div class="swatches" id="swatches">
+        <!-- injected by JS -->
+      </div>
+      <div class="precision-bar-wrap"><div class="precision-bar"></div></div>
+      <div class="match-label">Computer Color-Matching · Factory Finish · OEM Grade</div>
+    </div>
+  </div>
+
+  <!-- SCENE 4: ESTIMATE / INSURANCE -->
+  <div class="scene" id="s4">
+    <div class="mech-scene">
+      <div class="scene-title">ESTIMATES &amp; INSURANCE</div>
+      <div class="services-grid" id="svc-grid"></div>
+    </div>
+  </div>
+
+  <!-- SCENE 5: CTA -->
+  <div class="scene" id="s5">
+    <div class="cta-wrap">
+      <div class="pulse-ring"></div>
+      <div class="pulse-ring"></div>
+      <div class="pulse-ring"></div>
+      <div class="big-word">FREE<br><span>ESTIMATE</span></div>
+      <div class="phone"><strong>(518) 495-6876</strong></div>
+      <div class="address">2603 2nd Ave · Watervliet, NY · Mon–Fri 9–6</div>
+    </div>
+  </div>
+
+</div><!-- /stage -->
+
+<script>
+// ─── Cursor ───────────────────────────────────────────────
+const cur = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function loop(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
+
+// ─── BG Canvas (particles + grid) ────────────────────────
+const bgC=document.getElementById('bg');
+const ctx=bgC.getContext('2d');
+let W,H;
+function resize(){W=bgC.width=window.innerWidth;H=bgC.height=window.innerHeight;}
+resize();window.addEventListener('resize',resize);
+const pts=Array.from({length:80},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-0.5)*0.4,vy:(Math.random()-0.5)*0.4,r:Math.random()*1.5+0.5}));
+function drawBG(){
+  ctx.clearRect(0,0,W,H);
+  // grid
+  ctx.strokeStyle='rgba(204,31,31,0.04)';ctx.lineWidth=1;
+  for(let x=0;x<W;x+=80){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+  for(let y=0;y<H;y+=80){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+  // particles
+  pts.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+    ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle='rgba(204,31,31,0.5)';ctx.fill();
+  });
+  // lines between close particles
+  pts.forEach((a,i)=>{pts.slice(i+1).forEach(b=>{
+    const d=Math.hypot(a.x-b.x,a.y-b.y);
+    if(d<120){ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+      ctx.strokeStyle=`rgba(204,31,31,${0.15*(1-d/120)})`;ctx.lineWidth=0.5;ctx.stroke();}
+  });});
+  requestAnimationFrame(drawBG);
+}
+drawBG();
+
+// ─── Scene Management ────────────────────────────────────
+const scenes=[
+  {id:'s0',name:'INTRO'},
+  {id:'s1',name:'COLLISION'},
+  {id:'s2',name:'RUST / UNDERCOAT'},
+  {id:'s3',name:'PAINT MATCH'},
+  {id:'s4',name:'ESTIMATES'},
+  {id:'s5',name:'CONTACT'},
+];
+let cur_s=0;
+const dotsEl=document.getElementById('dots');
+const progBar=document.getElementById('progress-bar');
+const sceneNameEl=document.getElementById('scene-name');
+const hudNum=document.getElementById('hud-num');
+
+// Build dots
+scenes.forEach((_,i)=>{
+  const d=document.createElement('div');d.className='dot'+(i===0?' active':'');
+  d.onclick=()=>gotoScene(i);dotsEl.appendChild(d);
+});
+
+function gotoScene(n){
+  if(n<0||n>=scenes.length)return;
+  document.getElementById(scenes[cur_s].id).classList.remove('active');
+  cur_s=n;
+  const el=document.getElementById(scenes[cur_s].id);
+  el.classList.add('active');
+  // re-trigger animations by cloning
+  const clone=el.cloneNode(true);
+  el.parentNode.replaceChild(clone,el);
+  clone.classList.add('active');
+  // reattach onclick for dots
+  dotsEl.querySelectorAll('.dot').forEach((d,i)=>{d.className='dot'+(i===cur_s?' active':'');d.onclick=()=>gotoScene(i);});
+  progBar.style.width=((cur_s/(scenes.length-1))*100)+'%';
+  sceneNameEl.textContent=scenes[cur_s].name;
+  hudNum.textContent=String(cur_s+1).padStart(2,'0');
+  // scene-specific init
+  if(cur_s===1)initScene1();
+  if(cur_s===2)initScene2();
+  if(cur_s===3)initScene3();
+  if(cur_s===4)initScene4();
+  if(cur_s===0)initScene0();
+}
+
+document.getElementById('next-btn').onclick=()=>gotoScene(cur_s+1);
+document.getElementById('prev-btn').onclick=()=>gotoScene(cur_s-1);
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown')gotoScene(cur_s+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp')gotoScene(cur_s-1);
+});
+// swipe
+let tx=0;
+document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;});
+document.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>50){dx<0?gotoScene(cur_s+1):gotoScene(cur_s-1);}});
+
+// Auto-advance
+let autoTimer=setInterval(()=>gotoScene((cur_s+1)%scenes.length),5000);
+document.addEventListener('click',()=>{clearInterval(autoTimer);autoTimer=setInterval(()=>gotoScene((cur_s+1)%scenes.length),6000);});
+
+// ─── Scene 0: Glitch ─────────────────────────────────────
+function initScene0(){
+  setTimeout(()=>{
+    const g=document.querySelector('#s0 .glitch-wrap');
+    if(g){g.classList.add('glitching');setTimeout(()=>g.classList.remove('glitching'),200);}
+  },2200);
+}
+initScene0();
+
+// ─── Scene 1: Car SVG + sparks ───────────────────────────
+function initScene1(){
+  const carEl=document.getElementById('car-svg-1')||document.querySelector('#s1 .car-svg');
+  if(!carEl)return;
+  carEl.innerHTML=`
+  <svg width="540" height="200" viewBox="0 0 540 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- shadow -->
+    <ellipse cx="270" cy="185" rx="200" ry="14" fill="rgba(0,0,0,0.5)"/>
+    <!-- body -->
+    <path d="M60 140 Q70 90 160 75 L240 60 Q270 55 310 58 L390 72 Q450 85 470 110 L490 140 Z" fill="#1a1a1a" stroke="#333" stroke-width="1.5"/>
+    <!-- roof -->
+    <path d="M165 75 Q200 38 270 32 Q340 28 385 72" fill="#141414" stroke="#2a2a2a" stroke-width="1"/>
+    <!-- windows -->
+    <path d="M175 73 Q195 44 255 40 L250 72Z" fill="rgba(100,180,255,0.15)" stroke="#444" stroke-width="1"/>
+    <path d="M258 40 Q320 38 378 70 L262 72Z" fill="rgba(100,180,255,0.12)" stroke="#444" stroke-width="1"/>
+    <!-- door line -->
+    <line x1="265" y1="60" x2="262" y2="138" stroke="#2a2a2a" stroke-width="1.5"/>
+    <!-- damage zone (left front) -->
+    <path d="M60 140 Q55 120 70 105 Q80 95 100 100 Q90 115 85 130 Z" fill="#cc1f1f" opacity="0.7"/>
+    <path d="M68 120 L90 108 M72 130 L95 118 M76 138 L98 128" stroke="#ff4444" stroke-width="1.5" opacity="0.8"/>
+    <!-- bumper -->
+    <rect x="50" y="138" width="52" height="12" rx="3" fill="#222" stroke="#333"/>
+    <rect x="438" y="138" width="52" height="12" rx="3" fill="#222" stroke="#333"/>
+    <!-- wheels -->
+    <circle cx="140" cy="158" r="28" fill="#111" stroke="#333" stroke-width="2"/>
+    <circle cx="140" cy="158" r="18" fill="#1a1a1a" stroke="#444" stroke-width="1.5"/>
+    <circle cx="140" cy="158" r="6" fill="#cc1f1f"/>
+    <circle cx="390" cy="158" r="28" fill="#111" stroke="#333" stroke-width="2"/>
+    <circle cx="390" cy="158" r="18" fill="#1a1a1a" stroke="#444" stroke-width="1.5"/>
+    <circle cx="390" cy="158" r="6" fill="#cc1f1f"/>
+    <!-- headlight -->
+    <path d="M468 108 Q480 112 487 125 L470 128 Z" fill="rgba(255,200,80,0.15)" stroke="#555"/>
+    <path d="M59 115 Q48 120 48 130 L65 130 Z" fill="rgba(255,200,80,0.08)" stroke="#444"/>
+    <!-- grill -->
+    <rect x="455" y="128" width="30" height="12" rx="2" fill="#1a1a1a" stroke="#333"/>
+    <line x1="455" y1="132" x2="485" y2="132" stroke="#444" stroke-width="0.8"/>
+    <line x1="455" y1="136" x2="485" y2="136" stroke="#444" stroke-width="0.8"/>
+    <!-- wrench overlay (repair symbol) -->
+    <g opacity="0" style="animation:fadeIn 0.5s ease 2.1s forwards">
+      <circle cx="90" cy="112" r="22" fill="none" stroke="rgba(204,31,31,0.6)" stroke-width="1.5" stroke-dasharray="4 2"/>
+    </g>
+  </svg>`;
+
+  // Sparks on impact
+  setTimeout(()=>{
+    const stage=document.getElementById('s1');
+    if(!stage)return;
+    for(let i=0;i<18;i++){
+      const sp=document.createElement('div');sp.className='spark';
+      const ang=Math.random()*Math.PI*2;const dist=30+Math.random()*60;
+      sp.style.cssText=`left:${180+Math.random()*40}px;top:${130+Math.random()*30}px;--tx:${Math.cos(ang)*dist}px;--ty:${Math.sin(ang)*dist-40}px;--dur:${0.5+Math.random()*0.6}s;animation-delay:${Math.random()*0.2}s;`;
+      stage.appendChild(sp);setTimeout(()=>sp.remove(),1200);
+    }
+  },1350);
+}
+
+// ─── Scene 2: Rust canvas animation ──────────────────────
+function initScene2(){
+  setTimeout(()=>{
+    const canvas=document.getElementById('rust-canvas');
+    if(!canvas)return;
+    const c=canvas.getContext('2d');
+    const W2=canvas.width,H2=canvas.height;
+    // Draw a panel shape
+    c.fillStyle='#1c1c1c';c.fillRect(0,0,W2,H2);
+    c.strokeStyle='#333';c.lineWidth=2;c.strokeRect(4,4,W2-8,H2-8);
+
+    // Rust spots that spread
+    const rustSpots=[];
+    for(let i=0;i<12;i++){rustSpots.push({x:Math.random()*W2,y:Math.random()*H2,r:1,maxR:10+Math.random()*25,speed:0.4+Math.random()*0.8,hue:Math.random()*20+5});}
+
+    let frame=0,covered=0;
+    function drawRust(){
+      if(frame>160)return;frame++;
+      // background panel
+      c.fillStyle='rgba(28,28,28,0.3)';c.fillRect(0,0,W2,H2);
+      rustSpots.forEach(rs=>{
+        if(rs.r<rs.maxR){rs.r+=rs.speed;}
+        // rust layers
+        const grad=c.createRadialGradient(rs.x,rs.y,0,rs.x,rs.y,rs.r);
+        grad.addColorStop(0,`hsla(${rs.hue},80%,25%,0.9)`);
+        grad.addColorStop(0.5,`hsla(${rs.hue+5},70%,18%,0.7)`);
+        grad.addColorStop(1,'rgba(0,0,0,0)');
+        c.beginPath();c.arc(rs.x,rs.y,rs.r,0,Math.PI*2);c.fillStyle=grad;c.fill();
+      });
+      // panel edge highlight
+      c.strokeStyle='rgba(180,100,20,0.3)';c.lineWidth=1.5;c.strokeRect(4,4,W2-8,H2-8);
+
+      if(frame===80){
+        // Overlay "TREATED" text halfway through
+        covered=0;
+      }
+      if(frame>110){
+        // Protection sweep
+        const progress=(frame-110)/50;
+        const grad2=c.createLinearGradient(0,0,W2*progress,0);
+        grad2.addColorStop(0,'rgba(0,100,40,0.3)');
+        grad2.addColorStop(0.9,'rgba(0,80,30,0.2)');
+        grad2.addColorStop(1,'rgba(0,0,0,0)');
+        c.fillStyle=grad2;c.fillRect(0,0,W2,H2);
+        // green shield line
+        c.strokeStyle=`rgba(30,200,80,${0.6*Math.min(1,progress*2)})`;
+        c.lineWidth=2;
+        c.beginPath();c.moveTo(W2*progress,0);c.lineTo(W2*progress,H2);c.stroke();
+      }
+      if(frame<160)requestAnimationFrame(drawRust);
+      else{
+        // final state: treated label
+        c.fillStyle='rgba(0,0,0,0.7)';c.fillRect(W2/2-70,H2/2-16,140,32);
+        c.fillStyle='#ffffff';c.font='bold 13px DM Mono, monospace';
+        c.textAlign='center';c.textBaseline='middle';c.fillText('TREATED ✓',W2/2,H2/2);
+      }
+    }
+    drawRust();
+  },500);
+}
+
+// ─── Scene 3: Paint swatches ──────────────────────────────
+function initScene3(){
+  const colors=[
+    {c:'#1a1a2e',name:'Midnight'},
+    {c:'#cc1f1f',name:'CR8 Red'},
+    {c:'#2d4a22',name:'Forest'},
+    {c:'#1b3a5c',name:'Navy'},
+    {c:'#8b7355',name:'Sand'},
+    {c:'#c0c0c0',name:'Silver'},
+    {c:'#2c1810',name:'Espresso'},
+    {c:'#ffffff',name:'Pearl'},
+  ];
+  const container=document.getElementById('swatches');
+  if(!container)return;
+  container.innerHTML='';
+  colors.forEach((col,i)=>{
+    const sw=document.createElement('div');sw.className='swatch';
+    sw.style.cssText=`background:${col.c};animation:popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) ${0.3+i*0.1}s forwards;box-shadow:0 0 20px 4px ${col.c}44;border:2px solid rgba(255,255,255,0.1);`;
+    container.appendChild(sw);
+    // Scan line flash
+    setTimeout(()=>{
+      sw.style.boxShadow=`0 0 40px 12px ${col.c}88`;
+      setTimeout(()=>sw.style.boxShadow=`0 0 20px 4px ${col.c}44`,300);
+    },300+i*100+500);
+  });
+  // Matching laser sweep
+  setTimeout(()=>{
+    const sweep=document.createElement('div');
+    sweep.style.cssText='position:absolute;top:0;bottom:0;width:2px;background:linear-gradient(180deg,transparent,#cc1f1f,transparent);box-shadow:0 0 20px var(--red);animation:sweepAcross 1.2s ease forwards;';
+    sweep.style.left='0';
+    document.querySelector('#s3 .paint-scene').style.position='relative';
+    document.querySelector('#s3 .paint-scene').appendChild(sweep);
+    sweep.animate([{left:'0%'},{left:'100%'}],{duration:1200,easing:'ease-in-out',fill:'forwards'});
+    setTimeout(()=>sweep.remove(),1300);
+  },1800);
+}
+
+// ─── Scene 4: Services ────────────────────────────────────
+function initScene4(){
+  const services=[
+  {icon:'💥',name:'Collision Repair'},
+  {icon:'🛡️',name:'Rust Treatment'},
+  {icon:'🧱',name:'Undercoating'},
+  {icon:'🔥',name:'Metal Welding'},
+  {icon:'🚚',name:'Truck Bed Restore'},
+  {icon:'🎨',name:'Paint & Refinishing'},
+  {icon:'🪟',name:'Glass Replacement'},
+  {icon:'📋',name:'Insurance Estimates'},
+  ];
+  const grid=document.getElementById('svc-grid');
+  if(!grid)return;
+  grid.innerHTML='';
+  services.forEach((s,i)=>{
+    const card=document.createElement('div');card.className='svc-card';
+    card.innerHTML=`<div class="svc-icon">${s.icon}</div><div class="svc-name">${s.name}</div>`;
+    card.style.animationDelay=`${0.3+i*0.08}s`;
+    card.style.animation=`fadeUp 0.5s ease ${0.3+i*0.08}s forwards`;
+    grid.appendChild(card);
+    // hover glow
+    card.addEventListener('mouseenter',()=>{card.style.borderColor='rgba(204,31,31,0.7)';card.style.background='rgba(204,31,31,0.12)';card.style.transform='translateY(-4px)';card.style.transition='all 0.2s';});
+    card.addEventListener('mouseleave',()=>{card.style.borderColor='';card.style.background='';card.style.transform='';});
+  });
+}
+
+// ─── Glitch loop ──────────────────────────────────────────
+setInterval(()=>{
+  const g=document.querySelector(`#${scenes[cur_s].id} .glitch-wrap`);
+  if(g&&Math.random()<0.3){g.classList.add('glitching');setTimeout(()=>g.classList.remove('glitching'),150);}
+},3000);
+
+// Progress bar init
+progBar.style.width='0%';
+</script>
+</body>
+</html>
