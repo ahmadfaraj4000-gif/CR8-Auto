@@ -29,7 +29,8 @@ function getSupabaseClient() {
 const menuBtn = document.querySelector('.menu-btn')
 const navLinks = document.querySelector('.nav-links')
 
-if (menuBtn && navLinks) {
+if (menuBtn && navLinks && menuBtn.dataset.cr8Bound !== 'true') {
+  menuBtn.dataset.cr8Bound = 'true'
   menuBtn.addEventListener('click', () => {
     navLinks.classList.toggle('open')
   })

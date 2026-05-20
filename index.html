@@ -1307,64 +1307,8 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
 
 
 /* ==========================================================
-   FINAL MOBILE NAV + HERO RESPONSIVE PATCH
+   FINAL HERO RESPONSIVE PATCH
    ========================================================== */
-@media(max-width:900px){
-  .navbar{
-    z-index:9999 !important;
-  }
-
-  .menu-btn{
-    display:flex !important;
-    pointer-events:auto !important;
-    z-index:10001 !important;
-  }
-
-  .nav-links{
-    display:none !important;
-  }
-
-  .nav-links.open{
-    display:flex !important;
-    flex-direction:column !important;
-    position:fixed !important;
-    top:76px !important;
-    left:0 !important;
-    right:0 !important;
-    width:100% !important;
-    max-width:none !important;
-    background:#050505 !important;
-    border-top:1px solid rgba(204,31,31,.45) !important;
-    border-bottom:3px solid var(--red) !important;
-    padding:14px !important;
-    gap:9px !important;
-    z-index:10000 !important;
-    box-shadow:0 20px 35px rgba(0,0,0,.75) !important;
-  }
-
-  .nav-links.open li{
-    display:block !important;
-    width:100% !important;
-  }
-
-  .nav-links.open a{
-    width:100% !important;
-    min-height:48px !important;
-    display:flex !important;
-    align-items:center !important;
-    justify-content:center !important;
-    background:#111 !important;
-    border:1px solid rgba(255,255,255,.12) !important;
-    color:#fff !important;
-    border-radius:0 !important;
-  }
-
-  .nav-links.open .nav-cta{
-    background:linear-gradient(180deg,var(--red-light),var(--red)) !important;
-    border-color:rgba(232,51,51,.9) !important;
-  }
-}
-
 @media(max-width:700px){
   .hero{
     min-height:126svh !important;
@@ -2158,9 +2102,16 @@ function scrollToServices() {
 window.addEventListener('scroll', () => {
   document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
 });
-document.getElementById('menuBtn').addEventListener('click', () => {
-  document.getElementById('navLinks').classList.toggle('open');
-});
+{
+  const menuBtn = document.getElementById('menuBtn');
+  const navLinks = document.getElementById('navLinks');
+  if (menuBtn && navLinks && menuBtn.dataset.cr8Bound !== 'true') {
+    menuBtn.dataset.cr8Bound = 'true';
+    menuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+  }
+}
 document.getElementById('yr').textContent = new Date().getFullYear();
 
 // ===== MODALS =====
@@ -2371,18 +2322,12 @@ function submitContact(e) {
       navLinks.classList.toggle('open');
       const isOpen = navLinks.classList.contains('open');
       menuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      const icon = menuBtn.querySelector('i');
-      if(icon){
-        icon.className = isOpen ? 'fas fa-times' : 'fas fa-bars';
-      }
     });
 
     navLinks.querySelectorAll('a').forEach(function(link){
       link.addEventListener('click', function(){
         navLinks.classList.remove('open');
         menuBtn.setAttribute('aria-expanded','false');
-        const icon = menuBtn.querySelector('i');
-        if(icon) icon.className = 'fas fa-bars';
       });
     });
 
@@ -2391,8 +2336,6 @@ function submitContact(e) {
       if(navLinks.contains(e.target) || menuBtn.contains(e.target)) return;
       navLinks.classList.remove('open');
       menuBtn.setAttribute('aria-expanded','false');
-      const icon = menuBtn.querySelector('i');
-      if(icon) icon.className = 'fas fa-bars';
     });
   }
 
