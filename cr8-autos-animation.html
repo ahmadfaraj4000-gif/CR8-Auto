@@ -689,6 +689,8 @@ const dotsEl=document.getElementById('dots');
 const progBar=document.getElementById('progress-bar');
 const sceneNameEl=document.getElementById('scene-name');
 const hudNum=document.getElementById('hud-num');
+const nextBtn=document.getElementById('next-btn');
+const prevBtn=document.getElementById('prev-btn');
 
 // Build dots
 scenes.forEach((_,i)=>{
@@ -709,8 +711,8 @@ function gotoScene(n){
   // reattach onclick for dots
   dotsEl.querySelectorAll('.dot').forEach((d,i)=>{d.className='dot'+(i===cur_s?' active':'');d.onclick=()=>gotoScene(i);});
   progBar.style.width=((cur_s/(scenes.length-1))*100)+'%';
-  sceneNameEl.textContent=scenes[cur_s].name;
-  hudNum.textContent=String(cur_s+1).padStart(2,'0');
+  if(sceneNameEl)sceneNameEl.textContent=scenes[cur_s].name;
+  if(hudNum)hudNum.textContent=String(cur_s+1).padStart(2,'0');
   // scene-specific init
   if(cur_s===1)initScene1();
   if(cur_s===2)initScene2();
@@ -719,8 +721,8 @@ function gotoScene(n){
   if(cur_s===0)initScene0();
 }
 
-document.getElementById('next-btn').onclick=()=>gotoScene(cur_s+1);
-document.getElementById('prev-btn').onclick=()=>gotoScene(cur_s-1);
+if(nextBtn)nextBtn.onclick=()=>gotoScene(cur_s+1);
+if(prevBtn)prevBtn.onclick=()=>gotoScene(cur_s-1);
 document.addEventListener('keydown',e=>{
   if(e.key==='ArrowRight'||e.key==='ArrowDown')gotoScene(cur_s+1);
   if(e.key==='ArrowLeft'||e.key==='ArrowUp')gotoScene(cur_s-1);

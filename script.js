@@ -635,6 +635,7 @@ if (estimateForm) {
       const vehicleModel = getFieldValue(['estimate-model', 'vehicle-model'])
       const fallbackVehicle = getFieldValue(['estimate-vehicle', 'vehicle'])
       const vehicle = formatVehicle(vehicleYear, vehicleMake, vehicleModel, fallbackVehicle)
+      const vin = getFieldValue(['estimate-vin', 'vehicle-vin', 'vehicleVin', 'vin']).toUpperCase()
 
       const insurance_type = getFieldValue(['estimate-insurance', 'insurance-type'])
       const damage_area = getFieldValue(['estimate-damage-area', 'damage-area'])
@@ -658,6 +659,10 @@ if (estimateForm) {
             email: email || null,
             zip: zip || null,
             vehicle,
+            vehicle_year: vehicleYear || null,
+            vehicle_make: vehicleMake || null,
+            vehicle_model: vehicleModel || null,
+            vin: vin || null,
             insurance_type: insurance_type || null,
             damage_area: damage_area || null,
             damage_type: damage_type || null,
@@ -667,7 +672,8 @@ if (estimateForm) {
             ai_result: {
               review_type: 'manual_photo_review',
               message: 'Customer submitted vehicle information and photos. CR8 Autos must review and contact the customer as soon as possible.',
-              photo_count: selectedEstimateFiles.length
+              photo_count: selectedEstimateFiles.length,
+              vin: vin || null
             },
             estimate_range: 'Submitted',
             status: 'new',
@@ -689,7 +695,8 @@ if (estimateForm) {
             ai_result: {
               review_type: 'manual_photo_review',
               message: 'Customer submitted vehicle information and photos. CR8 Autos must review and contact the customer as soon as possible.',
-              photo_count: selectedEstimateFiles.length
+              photo_count: selectedEstimateFiles.length,
+              vin: vin || null
             }
           })
           .eq('id', insertedLead.id)
