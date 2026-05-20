@@ -2310,10 +2310,13 @@ function submitContact(e) {
 <script>
 (function(){
   function initCr8MobileMenu(){
-    const menuBtn = document.getElementById('menuBtn');
+    let menuBtn = document.getElementById('menuBtn');
     const navLinks = document.getElementById('navLinks');
-    if(!menuBtn || !navLinks || menuBtn.dataset.cr8Bound === 'true') return;
+    if(!menuBtn || !navLinks) return;
 
+    const cleanMenuBtn = menuBtn.cloneNode(true);
+    menuBtn.parentNode.replaceChild(cleanMenuBtn, menuBtn);
+    menuBtn = cleanMenuBtn;
     menuBtn.dataset.cr8Bound = 'true';
 
     menuBtn.addEventListener('click', function(e){
