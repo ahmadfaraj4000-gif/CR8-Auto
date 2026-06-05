@@ -991,6 +991,39 @@ window.addEventListener('DOMContentLoaded', function() {
     carInput.placeholder = 'e.g. 2019 Toyota Camry';
     detailsInput.placeholder = 'Any additional information about your vehicle or the service needed...';
   }
+
+  function normalizeBookingTime(value) {
+    const raw = String(value || '').trim().toUpperCase();
+    if (!raw) return '';
+
+    const match = raw.match(/^(\d{1,2})(?::(\d{2}))?\s*(AM|PM)?$/);
+    if (!match) return raw;
+
+    let hour = Number(match[1]);
+    const minute = match[2] || '00';
+    const meridiem = match[3];
+
+    if (meridiem === 'PM' && hour !== 12) hour += 12;
+    if (meridiem === 'AM' && hour === 12) hour = 0;
+
+    return `${String(hour).padStart(2, '0')}:${minute}`;
+  }
+
+  async function isSlotAlreadyBooked(date, time) {
+    const normalizedTime = normalizeBookingTime(time);
+    const { data, error } = await supabase
+      .from('bookings')
+      .select('id, appointment_time, status')
+      .eq('appointment_date', date);
+
+    if (error) throw error;
+
+    return (data || []).some((booking) => (
+      booking.status !== 'cancelled' &&
+      booking.status !== 'archived' &&
+      normalizeBookingTime(booking.appointment_time) === normalizedTime
+    ));
+  }
   
   // Load booked slots
   async function loadBookedSlotsForMonth() {
@@ -1007,7 +1040,7 @@ window.addEventListener('DOMContentLoaded', function() {
       if (data) {
         data.forEach(row => {
           if (!bookedSlotsByDate[row.appointment_date]) bookedSlotsByDate[row.appointment_date] = [];
-          bookedSlotsByDate[row.appointment_date].push(row.appointment_time);
+          bookedSlotsByDate[row.appointment_date].push(normalizeBookingTime(row.appointment_time));
         });
       }
       console.log('Bookings loaded:', bookedSlotsByDate);
@@ -1090,7 +1123,7 @@ window.addEventListener('DOMContentLoaded', function() {
       const slotEl = document.createElement('div');
       slotEl.className = 'cal-time-slot';
       slotEl.textContent = slot;
-      if (bookedTimes.includes(slot)) {
+      if (bookedTimes.includes(normalizeBookingTime(slot))) {
         slotEl.classList.add('cal-time-booked');
       } else {
         slotEl.onclick = () => selectTime(slot, slotEl);
@@ -1148,6 +1181,20 @@ window.addEventListener('DOMContentLoaded', function() {
     confirmBtn.innerHTML = '<span class="spinner"></span> Booking...';
     
     try {
+      const alreadyBooked = await isSlotAlreadyBooked(calSelectedDate, calSelectedTime);
+      if (alreadyBooked) {
+        alert('That time was just booked. Please choose another available time.');
+        await loadBookedSlotsForMonth();
+        calSelectedTime = null;
+        document.getElementById('bookConfirmBtn').style.display = 'none';
+        renderCalendar();
+        if (calSelectedDate) {
+          const dayNum = Number(calSelectedDate.split('-')[2]);
+          selectDate(calSelectedDate, dayNum);
+        }
+        return;
+      }
+
       const { error } = await supabase
         .from('bookings')
         .insert([{
@@ -1156,7 +1203,7 @@ window.addEventListener('DOMContentLoaded', function() {
           email: null,
           service: document.getElementById('bService').value,
           appointment_date: calSelectedDate,
-          appointment_time: calSelectedTime,
+          appointment_time: normalizeBookingTime(calSelectedTime),
           notes: `${isRideService(document.getElementById('bService').value) ? 'Ride details' : 'Vehicle'}: ${document.getElementById('bCar').value.trim()}. ${document.getElementById('bDetails').value.trim()}`,
           status: 'new'
         }]);
