@@ -1013,7 +1013,7 @@ window.addEventListener('DOMContentLoaded', function() {
     const normalizedTime = normalizeBookingTime(time);
     const { data, error } = await supabase
       .from('bookings')
-      .select('id, appointment_time, status')
+      .select('id, appointment_time, service, status')
       .eq('appointment_date', date);
 
     if (error) throw error;
@@ -1181,6 +1181,8 @@ window.addEventListener('DOMContentLoaded', function() {
     confirmBtn.innerHTML = '<span class="spinner"></span> Booking...';
     
     try {
+      const service = document.getElementById('bService').value;
+
       const alreadyBooked = await isSlotAlreadyBooked(calSelectedDate, calSelectedTime);
       if (alreadyBooked) {
         alert('That time was just booked. Please choose another available time.');
@@ -1201,7 +1203,7 @@ window.addEventListener('DOMContentLoaded', function() {
           name: document.getElementById('bName').value.trim(),
           phone: document.getElementById('bPhone').value.trim(),
           email: null,
-          service: document.getElementById('bService').value,
+          service,
           appointment_date: calSelectedDate,
           appointment_time: normalizeBookingTime(calSelectedTime),
           notes: `${isRideService(document.getElementById('bService').value) ? 'Ride details' : 'Vehicle'}: ${document.getElementById('bCar').value.trim()}. ${document.getElementById('bDetails').value.trim()}`,
