@@ -707,7 +707,6 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
     <li><a href="index.html">Home</a></li>
     <li><a href="booking.html" class="current">Book Appointment</a></li>
     <li><a href="index.html#services-section">Services</a></li>
-    <li><a href="empire-elite-rides.html">Elite Rides</a></li>
     <li><a href="whyus.html">Why Us?</a></li>
     <li><a href="careers.html">Careers</a></li>
     <li><a href="tel:+15184956876" class="nav-cta">Contact Us</a></li>
@@ -830,30 +829,9 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
                 <option>Exhaust Repair</option>
                 <option>Key Fob Replacement</option>
               </optgroup>
-              <optgroup label="── Empire Elite Rides ──">
-                <option>Executive Services</option>
-                <option>Wedding Chauffeur</option>
-                <option>Corporate Black Car Service</option>
-                <option>Night Out VIP Ride</option>
-                <option>Airport Transfer</option>
-              </optgroup>
               <optgroup label="──────────────────">
                 <option>Other</option>
               </optgroup>
-            </select>
-          </div>
-          <div class="form-group" id="rideDurationGroup" style="display:none;">
-            <label class="form-label">Ride Duration</label>
-            <select class="form-select" id="rideDuration">
-              <option value="1">1 hour</option>
-              <option value="2">2 hours</option>
-              <option value="3">3 hours</option>
-              <option value="4">4 hours</option>
-              <option value="5">5 hours</option>
-              <option value="6">6 hours</option>
-              <option value="8">8 hours</option>
-              <option value="10">10 hours</option>
-              <option value="12">12 hours</option>
             </select>
           </div>
           <div class="form-group">
@@ -974,7 +952,6 @@ window.addEventListener('DOMContentLoaded', function() {
   
   // Constants
   const TIME_SLOTS = ['9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM'];
-  const RIDE_SERVICES = ['Executive Services', 'Wedding Chauffeur', 'Corporate Black Car Service', 'Night Out VIP Ride', 'Airport Transfer'];
   
   // State
   let calYear = null;
@@ -982,32 +959,16 @@ window.addEventListener('DOMContentLoaded', function() {
   let calSelectedDate = null;
   let calSelectedTime = null;
   let bookedSlotsByDate = {};
-  let rideBlocksByDate = {};
   const requestedService = new URLSearchParams(window.location.search).get('service');
 
-  function isRideService(service) {
-    return RIDE_SERVICES.includes(service);
-  }
-
   function updateServiceFields() {
-    const service = document.getElementById('bService').value;
     const carLabel = document.getElementById('bCarLabel');
     const carInput = document.getElementById('bCar');
     const detailsInput = document.getElementById('bDetails');
-    const rideDurationGroup = document.getElementById('rideDurationGroup');
-
-    if (isRideService(service)) {
-      carLabel.textContent = 'Ride Details';
-      carInput.placeholder = 'Black Ford Expedition ride: pickup, destination, date/event';
-      detailsInput.placeholder = 'Passenger count, luggage, flight number, event timing, or any special requests...';
-      rideDurationGroup.style.display = 'block';
-      return;
-    }
 
     carLabel.textContent = 'Vehicle (Year, Make, Model)';
     carInput.placeholder = 'e.g. 2019 Toyota Camry';
     detailsInput.placeholder = 'Any additional information about your vehicle or the service needed...';
-    rideDurationGroup.style.display = 'none';
   }
 
   function normalizeBookingTime(value) {
@@ -1027,84 +988,31 @@ window.addEventListener('DOMContentLoaded', function() {
     return `${String(hour).padStart(2, '0')}:${minute}`;
   }
 
-  function timeToMinutes(value) {
-    const normalized = normalizeBookingTime(value);
-    const [hour, minute] = normalized.split(':').map(Number);
-    return hour * 60 + minute;
-  }
-
-  function minutesToTime(totalMinutes) {
-    const hour = Math.floor(totalMinutes / 60);
-    const minute = totalMinutes % 60;
-    return `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
-  }
-
-  function getSelectedRideWindow() {
-    if (!calSelectedTime) return null;
-    const startMinutes = timeToMinutes(calSelectedTime);
-    const durationHours = Number(document.getElementById('rideDuration').value || 1);
-    const endMinutes = startMinutes + durationHours * 60;
-
-    return {
-      start: normalizeBookingTime(calSelectedTime),
-      end: minutesToTime(endMinutes),
-      startMinutes,
-      endMinutes,
-      durationHours
-    };
-  }
-
-  function blocksOverlap(startA, endA, startB, endB) {
-    return startA < endB && startB < endA;
-  }
-
-  async function isSlotAlreadyBooked(date, time, service) {
+  async function isSlotAlreadyBooked(date, time) {
     const normalizedTime = normalizeBookingTime(time);
     const { data, error } = await supabase
       .from('bookings')
-      .select('id, appointment_time, service, status, ride_start_time, ride_end_time')
+      .select('id, appointment_time, status')
       .eq('appointment_date', date);
 
     if (error) throw error;
 
-    const exactSlotTaken = (data || []).some((booking) => (
-      booking.status !== 'cancelled' &&
-      booking.status !== 'archived' &&
-      normalizeBookingTime(booking.appointment_time) === normalizedTime
-    ));
-
-    if (exactSlotTaken) return true;
-
-    if (!isRideService(service)) return false;
-
-    const selectedWindow = getSelectedRideWindow();
-    if (!selectedWindow) return false;
-
     return (data || []).some((booking) => (
       booking.status !== 'cancelled' &&
       booking.status !== 'archived' &&
-      isRideService(booking.service) &&
-      booking.ride_start_time &&
-      booking.ride_end_time &&
-      blocksOverlap(
-        selectedWindow.startMinutes,
-        selectedWindow.endMinutes,
-        timeToMinutes(booking.ride_start_time),
-        timeToMinutes(booking.ride_end_time)
-      )
+      normalizeBookingTime(booking.appointment_time) === normalizedTime
     ));
   }
   
   // Load booked slots
   async function loadBookedSlotsForMonth() {
     bookedSlotsByDate = {};
-    rideBlocksByDate = {};
     try {
       const start = `${calYear}-${String(calMonth + 1).padStart(2, '0')}-01`;
       const end = `${calYear}-${String(calMonth + 2).padStart(2, '0')}-01`;
       const { data, error } = await supabase
         .from('bookings')
-        .select('appointment_date, appointment_time, service, status, ride_start_time, ride_end_time')
+        .select('appointment_date, appointment_time, status')
         .gte('appointment_date', start)
         .lt('appointment_date', end);
       if (error) throw error;
@@ -1112,20 +1020,6 @@ window.addEventListener('DOMContentLoaded', function() {
         data.forEach(row => {
           if (!bookedSlotsByDate[row.appointment_date]) bookedSlotsByDate[row.appointment_date] = [];
           bookedSlotsByDate[row.appointment_date].push(normalizeBookingTime(row.appointment_time));
-
-          if (
-            isRideService(row.service) &&
-            row.status !== 'cancelled' &&
-            row.status !== 'archived' &&
-            row.ride_start_time &&
-            row.ride_end_time
-          ) {
-            if (!rideBlocksByDate[row.appointment_date]) rideBlocksByDate[row.appointment_date] = [];
-            rideBlocksByDate[row.appointment_date].push({
-              start: normalizeBookingTime(row.ride_start_time),
-              end: normalizeBookingTime(row.ride_end_time)
-            });
-          }
         });
       }
       console.log('Bookings loaded:', bookedSlotsByDate);
@@ -1198,9 +1092,6 @@ window.addEventListener('DOMContentLoaded', function() {
     renderCalendar();
     
     const bookedTimes = bookedSlotsByDate[dateKey] || [];
-    const rideBlocks = rideBlocksByDate[dateKey] || [];
-    const service = document.getElementById('bService').value;
-    const durationHours = Number(document.getElementById('rideDuration').value || 1);
     const timeGrid = document.getElementById('calTimeGrid');
     timeGrid.innerHTML = '';
     
@@ -1210,18 +1101,9 @@ window.addEventListener('DOMContentLoaded', function() {
     TIME_SLOTS.forEach(slot => {
       const slotEl = document.createElement('div');
       slotEl.className = 'cal-time-slot';
-      const startMinutes = timeToMinutes(slot);
-      const endMinutes = startMinutes + durationHours * 60;
-      const endsAfterMidnight = endMinutes > 24 * 60;
-      const overlapsRideBlock = isRideService(service) && rideBlocks.some((block) =>
-        blocksOverlap(startMinutes, endMinutes, timeToMinutes(block.start), timeToMinutes(block.end))
-      );
+      slotEl.textContent = slot;
 
-      slotEl.textContent = isRideService(service)
-        ? `${slot} - ${endsAfterMidnight ? 'Unavailable' : minutesToTime(endMinutes)}`
-        : slot;
-
-      if (bookedTimes.includes(normalizeBookingTime(slot)) || overlapsRideBlock || endsAfterMidnight) {
+      if (bookedTimes.includes(normalizeBookingTime(slot))) {
         slotEl.classList.add('cal-time-booked');
       } else {
         slotEl.onclick = () => selectTime(slot, slotEl);
@@ -1280,14 +1162,8 @@ window.addEventListener('DOMContentLoaded', function() {
     
     try {
       const service = document.getElementById('bService').value;
-      const rideWindow = isRideService(service) ? getSelectedRideWindow() : null;
 
-      if (rideWindow && rideWindow.endMinutes > 24 * 60) {
-        alert('Please choose a ride start time and duration that ends before midnight.');
-        return;
-      }
-
-      const alreadyBooked = await isSlotAlreadyBooked(calSelectedDate, calSelectedTime, service);
+      const alreadyBooked = await isSlotAlreadyBooked(calSelectedDate, calSelectedTime);
       if (alreadyBooked) {
         alert('That time was just booked. Please choose another available time.');
         await loadBookedSlotsForMonth();
@@ -1308,15 +1184,9 @@ window.addEventListener('DOMContentLoaded', function() {
         service,
         appointment_date: calSelectedDate,
         appointment_time: normalizeBookingTime(calSelectedTime),
-        notes: `${isRideService(service) ? `Ride details (${rideWindow.durationHours} hour block, ${rideWindow.start}-${rideWindow.end})` : 'Vehicle'}: ${document.getElementById('bCar').value.trim()}. ${document.getElementById('bDetails').value.trim()}`,
+        notes: `Vehicle: ${document.getElementById('bCar').value.trim()}. ${document.getElementById('bDetails').value.trim()}`,
         status: 'new'
       };
-
-      if (rideWindow) {
-        bookingPayload.ride_start_time = rideWindow.start;
-        bookingPayload.ride_end_time = rideWindow.end;
-        bookingPayload.ride_duration_hours = rideWindow.durationHours;
-      }
 
       const { error } = await supabase
         .from('bookings')
@@ -1348,7 +1218,6 @@ window.addEventListener('DOMContentLoaded', function() {
       document.getElementById('bCar').value = '';
       document.getElementById('bDetails').value = '';
       document.getElementById('bService').selectedIndex = 0;
-      document.getElementById('rideDuration').value = '1';
       updateServiceFields();
       calSelectedDate = null;
       calSelectedTime = null;
@@ -1403,14 +1272,6 @@ window.addEventListener('DOMContentLoaded', function() {
   });
 
   document.getElementById('bService').addEventListener('change', updateServiceFields);
-  document.getElementById('rideDuration').addEventListener('change', () => {
-    calSelectedTime = null;
-    document.getElementById('bookConfirmBtn').style.display = 'none';
-    if (calSelectedDate) {
-      const dayNum = Number(calSelectedDate.split('-')[2]);
-      selectDate(calSelectedDate, dayNum);
-    }
-  });
   
   document.getElementById('yr').textContent = new Date().getFullYear();
   
