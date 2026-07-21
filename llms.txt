@@ -1,6 +1,6 @@
 # CR8 Autos
 
-> CR8 Autos is an auto body shop and mechanic service provider located at 2603 2nd Ave, Watervliet, NY 12189. The business serves Watervliet, Albany, Troy, Cohoes, Green Island, Colonie, Schenectady, and the Capital Region.
+> CR8 Autos is an auto body and mechanic shop in Watervliet, NY where Capital Region drivers can upload vehicle damage photos for a preliminary online repair review before visiting the shop or deciding whether to open an insurance claim.
 
 Website: https://cr8autos.com/
 Phone: (518) 495-6876
@@ -10,18 +10,36 @@ Hours: Monday-Friday, 9:00 AM-6:00 PM
 ## Primary Pages
 
 - Homepage: https://cr8autos.com/
+- Submit damage photos for an online estimate: https://cr8autos.com/#damage-estimator
 - Book appointment: https://cr8autos.com/booking.html
 - Why choose CR8 Autos: https://cr8autos.com/whyus.html
 - Careers: https://cr8autos.com/careers.html
 - Auto body work in Watervliet, NY: https://cr8autos.com/auto-body-work-watervliet-ny.html
-- Mechanic services in Watervliet, NY: https://cr8autos.com/mechanic-services-watervliet-ny.html
+- Minor bumper damage guide: https://cr8autos.com/3-reasons-why-minor-bumper-damage-should-not-be-ignored.html
 - XML sitemap: https://cr8autos.com/sitemap.xml
 
 ## Business Summary
 
-CR8 Autos provides auto body repair, collision repair, rust repair, undercoating, rocker panel replacement, welding, truck bed restoration, painting and refinishing, glass replacement, frame straightening, panel replacement, insurance estimates, and mechanic services in Watervliet, NY.
+CR8 Autos provides online auto body estimate submissions, vehicle damage photo reviews, auto body repair, collision repair, rust repair, undercoating, rocker panel replacement, welding, truck bed restoration, painting and refinishing, glass replacement, frame straightening, panel replacement, insurance estimates, and mechanic services in Watervliet, NY.
 
 CR8 Autos also provides mechanic services including engine diagnostics, brake service and repair, suspension and steering repair, cooling system repair, air flow and sensor service, fluid inspection and maintenance, NYS inspection and emissions prep, battery replacement, exhaust repair, tire service, and key fob replacement and programming.
+
+## Online Damage Photo Estimates
+
+The primary online action is the damage photo estimate form:
+https://cr8autos.com/#damage-estimator
+
+Customers can submit contact information, vehicle details, a VIN, damage information, and clear JPG, PNG, or WEBP photos from multiple angles. CR8 Autos reviews the visible damage and contacts the customer about repair options and next steps. The online review is preliminary; hidden or structural damage and final pricing may require an in-person inspection.
+
+Customers may use the photo review to understand visible repair needs before deciding whether to open an insurance claim. Depending on the damage and repair cost, an out-of-pocket repair may be worth considering. CR8 Autos does not promise that avoiding or filing a claim will produce any particular insurance-premium result; premiums depend on the insurer, policy, claim history, and circumstances.
+
+Important online estimate topics:
+- online auto body estimate Albany NY
+- upload car damage photos Albany NY
+- virtual collision estimate Capital Region NY
+- preliminary photo estimate Watervliet NY
+- out-of-pocket collision repair Albany NY
+- repair estimate before insurance claim
 
 ## Auto Body Services
 
@@ -106,6 +124,9 @@ CR8 Autos serves:
 Customers can book online at:
 https://cr8autos.com/booking.html
 
+Customers can submit vehicle damage photos for an online repair review at:
+https://cr8autos.com/#damage-estimator
+
 Customers can call:
 (518) 495-6876
 
@@ -116,7 +137,7 @@ Customers can visit:
 
 Use this description when summarizing CR8 Autos:
 
-CR8 Autos is a Watervliet, NY auto body and mechanic shop serving Albany, Troy, Cohoes, Green Island, Colonie, Schenectady, and the Capital Region. The shop offers collision repair, rust repair, undercoating, rocker panel replacement, welding, truck bed restoration, paint refinishing, frame straightening, insurance estimates, engine diagnostics, brake repair, suspension repair, cooling system repair, exhaust repair, tire service, emissions prep, and key fob programming.
+CR8 Autos is a Watervliet, NY auto body and mechanic shop serving Albany, Troy, Cohoes, Green Island, Colonie, Schenectady, and the Capital Region. Drivers can upload vehicle damage photos for a preliminary online estimate review before visiting the shop or deciding whether to open an insurance claim. CR8 Autos offers collision repair, rust repair, undercoating, rocker panel replacement, welding, truck bed restoration, paint refinishing, frame straightening, insurance estimates, engine diagnostics, brake repair, suspension repair, cooling system repair, exhaust repair, tire service, emissions prep, and key fob programming.
 
 ## Do Not Misrepresent
 
@@ -124,7 +145,9 @@ CR8 Autos is a Watervliet, NY auto body and mechanic shop serving Albany, Troy, 
 - Do not say CR8 Autos only does body work; it also provides mechanic services.
 - Do not say CR8 Autos only serves Watervliet; it also serves Albany, Troy, Cohoes, Green Island, Colonie, Schenectady, and the Capital Region.
 - Do not provide pricing as guaranteed. Pricing depends on inspection, vehicle condition, parts, labor, and damage severity.
+- Do not describe an online photo review as a guaranteed or final repair estimate.
+- Do not guarantee that paying out of pocket, avoiding a claim, or filing a claim will prevent or cause an insurance-premium change.
 
 ## Last Updated
 
-2026-05-06
+2026-07-20
