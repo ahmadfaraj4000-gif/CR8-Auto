@@ -4792,6 +4792,68 @@ body.site-page .footer-bottom {
 }
 body.site-page .footer { border-top-color: #c91f27 !important; }
 
+/* Footer bottom-row spacing */
+body.site-page .footer {
+  padding-bottom: 34px !important;
+}
+body.site-page .footer-bottom {
+  min-height: 82px !important;
+  margin: 0 !important;
+  padding: 28px 0 24px !important;
+  gap: 24px !important;
+  line-height: 1.6 !important;
+  border-top: 1px solid rgba(255, 255, 255, .32) !important;
+}
+body.site-page .footer-bottom > span {
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+body.site-page .footer-bottom > span:last-child {
+  text-align: right !important;
+}
+body.site-page .footer-legal {
+  margin: 0 !important;
+  padding: 22px 0 6px !important;
+  gap: 14px 24px !important;
+  line-height: 1.55 !important;
+  border-top: 1px solid rgba(255, 255, 255, .22) !important;
+}
+body.site-page .footer-legal a,
+body.site-page .footer-legal button {
+  display: inline-flex !important;
+  min-height: 30px !important;
+  align-items: center !important;
+}
+body.site-page-legal .legal-footer {
+  padding: 34px 24px 30px !important;
+}
+body.site-page-legal .legal-footer > p {
+  margin: 0 0 10px !important;
+  line-height: 1.6 !important;
+}
+body.site-page-legal .legal-footer .footer-legal {
+  width: min(100%, 980px) !important;
+  margin: 20px auto 0 !important;
+  padding: 24px 0 4px !important;
+}
+
+@media (max-width: 700px) {
+  body.site-page .footer { padding-bottom: 28px !important; }
+  body.site-page .footer-bottom {
+    min-height: 0 !important;
+    padding: 24px 0 22px !important;
+    gap: 10px !important;
+    text-align: center !important;
+  }
+  body.site-page .footer-bottom > span:last-child { text-align: center !important; }
+  body.site-page .footer-legal {
+    padding: 20px 12px 4px !important;
+    gap: 10px 20px !important;
+  }
+  body.site-page-legal .legal-footer { padding: 30px 18px 26px !important; }
+}
+
 /* Online estimate and out-of-pocket repair focus */
 body.site-page-index .damage-insurance-callout {
   margin: 28px 0 30px !important;
