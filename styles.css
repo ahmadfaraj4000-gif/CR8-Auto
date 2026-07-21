@@ -4911,3 +4911,105 @@ body.site-page-index .damage-insurance-callout .btn {
   }
   body.site-page-index .damage-insurance-callout .btn { width: 100% !important; justify-content: center !important; }
 }
+
+/* Final mobile hardening: shared across every public page */
+@media (max-width: 900px) {
+  html { overflow-x: hidden !important; }
+  body.site-page {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    -webkit-text-size-adjust: 100%;
+  }
+  body.site-page img,
+  body.site-page video,
+  body.site-page iframe {
+    max-width: 100% !important;
+  }
+  body.site-page .navbar,
+  body.site-page .navbar.scrolled {
+    width: 100% !important;
+    grid-template-columns: minmax(118px, 144px) minmax(0, 1fr) 44px !important;
+  }
+  body.site-page .menu-btn {
+    grid-column: 3 !important;
+    min-width: 44px !important;
+    min-height: 44px !important;
+    place-self: center end !important;
+  }
+  body.site-page .nav-links.open { overscroll-behavior: contain !important; }
+  body.site-page .btn,
+  body.site-page button:not(.menu-btn),
+  body.site-page input[type="submit"] {
+    min-height: 48px;
+  }
+  body.site-page .form-input,
+  body.site-page .form-select,
+  body.site-page .form-textarea,
+  body.site-page input,
+  body.site-page select,
+  body.site-page textarea {
+    max-width: 100% !important;
+    font-size: 16px !important;
+  }
+  body.site-page .form-input,
+  body.site-page .form-select,
+  body.site-page input:not([type="checkbox"]):not([type="radio"]):not([type="file"]) {
+    min-height: 48px !important;
+  }
+  body.site-page .modal-overlay { padding: 12px !important; }
+  body.site-page .modal {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: calc(100dvh - 24px) !important;
+  }
+  body.site-page .modal-header,
+  body.site-page .modal-body { padding-left: 20px !important; padding-right: 20px !important; }
+  body.site-page-index .damage-ai-card,
+  body.site-page-index .damage-ai-main,
+  body.site-page-index .damage-ai-side,
+  body.site-page-booking .booking-form-card,
+  body.site-page-booking .booking-sidebar {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+  body.site-page .footer {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  body.site-page .footer-bottom {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  body.site-page h1,
+  body.site-page h2,
+  body.site-page h3,
+  body.site-page p,
+  body.site-page a { overflow-wrap: anywhere; }
+}
+
+@media (max-width: 520px) {
+  body.site-page .navbar,
+  body.site-page .navbar.scrolled {
+    grid-template-columns: 122px minmax(0, 1fr) 44px !important;
+    padding: 0 10px !important;
+  }
+  body.site-page-index .home-hero {
+    width: calc(100% - 20px) !important;
+    margin-top: 88px !important;
+    border-radius: 12px !important;
+  }
+  body.site-page-index .home-hero-copy { padding: 30px 18px 34px !important; }
+  body.site-page-index .home-hero-media {
+    min-height: 280px !important;
+    height: min(96vw, 390px) !important;
+  }
+  body.site-page-index .hero-action-row { padding: 12px !important; }
+  body.site-page-index .damage-ai-section { padding: 52px 12px !important; }
+  body.site-page-index .damage-ai-main,
+  body.site-page-index .damage-ai-side { padding: 18px 14px !important; }
+  body.site-page-index .damage-upload-zone { min-height: 180px !important; padding: 22px 14px !important; }
+  body.site-page-booking .form-header,
+  body.site-page-booking .form-body { padding-left: 18px !important; padding-right: 18px !important; }
+  body.site-page .footer { padding-left: 16px !important; padding-right: 16px !important; }
+}
