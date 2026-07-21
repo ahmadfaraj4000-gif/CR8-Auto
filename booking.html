@@ -15,692 +15,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
 
-<style>
-:root {
-  --black: #0a0a0a;
-  --dark: #111111;
-  --card: #161616;
-  --border: #222222;
-  --red: #cc1f1f;
-  --red-light: #e83333;
-  --red-dark: #9a1515;
-  --white: #f5f5f5;
-  --gray: #888888;
-  --light-gray: #cccccc;
-}
-*{margin:0;padding:0;box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);overflow-x:hidden;}
-
-::-webkit-scrollbar{width:4px;}
-::-webkit-scrollbar-track{background:var(--black);}
-::-webkit-scrollbar-thumb{background:var(--red);}
-
-.navbar{position:fixed;top:0;left:0;width:100%;z-index:1000;padding:1rem 3rem;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,10,0.95);backdrop-filter:blur(20px);border-bottom:1px solid rgba(204,31,31,0.2);transition:all 0.3s;}
-.navbar.scrolled{padding:0.7rem 3rem;border-bottom-color:rgba(204,31,31,0.4);}
-.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none;cursor:pointer;}
-.logo-text{font-family:'Oswald',sans-serif;font-weight:700;font-size:1.2rem;letter-spacing:2px;text-transform:uppercase;color:var(--white);}
-.logo-text span{color:var(--red);}
-.nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center;}
-.nav-links a{color:var(--light-gray);text-decoration:none;font-family:'Oswald',sans-serif;font-size:0.85rem;letter-spacing:2px;text-transform:uppercase;font-weight:400;transition:color 0.3s;position:relative;}
-.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--red);transition:width 0.3s;}
-.nav-links a:hover{color:var(--white);}
-.nav-links a:hover::after{width:100%;}
-.nav-cta{background:var(--red)!important;color:white!important;padding:0.5rem 1.5rem;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:2px;font-size:0.8rem;border:none;cursor:pointer;text-transform:uppercase;transition:all 0.3s;text-decoration:none;clip-path:polygon(8px 0,100% 0,calc(100% - 8px) 100%,0 100%);}
-.nav-cta:hover{background:var(--red-light)!important;transform:translateY(-2px);}
-.nav-cta::after{display:none!important;}
-.menu-btn{display:none;background:none;border:none;color:var(--white);font-size:1.4rem;cursor:pointer;}
-
-.btn{display:inline-flex;align-items:center;gap:8px;padding:0.9rem 2rem;font-family:'Oswald',sans-serif;font-weight:500;font-size:0.85rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;border:none;text-decoration:none;transition:all 0.3s;}
-.btn-red{background:var(--red);color:white;clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%);}
-.btn-red:hover{background:var(--red-light);transform:translateY(-3px);}
-.btn-outline{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,0.2);clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%);}
-.btn-outline:hover{border-color:var(--red);color:var(--red);}
-
-.booking-hero{padding:140px 3rem 60px;background:var(--dark);position:relative;overflow:hidden;}
-.booking-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--red),transparent);}
-.booking-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(204,31,31,0.06) 0%,transparent 50%);pointer-events:none;}
-.booking-hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(204,31,31,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(204,31,31,0.05) 1px,transparent 1px);background-size:80px 80px;mask-image:radial-gradient(ellipse at 50% 0%,black 20%,transparent 70%);}
-.booking-hero-inner{max-width:900px;margin:0 auto;text-align:center;position:relative;z-index:1;}
-.booking-hero-tag{display:inline-flex;align-items:center;gap:10px;margin-bottom:1.2rem;justify-content:center;}
-.booking-hero-tag span{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--red);}
-.booking-hero-tag::before,.booking-hero-tag::after{content:'';width:40px;height:1px;background:var(--red);}
-.booking-hero h1{font-family:'Oswald',sans-serif;font-size:clamp(2.8rem,5vw,4.5rem);font-weight:700;text-transform:uppercase;letter-spacing:1px;line-height:1;margin-bottom:1rem;}
-.booking-hero h1 span{color:var(--red);}
-.booking-hero p{font-size:1.1rem;color:var(--gray);line-height:1.8;font-style:italic;max-width:580px;margin:0 auto;}
-
-.booking-section{padding:60px 3rem 100px;background:var(--black);position:relative;}
-.booking-section::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(204,31,31,0.3),transparent);}
-.booking-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1.4fr;gap:4rem;align-items:start;}
-
-.booking-sidebar{}
-.sidebar-block{margin-bottom:2.5rem;}
-.sidebar-label{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:1rem;display:flex;align-items:center;gap:8px;}
-.sidebar-label::after{content:'';flex:1;height:1px;background:rgba(204,31,31,0.2);}
-.contact-row{display:flex;align-items:center;gap:12px;padding:0.8rem 0;border-bottom:1px solid var(--border);}
-.contact-row:last-child{border-bottom:none;}
-.contact-icon{width:36px;height:36px;background:rgba(204,31,31,0.1);border:1px solid rgba(204,31,31,0.2);display:flex;align-items:center;justify-content:center;color:var(--red);font-size:0.85rem;flex-shrink:0;}
-.contact-label{font-family:'Oswald',sans-serif;font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-bottom:2px;}
-.contact-val{color:var(--white);font-size:0.95rem;}
-.contact-val a{color:var(--white);text-decoration:none;transition:color 0.2s;}
-.contact-val a:hover{color:var(--red);}
-.hours-row{display:flex;justify-content:space-between;padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.05);font-size:0.9rem;}
-.hours-row:last-child{border-bottom:none;}
-.hours-row .day{color:var(--gray);}
-.hours-row .time{color:var(--white);}
-.policy-note{background:rgba(204,31,31,0.06);border:1px solid rgba(204,31,31,0.15);border-left:3px solid var(--red);padding:1rem 1.2rem;font-size:0.88rem;color:var(--gray);line-height:1.7;}
-.policy-note strong{color:var(--light-gray);}
-
-.booking-form-card{background:var(--card);border:1px solid var(--border);border-top:3px solid var(--red);position:relative;}
-.booking-form-card::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(204,31,31,0.03) 0%,transparent 30%);pointer-events:none;}
-.form-header{padding:2rem 2rem 0;border-bottom:1px solid var(--border);padding-bottom:1.5rem;}
-.step-label{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:2px;color:var(--red);margin-bottom:0.3rem;}
-.step-title{font-family:'Oswald',sans-serif;font-size:1.4rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;}
-
-.book-progress{height:3px;background:rgba(255,255,255,0.08);margin:1.5rem 2rem 0;border-radius:2px;}
-.book-progress-bar{height:100%;background:var(--red);border-radius:2px;transition:width 0.4s ease;}
-
-.form-body{padding:1.5rem 2rem 2rem;}
-
-.form-group{margin-bottom:1.2rem;}
-.form-label{display:block;font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--gray);margin-bottom:0.5rem;}
-.form-input,.form-select,.form-textarea{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--white);font-family:'Crimson Pro',serif;font-size:1rem;padding:0.8rem 1rem;outline:none;transition:border-color 0.3s;}
-.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--red);}
-.form-input::placeholder,.form-textarea::placeholder{color:rgba(255,255,255,0.2);}
-.form-select option{background:var(--dark);}
-.form-textarea{resize:vertical;min-height:100px;}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
-.form-success{text-align:center;padding:2.5rem 1rem;color:var(--red);}
-.form-success i{font-size:3rem;display:block;margin-bottom:1rem;}
-.form-success p{color:var(--light-gray);font-size:1.1rem;line-height:1.7;}
-.form-success .appt-details{margin:1.5rem auto 0;background:rgba(204,31,31,0.08);border:1px solid rgba(204,31,31,0.2);padding:1rem 1.5rem;max-width:380px;font-size:1rem;color:var(--white);}
-
-.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
-.cal-nav-btn{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:var(--white);width:36px;height:36px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
-.cal-nav-btn:hover{border-color:var(--red);color:var(--red);}
-.cal-month-label{font-family:'Oswald',sans-serif;font-size:1.1rem;letter-spacing:2px;text-transform:uppercase;color:var(--white);}
-
-.cal-grid-header{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;margin-bottom:0.4rem;}
-.cal-grid-header span{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:1px;color:var(--gray);padding:4px 0;}
-.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:1.2rem;}
-.cal-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:0.85rem;cursor:pointer;border:1px solid transparent;transition:all 0.2s;border-radius:2px;color:var(--light-gray);}
-.cal-day:hover:not(.cal-day-disabled):not(.cal-day-empty){border-color:var(--red);color:var(--red);}
-.cal-day-today{border-color:rgba(255,255,255,0.2);color:var(--white);}
-.cal-day-selected{background:var(--red);color:white!important;border-color:var(--red)!important;}
-.cal-day-disabled{color:rgba(255,255,255,0.15);cursor:default;pointer-events:none;}
-.cal-day-empty{cursor:default;pointer-events:none;}
-
-.cal-time-title{font-family:'DM Mono',monospace;font-size:0.75rem;letter-spacing:2px;color:var(--red);text-transform:uppercase;margin-bottom:0.8rem;}
-.cal-time-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1.5rem;}
-.cal-time-slot{padding:0.55rem 0.3rem;text-align:center;font-family:'DM Mono',monospace;font-size:0.78rem;border:1px solid rgba(255,255,255,0.12);color:var(--light-gray);cursor:pointer;transition:all 0.2s;background:transparent;}
-.cal-time-slot:hover:not(.cal-time-booked){border-color:var(--red);color:var(--red);}
-.cal-time-slot.cal-time-selected{background:var(--red);border-color:var(--red);color:white;}
-.cal-time-slot.cal-time-booked{color:rgba(255,255,255,0.15);border-color:rgba(255,255,255,0.06);cursor:not-allowed;text-decoration:line-through;}
-
-.cal-footer{display:flex;justify-content:space-between;align-items:center;padding-top:0.5rem;border-top:1px solid rgba(255,255,255,0.06);}
-
-.footer{background:var(--dark);border-top:1px solid var(--border);padding:60px 3rem 30px;}
-.footer-inner{max-width:1300px;margin:0 auto;}
-.footer-top{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:3rem;margin-bottom:3rem;}
-.footer-brand p{color:var(--gray);font-size:0.95rem;line-height:1.8;margin-top:1rem;}
-.footer-col-title{font-family:'Oswald',sans-serif;font-size:0.85rem;letter-spacing:3px;text-transform:uppercase;color:var(--white);margin-bottom:1.2rem;}
-.footer-col ul{list-style:none;}
-.footer-col ul li{margin-bottom:0.7rem;}
-.footer-col ul li a{color:var(--gray);text-decoration:none;font-size:0.95rem;transition:color 0.2s;}
-.footer-col ul li a:hover{color:var(--red);}
-.footer-bottom{border-top:1px solid var(--border);padding-top:2rem;display:flex;justify-content:space-between;align-items:center;color:var(--gray);font-size:0.85rem;}
-
-.spinner{width:18px;height:18px;border:2px solid rgba(255,255,255,0.3);border-top-color:white;border-radius:50%;animation:spin 0.8s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg);}}
-
-@media(max-width:900px){
-  .booking-inner{grid-template-columns:1fr;gap:2.5rem;}
-  .booking-sidebar{order:2;}
-  .booking-form-card{order:1;}
-}
-@media(max-width:768px){
-  .navbar{padding:1rem 1.5rem;}
-  .nav-links{display:none;}
-  .menu-btn{display:block;}
-  .nav-links.open{display:flex;flex-direction:column;position:fixed;top:64px;left:0;right:0;background:rgba(10,10,10,0.98);padding:2rem;gap:1.5rem;border-bottom:1px solid var(--border);}
-  .booking-hero{padding:120px 1.5rem 50px;}
-  .booking-section{padding:40px 1.5rem 80px;}
-  .form-row{grid-template-columns:1fr;}
-  .footer-top{grid-template-columns:1fr 1fr;}
-  .footer-bottom{flex-direction:column;gap:1rem;text-align:center;}
-  .cal-time-grid{grid-template-columns:repeat(3,1fr);}
-}
-@media(max-width:480px){
-  .footer-top{grid-template-columns:1fr;}
-  .cal-time-grid{grid-template-columns:repeat(2,1fr);}
-}
-
-
-/* ===== PUBLIC SITE NAV REFRESH — PEP BOYS INSPIRED ===== */
-.navbar{min-height:86px !important;padding:0 2.8rem !important;background:#ffffff !important;border-bottom:4px solid var(--red) !important;box-shadow:0 10px 30px rgba(0,0,0,.18) !important;backdrop-filter:none !important;gap:24px !important;}
-.navbar.scrolled{padding:0 2.8rem !important;border-bottom-color:var(--red) !important;}
-.nav-logo{align-self:stretch !important;min-width:210px !important;display:flex !important;align-items:center !important;justify-content:center !important;padding:0 22px !important;background:#070707 !important;border-right:4px solid var(--red) !important;}
-.nav-logo img{height:74px !important;width:auto !important;max-width:180px !important;object-fit:contain !important;}
-.nav-links{flex:1 !important;justify-content:center !important;gap:0 !important;background:#050505 !important;border:1px solid rgba(0,0,0,.88) !important;border-radius:0 !important;overflow:hidden !important;box-shadow:0 10px 22px rgba(0,0,0,.12) !important;}
-.nav-links li{display:flex !important;}
-.nav-links a{min-height:58px !important;display:flex !important;align-items:center !important;justify-content:center !important;padding:0 28px !important;color:#ffffff !important;font-size:1rem !important;letter-spacing:1.4px !important;font-weight:700 !important;border-left:1px solid rgba(255,255,255,.22) !important;white-space:nowrap !important;}
-.nav-links li:first-child a{border-left:none !important;}
-.nav-links a::after{display:none !important;}
-.nav-links a:hover{background:#191919 !important;color:#ffffff !important;}
-.nav-links .nav-cta,.nav-cta{min-height:58px !important;clip-path:none !important;background:linear-gradient(180deg,var(--red-light),var(--red)) !important;color:#ffffff !important;box-shadow:none !important;}
-.menu-btn{color:#111111 !important;border:1px solid rgba(0,0,0,.15) !important;width:46px !important;height:46px !important;border-radius:8px !important;align-items:center !important;justify-content:center !important;}
-@media(max-width:1100px){.navbar{padding:0 1.5rem !important;}.nav-logo{min-width:170px !important;padding:0 14px !important;}.nav-logo img{height:64px !important;max-width:150px !important;}.nav-links a{padding:0 16px !important;font-size:.88rem !important;letter-spacing:1px !important;}}
-@media(max-width:900px){.navbar{min-height:76px !important;padding:.6rem 1rem !important;}.nav-logo{min-width:auto !important;align-self:auto !important;height:58px !important;border-right:none !important;border-radius:8px !important;}.nav-logo img{height:52px !important;}.menu-btn{display:flex !important;}.nav-links.open{display:flex !important;flex-direction:column !important;position:fixed !important;top:76px !important;left:0 !important;right:0 !important;background:#ffffff !important;padding:12px !important;gap:8px !important;border-bottom:4px solid var(--red) !important;box-shadow:0 18px 35px rgba(0,0,0,.18) !important;}.nav-links.open li{width:100% !important;}.nav-links.open a{width:100% !important;min-height:50px !important;border-left:none !important;border-radius:8px !important;background:#050505 !important;}.nav-links.open .nav-cta{background:linear-gradient(180deg,var(--red-light),var(--red)) !important;}}
-
-
-
-/* ===== PROFESSIONAL HEADER / NAV POLISH ===== */
-.navbar{
-  position:fixed !important;
-  top:0 !important;
-  left:0 !important;
-  width:100% !important;
-  z-index:1000 !important;
-  min-height:88px !important;
-  padding:10px clamp(18px,3vw,48px) !important;
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  gap:24px !important;
-  background:#f7f7f7 !important;
-  border-bottom:4px solid var(--red) !important;
-  box-shadow:0 12px 30px rgba(0,0,0,.18) !important;
-  backdrop-filter:none !important;
-}
-.navbar.scrolled{
-  min-height:88px !important;
-  padding:10px clamp(18px,3vw,48px) !important;
-  background:#f7f7f7 !important;
-  border-bottom:4px solid var(--red) !important;
-}
-.nav-logo{
-  flex:0 0 178px !important;
-  height:68px !important;
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  padding:7px 16px !important;
-  background:#050505 !important;
-  border:1px solid rgba(204,31,31,.28) !important;
-  border-radius:0 !important;
-  box-shadow:0 10px 22px rgba(0,0,0,.18) !important;
-  text-decoration:none !important;
-}
-.nav-logo img{
-  display:block !important;
-  height:auto !important;
-  max-height:56px !important;
-  width:auto !important;
-  max-width:148px !important;
-  object-fit:contain !important;
-}
-.nav-links{
-  flex:1 1 auto !important;
-  max-width:990px !important;
-  min-height:58px !important;
-  display:flex !important;
-  justify-content:center !important;
-  align-items:stretch !important;
-  gap:0 !important;
-  list-style:none !important;
-  margin:0 !important;
-  padding:0 !important;
-  background:#050505 !important;
-  border:1px solid rgba(255,255,255,.16) !important;
-  box-shadow:0 10px 24px rgba(0,0,0,.18) !important;
-}
-.nav-links li{
-  display:flex !important;
-  min-width:0 !important;
-}
-.nav-links a{
-  min-height:58px !important;
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  padding:0 clamp(18px,2vw,31px) !important;
-  color:#fff !important;
-  text-decoration:none !important;
-  font-family:'Oswald',sans-serif !important;
-  font-size:clamp(.86rem,1.05vw,1rem) !important;
-  line-height:1 !important;
-  font-weight:700 !important;
-  letter-spacing:2px !important;
-  text-transform:uppercase !important;
-  border-left:1px solid rgba(255,255,255,.22) !important;
-  border-radius:0 !important;
-  background:transparent !important;
-  transition:background .2s ease,color .2s ease,transform .2s ease !important;
-  white-space:nowrap !important;
-}
-.nav-links li:first-child a{border-left:none !important;}
-.nav-links a::after{display:none !important;}
-.nav-links a:hover,
-.nav-links a.current{
-  background:#171717 !important;
-  color:#fff !important;
-}
-.nav-links .nav-cta{
-  background:linear-gradient(180deg,var(--red-light),var(--red)) !important;
-  color:#fff !important;
-  min-width:152px !important;
-  box-shadow:none !important;
-  clip-path:none !important;
-}
-.nav-links .nav-cta:hover{
-  background:linear-gradient(180deg,#ff3c3c,var(--red-dark)) !important;
-  color:#fff !important;
-  transform:none !important;
-}
-.menu-btn{
-  display:none !important;
-  align-items:center !important;
-  justify-content:center !important;
-  width:48px !important;
-  height:48px !important;
-  background:#050505 !important;
-  border:1px solid rgba(204,31,31,.36) !important;
-  color:#fff !important;
-  border-radius:0 !important;
-}
-@media(max-width:1180px){
-  .navbar{gap:16px !important;padding:10px 18px !important;}
-  .nav-logo{flex-basis:154px !important;}
-  .nav-logo img{max-height:50px !important;max-width:126px !important;}
-  .nav-links a{padding:0 16px !important;letter-spacing:1.45px !important;font-size:.82rem !important;}
-  .nav-links .nav-cta{min-width:130px !important;}
-}
-@media(max-width:900px){
-  .navbar{
-    min-height:76px !important;
-    padding:9px 14px !important;
-    justify-content:space-between !important;
-    gap:12px !important;
-  }
-  .navbar.scrolled{min-height:76px !important;padding:9px 14px !important;}
-  .nav-logo{
-    flex:0 0 142px !important;
-    width:142px !important;
-    height:56px !important;
-    padding:5px 12px !important;
-  }
-  .nav-logo img{max-height:46px !important;max-width:118px !important;}
-  .menu-btn{display:flex !important;}
-  .nav-links{display:none !important;}
-  .nav-links.open{
-    display:flex !important;
-    flex-direction:column !important;
-    position:fixed !important;
-    top:76px !important;
-    left:0 !important;
-    right:0 !important;
-    max-width:none !important;
-    min-height:0 !important;
-    padding:12px !important;
-    gap:8px !important;
-    background:#f7f7f7 !important;
-    border:0 !important;
-    border-bottom:4px solid var(--red) !important;
-    box-shadow:0 22px 36px rgba(0,0,0,.24) !important;
-  }
-  .nav-links.open li{width:100% !important;display:block !important;}
-  .nav-links.open a{
-    width:100% !important;
-    min-height:50px !important;
-    justify-content:center !important;
-    border-left:none !important;
-    border:1px solid rgba(255,255,255,.1) !important;
-    background:#050505 !important;
-    color:#fff !important;
-    border-radius:0 !important;
-  }
-  .nav-links.open .nav-cta{background:linear-gradient(180deg,var(--red-light),var(--red)) !important;}
-}
-@media(max-width:520px){
-  .navbar{min-height:70px !important;padding:7px 10px !important;}
-  .navbar.scrolled{min-height:70px !important;padding:7px 10px !important;}
-  .nav-logo{flex-basis:126px !important;width:126px !important;height:52px !important;}
-  .nav-logo img{max-height:42px !important;max-width:106px !important;}
-  .nav-links.open{top:70px !important;}
-}
-
-
-
-/* ==========================================================
-   CR8 AUTOS — PROFESSIONAL BLACK HEADER / CENTERED NAV UPDATE
-   Header polish only. Content, forms, SEO, and page sections untouched.
-   ========================================================== */
-.navbar{
-  position:fixed !important;
-  top:0 !important;
-  left:0 !important;
-  width:100% !important;
-  min-height:86px !important;
-  padding:0 34px !important;
-  display:grid !important;
-  grid-template-columns:190px minmax(0,1fr) 190px !important;
-  align-items:center !important;
-  background:#000000 !important;
-  background-color:#000000 !important;
-  backdrop-filter:none !important;
-  -webkit-backdrop-filter:none !important;
-  border-bottom:1px solid rgba(204,31,31,.55) !important;
-  box-shadow:0 14px 34px rgba(0,0,0,.62) !important;
-  transition:min-height .25s ease, box-shadow .25s ease, border-color .25s ease !important;
-}
-.navbar::after{
-  content:'' !important;
-  position:absolute !important;
-  left:0 !important;
-  right:0 !important;
-  bottom:-2px !important;
-  height:2px !important;
-  background:linear-gradient(90deg,transparent 0%,rgba(204,31,31,.35) 20%,rgba(232,51,51,.95) 50%,rgba(204,31,31,.35) 80%,transparent 100%) !important;
-  pointer-events:none !important;
-}
-.navbar.scrolled{
-  min-height:76px !important;
-  padding:0 34px !important;
-  background:#000000 !important;
-  border-bottom-color:rgba(204,31,31,.72) !important;
-  box-shadow:0 12px 28px rgba(0,0,0,.72) !important;
-}
-.nav-logo{
-  grid-column:1 !important;
-  justify-self:start !important;
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  height:72px !important;
-  min-width:0 !important;
-  padding:0 !important;
-  gap:0 !important;
-  background:transparent !important;
-  border:0 !important;
-  border-right:0 !important;
-  border-radius:0 !important;
-  text-decoration:none !important;
-}
-.nav-logo img{
-  display:block !important;
-  height:64px !important;
-  max-height:64px !important;
-  width:auto !important;
-  max-width:168px !important;
-  object-fit:contain !important;
-}
-.nav-links{
-  grid-column:2 !important;
-  justify-self:center !important;
-  display:flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  flex-wrap:nowrap !important;
-  gap:10px !important;
-  margin:0 !important;
-  padding:0 !important;
-  list-style:none !important;
-}
-.nav-links li{display:flex !important;align-items:center !important;}
-.nav-links a{
-  display:inline-flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  min-height:42px !important;
-  padding:0 17px !important;
-  border:1px solid rgba(255,255,255,.16) !important;
-  border-radius:999px !important;
-  background:rgba(255,255,255,.025) !important;
-  color:rgba(245,245,245,.88) !important;
-  font-family:'Oswald',sans-serif !important;
-  font-size:.78rem !important;
-  font-weight:600 !important;
-  letter-spacing:1.35px !important;
-  line-height:1 !important;
-  text-transform:uppercase !important;
-  text-decoration:none !important;
-  white-space:nowrap !important;
-  clip-path:none !important;
-  transition:background .22s ease,border-color .22s ease,color .22s ease,box-shadow .22s ease,transform .22s ease !important;
-}
-.nav-links a::after{display:none !important;content:none !important;}
-.nav-links a:hover,
-.nav-links a.current{
-  color:#ffffff !important;
-  border-color:rgba(232,51,51,.78) !important;
-  background:rgba(204,31,31,.16) !important;
-  box-shadow:0 0 0 1px rgba(204,31,31,.18),0 8px 22px rgba(204,31,31,.14) !important;
-  transform:translateY(-1px) !important;
-}
-.nav-cta{
-  border:1px solid rgba(232,51,51,.95) !important;
-  background:linear-gradient(180deg,rgba(204,31,31,.95),rgba(154,21,21,.95)) !important;
-  color:#ffffff !important;
-  box-shadow:0 9px 22px rgba(204,31,31,.22) !important;
-}
-.nav-cta:hover{
-  background:linear-gradient(180deg,#e83333,#cc1f1f) !important;
-  color:#ffffff !important;
-  border-color:#ff4a4a !important;
-  transform:translateY(-1px) !important;
-}
-.menu-btn{
-  grid-column:3 !important;
-  justify-self:end !important;
-  width:46px !important;
-  height:42px !important;
-  display:none !important;
-  align-items:center !important;
-  justify-content:center !important;
-  background:#000000 !important;
-  border:1px solid rgba(204,31,31,.65) !important;
-  border-radius:999px !important;
-  color:#ffffff !important;
-  font-size:1.05rem !important;
-  cursor:pointer !important;
-}
-.menu-btn:hover{background:rgba(204,31,31,.14) !important;border-color:var(--red-light) !important;}
-
-@media(max-width:1180px){
-  .navbar{grid-template-columns:170px minmax(0,1fr) 80px !important;padding:0 22px !important;}
-  .navbar.scrolled{padding:0 22px !important;}
-  .nav-logo img{height:58px !important;max-height:58px !important;max-width:146px !important;}
-  .nav-links{gap:7px !important;}
-  .nav-links a{min-height:40px !important;padding:0 12px !important;font-size:.72rem !important;letter-spacing:1px !important;}
-}
-@media(max-width:900px){
-  .navbar,
-  .navbar.scrolled{
-    min-height:76px !important;
-    padding:0 16px !important;
-    display:grid !important;
-    grid-template-columns:auto auto !important;
-    justify-content:space-between !important;
-    background:#000000 !important;
-    border-bottom:1px solid rgba(204,31,31,.65) !important;
-  }
-  .nav-logo{grid-column:1 !important;height:64px !important;justify-self:start !important;}
-  .nav-logo img{height:54px !important;max-height:54px !important;max-width:138px !important;}
-  .menu-btn{grid-column:2 !important;display:flex !important;}
-  .nav-links{display:none !important;}
-  .nav-links.open{
-    display:flex !important;
-    flex-direction:column !important;
-    align-items:stretch !important;
-    justify-content:flex-start !important;
-    position:fixed !important;
-    top:76px !important;
-    left:0 !important;
-    right:0 !important;
-    width:100% !important;
-    max-height:calc(100vh - 76px) !important;
-    overflow:auto !important;
-    padding:16px !important;
-    gap:10px !important;
-    background:#000000 !important;
-    border-top:1px solid rgba(255,255,255,.08) !important;
-    border-bottom:2px solid rgba(204,31,31,.88) !important;
-    box-shadow:0 22px 44px rgba(0,0,0,.72) !important;
-  }
-  .nav-links.open li{width:100% !important;display:block !important;}
-  .nav-links.open a{
-    width:100% !important;
-    min-height:52px !important;
-    padding:0 18px !important;
-    border-radius:14px !important;
-    border:1px solid rgba(255,255,255,.14) !important;
-    background:#050505 !important;
-    color:#ffffff !important;
-    font-size:.86rem !important;
-    letter-spacing:1.4px !important;
-  }
-  .nav-links.open a:hover,
-  .nav-links.open a.current{background:rgba(204,31,31,.18) !important;border-color:rgba(232,51,51,.82) !important;}
-  .nav-links.open .nav-cta{background:linear-gradient(180deg,var(--red-light),var(--red)) !important;border-color:var(--red-light) !important;}
-}
-@media(max-width:480px){
-  .navbar,
-  .navbar.scrolled{min-height:72px !important;padding:0 12px !important;}
-  .nav-logo{height:60px !important;}
-  .nav-logo img{height:48px !important;max-height:48px !important;max-width:120px !important;}
-  .menu-btn{width:42px !important;height:40px !important;}
-  .nav-links.open{top:72px !important;max-height:calc(100vh - 72px) !important;padding:12px !important;}
-}
-
-
-
-/* ==========================================================
-   CR8 AUTOS — FINAL NAV CLEANUP
-   Removes boxed outlines around nav tabs and keeps Contact Us
-   the same size/alignment as every other nav item.
-   ========================================================== */
-.nav-links{
-  gap:18px !important;
-  background:transparent !important;
-  border:0 !important;
-  box-shadow:none !important;
-  overflow:visible !important;
-}
-.nav-links li{
-  display:flex !important;
-  align-items:center !important;
-}
-.nav-links a,
-.nav-links .nav-cta,
-.nav-cta{
-  min-height:42px !important;
-  height:42px !important;
-  padding:0 15px !important;
-  border:0 !important;
-  outline:0 !important;
-  border-radius:0 !important;
-  background:transparent !important;
-  box-shadow:none !important;
-  clip-path:none !important;
-  color:rgba(245,245,245,.88) !important;
-  display:inline-flex !important;
-  align-items:center !important;
-  justify-content:center !important;
-  line-height:1 !important;
-}
-.nav-links a::after,
-.nav-links .nav-cta::after,
-.nav-cta::after{
-  content:'' !important;
-  display:block !important;
-  position:absolute !important;
-  left:15px !important;
-  right:15px !important;
-  bottom:6px !important;
-  width:auto !important;
-  height:2px !important;
-  background:var(--red) !important;
-  transform:scaleX(0) !important;
-  transform-origin:center !important;
-  transition:transform .22s ease !important;
-}
-.nav-links a:hover,
-.nav-links a.current,
-.nav-links .nav-cta:hover,
-.nav-cta:hover{
-  background:transparent !important;
-  border:0 !important;
-  box-shadow:none !important;
-  color:#ffffff !important;
-  transform:none !important;
-}
-.nav-links a:hover::after,
-.nav-links a.current::after,
-.nav-links .nav-cta:hover::after,
-.nav-cta:hover::after{
-  transform:scaleX(1) !important;
-}
-.nav-links .nav-cta,
-.nav-cta{
-  font-size:.78rem !important;
-  font-weight:600 !important;
-  letter-spacing:1.35px !important;
-  min-width:auto !important;
-  color:#ffffff !important;
-}
-.nav-links .nav-cta::before,
-.nav-cta::before{
-  content:'' !important;
-  position:absolute !important;
-  inset:5px 4px !important;
-  background:rgba(204,31,31,.92) !important;
-  z-index:-1 !important;
-  transform:skewX(-10deg) !important;
-  transition:background .22s ease !important;
-}
-.nav-links .nav-cta:hover::before,
-.nav-cta:hover::before{
-  background:var(--red-light) !important;
-}
-@media(max-width:1180px){
-  .nav-links{gap:10px !important;}
-  .nav-links a,
-  .nav-links .nav-cta,
-  .nav-cta{height:40px !important;min-height:40px !important;padding:0 11px !important;font-size:.72rem !important;letter-spacing:1px !important;}
-  .nav-links a::after,.nav-links .nav-cta::after,.nav-cta::after{left:11px !important;right:11px !important;bottom:5px !important;}
-}
-@media(max-width:900px){
-  .nav-links.open{
-    gap:6px !important;
-    background:#000000 !important;
-    border-top:1px solid rgba(255,255,255,.08) !important;
-    border-bottom:2px solid rgba(204,31,31,.88) !important;
-    box-shadow:0 22px 44px rgba(0,0,0,.72) !important;
-  }
-  .nav-links.open a,
-  .nav-links.open .nav-cta,
-  .nav-links.open .nav-cta:hover{
-    width:100% !important;
-    min-height:50px !important;
-    height:50px !important;
-    padding:0 18px !important;
-    border:0 !important;
-    outline:0 !important;
-    border-radius:0 !important;
-    background:transparent !important;
-    box-shadow:none !important;
-    color:#ffffff !important;
-  }
-  .nav-links.open .nav-cta::before{inset:7px 12px !important;}
-}
-</style>
+<link rel="stylesheet" href="assets/css/booking.css"/>
+<link rel="stylesheet" href="site-theme.css"/>
 </head>
-<body>
+<body class="site-page site-page-booking">
 
 <!-- NAVBAR -->
 <nav class="navbar" id="navbar">
   <a class="nav-logo" href="index.html" aria-label="CR8 Autos Home">
-    <img src="logo.png" alt="CR8 Autos"/>
+    <img src="logo-footer-transparent.png" alt="CR8 Autos body shop and repair"/>
   </a>
   <button class="menu-btn" id="menuBtn" aria-label="Open navigation"><i class="fas fa-bars"></i></button>
   <ul class="nav-links" id="navLinks">
@@ -709,7 +32,7 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
     <li><a href="index.html#services-section">Services</a></li>
     <li><a href="whyus.html">Why Us?</a></li>
     <li><a href="careers.html">Careers</a></li>
-    <li><a href="tel:+15184956876" class="nav-cta">Contact Us</a></li>
+    <li><a href="index.html#damage-estimator" class="nav-cta">Online Estimate</a></li>
   </ul>
 </nav>
 
@@ -761,13 +84,13 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
       <div class="sidebar-block">
         <div class="policy-note">
           <strong>Walk-ins welcome</strong> for free estimates. Booked appointments get priority scheduling.<br><br>
-          Need immediate help? Call us at <a href="tel:5184956876" style="color:var(--red);">(518) 495-6876</a>.
+          Need immediate help? Call us at <a class="booking-utility-1" href="tel:5184956876">(518) 495-6876</a>.
         </div>
       </div>
 
       <div class="sidebar-block">
         <div class="sidebar-label">We Serve</div>
-        <p style="color:var(--gray);font-size:0.9rem;line-height:1.8;">Watervliet · Albany · Troy · Cohoes · Green Island · Colonie · Schenectady, NY</p>
+        <p class="booking-utility-2">Watervliet · Albany · Troy · Cohoes · Green Island · Colonie · Schenectady, NY</p>
       </div>
     </div>
 
@@ -779,7 +102,7 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
       </div>
 
       <div class="book-progress">
-        <div class="book-progress-bar" id="bookProgressBar" style="width:50%"></div>
+        <div class="book-progress-bar booking-utility-3" id="bookProgressBar"></div>
       </div>
 
       <div class="form-body">
@@ -838,13 +161,13 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
             <label class="form-label">Additional Details</label>
             <textarea class="form-textarea" placeholder="Any additional information about your vehicle or the service needed..." id="bDetails" rows="3"></textarea>
           </div>
-          <button class="btn btn-red" style="width:100%;justify-content:center;" onclick="bookGoStep2()">
-            Next: Pick a Date &amp; Time <i class="fas fa-arrow-right" style="margin-left:8px;"></i>
+          <button class="btn btn-red booking-utility-4" onclick="bookGoStep2()">
+            Next: Pick a Date &amp; Time <i class="fas fa-arrow-right booking-utility-5"></i>
           </button>
         </div>
 
         <!-- STEP 2: Calendar -->
-        <div id="bookStep2" style="display:none;">
+        <div class="booking-utility-6" id="bookStep2">
           <div class="cal-nav">
             <button class="cal-nav-btn" onclick="calPrevMonth()"><i class="fas fa-chevron-left"></i></button>
             <span class="cal-month-label" id="calMonthLabel"></span>
@@ -854,30 +177,30 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
             <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
           </div>
           <div class="cal-grid" id="calGrid"></div>
-          <div id="calTimeSection" style="display:none;">
+          <div class="booking-utility-6" id="calTimeSection">
             <div class="cal-time-title">Available Times — <span id="calSelectedDateLabel"></span></div>
             <div class="cal-time-grid" id="calTimeGrid"></div>
           </div>
           <div class="cal-footer">
-            <button class="btn btn-outline" style="padding:0.6rem 1.5rem;" onclick="bookGoStep1(true)">
+            <button class="btn btn-outline booking-utility-7" onclick="bookGoStep1(true)">
               <i class="fas fa-arrow-left"></i> Back
             </button>
-            <button class="btn btn-red" id="bookConfirmBtn" style="padding:0.6rem 1.5rem;display:none;" onclick="submitBook()">
+            <button class="btn btn-red booking-utility-8" id="bookConfirmBtn" onclick="submitBook()">
               <i class="fas fa-calendar-check"></i> Confirm Appointment
             </button>
           </div>
         </div>
 
         <!-- Success -->
-        <div class="form-success" id="bookSuccess" style="display:none;">
+        <div class="form-success booking-utility-6" id="bookSuccess">
           <i class="fas fa-check-circle"></i>
           <p id="bookSuccessMsg">Appointment booked! We'll see you then.</p>
           <div class="appt-details" id="bookApptDetails"></div>
-          <div style="margin-top:2rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;">
-            <a href="index.html" class="btn btn-outline" style="padding:0.6rem 1.5rem;">
+          <div class="booking-utility-9">
+            <a href="index.html" class="btn btn-outline booking-utility-7">
               <i class="fas fa-home"></i> Back to Home
             </a>
-            <button class="btn btn-red" style="padding:0.6rem 1.5rem;" onclick="resetForm()">
+            <button class="btn btn-red booking-utility-7" onclick="resetForm()">
               <i class="fas fa-plus"></i> Book Another
             </button>
           </div>
@@ -892,8 +215,8 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
   <div class="footer-inner">
     <div class="footer-top">
       <div class="footer-brand">
-        <div style="display:flex;align-items:center;gap:10px;">
-        <img src="logo.png" alt="CR8 Autos" style="height:48px;width:auto;"/>      
+        <div class="booking-utility-10">
+        <img class="booking-utility-11" src="logo.png" alt="CR8 Autos"/>      
         </div>
         <p>Full-service auto body and mechanic shop in Watervliet, NY. Collision repair, mechanical services, and honest craftsmanship for the Capital Region.</p>
       </div>
@@ -921,7 +244,7 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
       </div>
       <div class="footer-col">
         <div class="footer-col-title">Contact</div>
-        <address style="font-style:normal;">
+        <address class="booking-utility-12">
           <ul>
             <li><a href="tel:5184956876">(518) 495-6876</a></li>
             <li><a href="https://www.google.com/maps/search/?api=1&query=2603+2nd+Ave+Watervliet+NY+12189" target="_blank" rel="noopener">2603 2nd Ave</a></li>
@@ -933,7 +256,7 @@ body{font-family:'Crimson Pro',serif;background:var(--black);color:var(--white);
     </div>
     <div class="footer-bottom">
       <span>© <span id="yr"></span> CR8 Autos Body Shop &amp; Repair. All rights reserved.</span>
-      <span style="font-size:0.8rem;">Powered by <a href="https://reimagebs.com" target="_blank" style="color:var(--red);text-decoration:none;">RE IMAGE Business Solutions</a></span>
+      <span class="booking-utility-13">Powered by <a class="booking-utility-14" href="https://reimagebs.com" target="_blank">RE IMAGE Business Solutions</a></span>
     </div>
   </div>
 </footer>
@@ -1289,5 +612,6 @@ window.addEventListener('DOMContentLoaded', function() {
   console.log('Booking page ready');
 });
 </script>
+<script src="site-ui.js" defer></script>
 </body>
 </html>
