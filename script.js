@@ -113,6 +113,8 @@ function initDamageEstimatorWizard() {
   }
 
   function renderStep() {
+    form.dataset.step = String(currentStep)
+
     document.querySelectorAll('.damage-step').forEach((step) => {
       step.classList.toggle('active', Number(step.dataset.step) === currentStep)
     })
@@ -121,7 +123,7 @@ function initDamageEstimatorWizard() {
       pill.classList.toggle('active', Number(pill.dataset.pill) <= currentStep)
     })
 
-    if (prevBtn) prevBtn.style.visibility = currentStep === 1 ? 'hidden' : 'visible'
+    if (prevBtn) prevBtn.style.display = currentStep === 1 ? 'none' : 'inline-flex'
     if (nextBtn) nextBtn.style.display = currentStep === 4 ? 'none' : 'inline-flex'
     if (analyzeBtn) analyzeBtn.style.display = currentStep === 4 ? 'inline-flex' : 'none'
   }
