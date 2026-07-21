@@ -5119,3 +5119,277 @@ body.site-page-index #damageEstimatorForm { scroll-margin-top: 88px; }
   body.site-page-index .damage-upload-sub { font-size: .82rem !important; line-height: 1.35 !important; }
   body.site-page-index .damage-ai-side { padding: 20px 16px !important; }
 }
+
+/* ==========================================================================
+   Definitive phone layout — keep this last so older page-specific patches
+   cannot turn the mobile site back into a compressed desktop composition.
+   ========================================================================== */
+@media (max-width: 600px) {
+  body.site-page {
+    font-size: 16px !important;
+    line-height: 1.55 !important;
+  }
+
+  body.site-page .navbar,
+  body.site-page .navbar.scrolled {
+    min-height: 72px !important;
+    height: 72px !important;
+    padding: 0 12px !important;
+    grid-template-columns: 118px minmax(0, 1fr) 44px !important;
+    gap: 10px !important;
+  }
+  body.site-page .nav-logo {
+    width: 116px !important;
+    height: 68px !important;
+  }
+  body.site-page .nav-logo img {
+    width: 112px !important;
+    height: 54px !important;
+    max-width: 112px !important;
+    max-height: 54px !important;
+    transform: none !important;
+  }
+  body.site-page .menu-btn {
+    width: 44px !important;
+    height: 44px !important;
+  }
+  body.site-page .nav-links.open {
+    top: 72px !important;
+    max-height: calc(100dvh - 72px) !important;
+  }
+
+  body.site-page .btn,
+  body.site-page button:not(.menu-btn) {
+    min-height: 50px !important;
+    padding: 0 16px !important;
+    font-size: .78rem !important;
+    letter-spacing: 1.25px !important;
+  }
+  body.site-page input::placeholder,
+  body.site-page textarea::placeholder {
+    color: #737873 !important;
+    opacity: 1 !important;
+  }
+
+  /* Homepage: lead with the offer, keep the shop photo useful but compact. */
+  body.site-page-index .home-hero {
+    width: calc(100% - 20px) !important;
+    margin: 84px auto 24px !important;
+    padding-top: 0 !important;
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto clamp(280px, 86vw, 370px) auto !important;
+    border-radius: 10px !important;
+    box-shadow: 0 12px 34px rgba(20, 24, 20, .1) !important;
+  }
+  body.site-page-index .home-hero-copy {
+    grid-row: 1 !important;
+    padding: 30px 20px 32px !important;
+  }
+  body.site-page-index .home-hero-copy::before {
+    width: 54px !important;
+    height: 5px !important;
+    margin-bottom: 16px !important;
+  }
+  body.site-page-index .home-hero-kicker {
+    margin-bottom: 10px !important;
+    font-size: .66rem !important;
+    line-height: 1.45 !important;
+    letter-spacing: 1.6px !important;
+  }
+  body.site-page-index .home-hero-copy h1 {
+    font-size: clamp(2.25rem, 10.5vw, 3rem) !important;
+    line-height: 1 !important;
+  }
+  body.site-page-index .home-hero-lead {
+    margin: 16px 0 20px !important;
+    font-size: 1.04rem !important;
+    line-height: 1.55 !important;
+  }
+  body.site-page-index .home-hero-buttons { gap: 10px !important; }
+  body.site-page-index .home-hero-buttons a { min-height: 52px !important; }
+  body.site-page-index .home-hero-note {
+    font-size: .72rem !important;
+    line-height: 1.55 !important;
+  }
+  body.site-page-index .home-hero-media {
+    grid-row: 2 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    border-top: 1px solid #dedad5 !important;
+    border-bottom: 5px solid #c91f27 !important;
+  }
+  body.site-page-index .home-hero-media img { object-fit: cover !important; }
+  body.site-page-index .hero-action-bar { grid-row: 3 !important; }
+  body.site-page-index .hero-quick-stat { padding: 14px 5px !important; }
+  body.site-page-index .hero-quick-num { font-size: 1.55rem !important; }
+  body.site-page-index .hero-quick-label {
+    font-size: .58rem !important;
+    line-height: 1.3 !important;
+    letter-spacing: .65px !important;
+  }
+  body.site-page-index .hero-action-row { padding: 12px !important; }
+  body.site-page-index .hero-address-link,
+  body.site-page-index .hero-phone-link {
+    min-height: 52px !important;
+    padding: 11px 12px !important;
+    font-size: .78rem !important;
+    line-height: 1.35 !important;
+  }
+  body.site-page-index .address-open-maps { display: block !important; width: 100% !important; }
+
+  body.site-page-index .shop-intro { padding: 54px 18px 64px !important; }
+  body.site-page-index .shop-intro-inner { gap: 38px !important; }
+  body.site-page-index .shop-intro-photo,
+  body.site-page-index .shop-intro-photo img {
+    height: clamp(290px, 88vw, 380px) !important;
+    min-height: 0 !important;
+  }
+  body.site-page-index .shop-intro-copy h2 {
+    margin-bottom: 20px !important;
+    font-size: clamp(2.45rem, 12vw, 3.35rem) !important;
+  }
+  body.site-page-index .shop-intro-copy > p:not(.section-tag) {
+    font-size: 1.06rem !important;
+    line-height: 1.65 !important;
+  }
+  body.site-page-index .shop-intro-actions { gap: 18px !important; margin-top: 26px !important; }
+  body.site-page-index .shop-intro-actions .btn { width: 100% !important; }
+
+  /* Estimate: comfortable form controls and readable supporting copy. */
+  body.site-page-index .damage-ai-shell { padding: 48px 14px 60px !important; }
+  body.site-page-index .damage-ai-header { margin-bottom: 22px !important; }
+  body.site-page-index .damage-ai-header h2 {
+    font-size: clamp(2.15rem, 10vw, 2.75rem) !important;
+    line-height: 1.03 !important;
+  }
+  body.site-page-index .damage-ai-header p,
+  body.site-page-index .damage-insurance-callout > p,
+  body.site-page-index .damage-ai-sub,
+  body.site-page-index .damage-side-list span {
+    font-size: 1rem !important;
+    line-height: 1.55 !important;
+  }
+  body.site-page-index .damage-ai-badges { grid-template-columns: 1fr !important; }
+  body.site-page-index .damage-ai-badge {
+    justify-content: flex-start !important;
+    padding: 11px 12px !important;
+    font-size: .68rem !important;
+  }
+  body.site-page-index .damage-insurance-callout {
+    margin: 20px 0 26px !important;
+    padding: 20px 18px !important;
+  }
+  body.site-page-index .damage-insurance-callout h3 {
+    font-size: 1.55rem !important;
+    line-height: 1.08 !important;
+  }
+  body.site-page-index .damage-ai-main { padding: 18px 16px !important; }
+  body.site-page-index .damage-ai-progress { gap: 4px !important; margin-bottom: 22px !important; }
+  body.site-page-index .damage-ai-step-pill {
+    min-height: 40px !important;
+    padding: 7px 3px !important;
+    font-size: .58rem !important;
+    white-space: normal !important;
+  }
+  body.site-page-index .damage-step-title {
+    margin-bottom: 18px !important;
+    font-size: 1.55rem !important;
+  }
+  body.site-page-index .damage-step .form-group { margin-bottom: 14px !important; }
+  body.site-page-index .damage-step .form-label {
+    margin-bottom: 7px !important;
+    font-size: .68rem !important;
+  }
+  body.site-page-index .damage-step .form-input,
+  body.site-page-index .damage-step .form-select {
+    min-height: 52px !important;
+    height: 52px !important;
+    padding: 10px 12px !important;
+  }
+  body.site-page-index .damage-step .form-textarea {
+    min-height: 108px !important;
+    height: auto !important;
+  }
+  body.site-page-index .damage-actions { margin-top: 14px !important; padding-top: 14px !important; }
+
+  /* Booking: form first, details second, with full-size readable controls. */
+  body.site-page-booking .booking-hero {
+    padding: 106px 18px 40px !important;
+  }
+  body.site-page-booking .booking-hero h1 {
+    font-size: clamp(2.45rem, 12vw, 3.2rem) !important;
+    line-height: 1 !important;
+  }
+  body.site-page-booking .booking-hero p { font-size: 1.04rem !important; line-height: 1.6 !important; }
+  body.site-page-booking .booking-section { padding: 28px 10px 64px !important; }
+  body.site-page-booking .booking-inner { gap: 24px !important; }
+  body.site-page-booking .booking-form-card,
+  body.site-page-booking .booking-sidebar { border-radius: 10px !important; }
+  body.site-page-booking .form-header { padding: 24px 18px 20px !important; }
+  body.site-page-booking .form-body { padding: 20px 18px 24px !important; }
+  body.site-page-booking .book-progress { margin: 18px 18px 0 !important; }
+  body.site-page-booking .step-title { font-size: 1.5rem !important; }
+  body.site-page-booking .form-group { margin-bottom: 16px !important; }
+  body.site-page-booking .form-label { margin-bottom: 7px !important; font-size: .68rem !important; }
+  body.site-page-booking .form-input,
+  body.site-page-booking .form-select {
+    min-height: 52px !important;
+    padding: 10px 12px !important;
+  }
+  body.site-page-booking .form-textarea { min-height: 112px !important; padding: 10px 12px !important; }
+  body.site-page-booking .booking-utility-4 { width: 100% !important; }
+  body.site-page-booking .booking-sidebar { padding: 22px 16px !important; }
+  body.site-page-booking .contact-row { min-height: 72px !important; }
+  body.site-page-booking .contact-val,
+  body.site-page-booking .contact-val a,
+  body.site-page-booking .hours-row,
+  body.site-page-booking .policy-note,
+  body.site-page-booking .sidebar-block:last-child p { font-size: .96rem !important; }
+
+  /* Service/editorial pages: readable type and single-column touch targets. */
+  body.site-page-auto-body-work-watervliet-ny .seo-hero,
+  body.site-page-3-reasons-why-minor-bumper-damage-should-not-be-ignored .blog-hero,
+  body.site-page-whyus .why-hero,
+  body.site-page-careers .careers-hero {
+    padding: 104px 18px 46px !important;
+  }
+  body.site-page-auto-body-work-watervliet-ny .seo-title,
+  body.site-page-3-reasons-why-minor-bumper-damage-should-not-be-ignored h1 {
+    font-size: clamp(2.5rem, 12vw, 3.35rem) !important;
+    line-height: .98 !important;
+  }
+  body.site-page-auto-body-work-watervliet-ny .seo-sub,
+  body.site-page-auto-body-work-watervliet-ny .info-card p,
+  body.site-page-auto-body-work-watervliet-ny .service-card p,
+  body.site-page-auto-body-work-watervliet-ny .faq-item p,
+  body.site-page-3-reasons-why-minor-bumper-damage-should-not-be-ignored .article-content p {
+    font-size: 1.04rem !important;
+    line-height: 1.65 !important;
+  }
+  body.site-page-auto-body-work-watervliet-ny .section,
+  body.site-page-3-reasons-why-minor-bumper-damage-should-not-be-ignored .article-wrap {
+    padding: 54px 18px 64px !important;
+  }
+  body.site-page-auto-body-work-watervliet-ny .hero-btns,
+  body.site-page-auto-body-work-watervliet-ny .content-grid,
+  body.site-page-auto-body-work-watervliet-ny .service-grid {
+    grid-template-columns: 1fr !important;
+  }
+  body.site-page-auto-body-work-watervliet-ny .hero-btns { display: grid !important; width: 100% !important; }
+  body.site-page-auto-body-work-watervliet-ny .hero-btns .btn { width: 100% !important; }
+  body.site-page-auto-body-work-watervliet-ny .info-card,
+  body.site-page-auto-body-work-watervliet-ny .service-card,
+  body.site-page-auto-body-work-watervliet-ny .cta-panel,
+  body.site-page-3-reasons-why-minor-bumper-damage-should-not-be-ignored .article-content,
+  body.site-page-3-reasons-why-minor-bumper-damage-should-not-be-ignored .cta-box {
+    padding: 22px 18px !important;
+  }
+}
+
+@media (max-width: 380px) {
+  body.site-page-index .home-hero-copy h1 { font-size: 2.15rem !important; }
+  body.site-page-index .hero-quick-label { font-size: .52rem !important; }
+  body.site-page-index .damage-ai-main { padding: 16px 12px !important; }
+  body.site-page-index .damage-ai-step-pill { font-size: .52rem !important; }
+  body.site-page-booking .form-body { padding-right: 14px !important; padding-left: 14px !important; }
+}
