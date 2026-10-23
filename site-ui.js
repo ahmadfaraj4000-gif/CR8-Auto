@@ -26,9 +26,12 @@
     notice.setAttribute('role', 'dialog');
     notice.setAttribute('aria-modal', 'false');
     notice.setAttribute('aria-labelledby', 'cookie-notice-title');
+    notice.setAttribute('aria-describedby', 'cookie-notice-description');
     notice.innerHTML = `
-      <h2 id="cookie-notice-title">Your privacy choices</h2>
-      <p>CR8 Autos uses essential browser storage to remember your preferences and support site features. Read our <a href="cookie-policy.html">Cookie Policy</a> for details.</p>
+      <div class="cookie-copy">
+        <h2 id="cookie-notice-title">Your privacy choices</h2>
+        <p id="cookie-notice-description">CR8 Autos uses essential browser storage to remember your preferences and support site features. Read our <a href="cookie-policy.html">Cookie Policy</a> for details.</p>
+      </div>
       <div class="cookie-actions">
         <button class="cookie-accept" type="button" data-cookie-choice="accepted">Accept</button>
         <button type="button" data-cookie-choice="essential">Essential only</button>
@@ -37,20 +40,28 @@
     notice.hidden = true;
     document.body.appendChild(notice);
 
-    const open = () => {
+    let returnFocus = null;
+    const open = (fromSettings = false) => {
       notice.hidden = false;
-      notice.querySelector('button').focus({ preventScroll: true });
+      if (fromSettings) {
+        returnFocus = document.activeElement;
+        notice.querySelector('button').focus({ preventScroll: true });
+      }
     };
     const close = (choice) => {
       localStorage.setItem(consentKey, choice);
       notice.hidden = true;
+      if (returnFocus) {
+        returnFocus.focus({ preventScroll: true });
+        returnFocus = null;
+      }
     };
 
     notice.querySelectorAll('[data-cookie-choice]').forEach((button) => {
       button.addEventListener('click', () => close(button.dataset.cookieChoice));
     });
     document.querySelectorAll('[data-cookie-settings]').forEach((button) => {
-      button.addEventListener('click', open);
+      button.addEventListener('click', () => open(true));
     });
 
     if (!localStorage.getItem(consentKey)) open();

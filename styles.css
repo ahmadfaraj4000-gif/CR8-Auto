@@ -4521,44 +4521,6 @@ body.site-page .footer-bottom {
 }
 .footer-legal button:hover { color: #ff5a5f; }
 
-.cookie-notice {
-  position: fixed;
-  z-index: 5000;
-  left: 50%;
-  right: auto;
-  bottom: 20px;
-  width: min(780px, calc(100vw - 40px));
-  padding: 16px 18px;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  grid-template-areas: "title actions" "copy actions";
-  column-gap: 24px;
-  align-items: center;
-  transform: translateX(-50%);
-  background: #ffffff;
-  color: #202320;
-  border: 1px solid #d7d3ce;
-  border-top: 5px solid #c91f27;
-  box-shadow: 0 22px 60px rgba(0, 0, 0, .24);
-}
-.cookie-notice[hidden] { display: none !important; }
-.cookie-notice h2 { grid-area: title; margin: 0 0 3px; color: #171917; font-size: 1.15rem; }
-.cookie-notice p { grid-area: copy; margin: 0; color: #565b56; line-height: 1.4; font-size: .9rem; }
-.cookie-notice a { color: #a91419; }
-.cookie-actions { grid-area: actions; display: flex; gap: 8px; margin: 0; flex-wrap: nowrap; }
-.cookie-actions button {
-  min-height: 42px;
-  padding: 0 16px;
-  border: 1px solid #1f221f;
-  background: #ffffff;
-  color: #1f221f;
-  font-family: 'Oswald', sans-serif;
-  font-weight: 600;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-.cookie-actions .cookie-accept { background: #c91f27; border-color: #c91f27; color: #ffffff; }
 
 @media (max-width: 900px) {
   body.site-page .nav-logo { width: 144px !important; height: 76px !important; }
@@ -4578,20 +4540,7 @@ body.site-page .footer-bottom {
   body.site-page .nav-logo { width: 120px !important; }
   body.site-page .nav-logo img { width: 114px !important; max-width: 114px !important; max-height: 48px !important; }
   body.site-page-index .home-hero-buttons { display: grid !important; grid-template-columns: 1fr !important; }
-  .cookie-notice {
-    left: 50%;
-    right: auto;
-    bottom: 12px;
-    width: calc(100vw - 24px);
-    padding: 14px;
-    grid-template-columns: 1fr;
-    grid-template-areas: "title" "copy" "actions";
-    row-gap: 8px;
-    transform: translateX(-50%);
-  }
-  .cookie-notice h2 { margin: 0; }
-  .cookie-actions { width: 100%; }
-  .cookie-actions button { flex: 1 1 0; min-width: 0; padding: 0 10px; }
+
 }
 
 /* Booking contact card */
@@ -5472,4 +5421,111 @@ body.site-page-index .home-hero-buttons a:last-child {
 }
 @media (max-width: 480px) {
   body.site-page-index .home-hero-buttons a i { display: none; }
+}
+
+/* Cookie notice: component-scoped rules outrank each page's element reset. */
+body.site-page .cookie-notice {
+  position: fixed;
+  z-index: 1000000;
+  left: 50%;
+  right: auto;
+  bottom: max(24px, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  box-sizing: border-box;
+  width: min(880px, calc(100% - 48px));
+  max-height: calc(100dvh - 48px);
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 264px;
+  align-items: center;
+  gap: 28px;
+  margin: 0;
+  padding: 26px 28px;
+  background: #ffffff;
+  color: #202320;
+  border: 1px solid #d9dcd6;
+  border-top: 4px solid #c91f27;
+  border-radius: 14px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, .2), 0 2px 8px rgba(0, 0, 0, .08);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+body.site-page .cookie-notice[hidden] { display: none !important; }
+body.site-page .cookie-copy { min-width: 0; margin: 0; padding: 0; }
+body.site-page .cookie-notice h2 {
+  margin: 0 0 10px;
+  padding: 0;
+  color: #1a1c1a;
+  font: 700 19px/1.3 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  letter-spacing: -.2px;
+  text-transform: none;
+}
+body.site-page .cookie-notice p {
+  margin: 0;
+  padding: 0;
+  color: #565b56;
+  font: 400 14px/1.65 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+body.site-page .cookie-notice a {
+  color: #a8171e;
+  font: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+body.site-page .cookie-notice .cookie-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 12px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+body.site-page .cookie-notice .cookie-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 0;
+  width: 100%;
+  min-height: 48px !important;
+  margin: 0;
+  padding: 12px 14px !important;
+  border: 1px solid #b8beb6;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #252825;
+  font: 600 14px/1.35 -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px !important;
+  letter-spacing: 0 !important;
+  text-transform: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color .15s ease, border-color .15s ease;
+}
+body.site-page .cookie-notice .cookie-actions .cookie-accept {
+  background: #c91f27;
+  border-color: #c91f27;
+  color: #ffffff;
+}
+body.site-page .cookie-notice .cookie-actions button:hover { background: #f0f2ee; border-color: #747b71; }
+body.site-page .cookie-notice .cookie-actions .cookie-accept:hover { background: #a8171e; border-color: #a8171e; }
+body.site-page .cookie-notice :is(a, button):focus-visible {
+  outline: 3px solid #a8171e;
+  outline-offset: 4px;
+}
+@media (max-width: 720px) {
+  body.site-page .cookie-notice {
+    bottom: max(16px, env(safe-area-inset-bottom));
+    width: calc(100% - 32px);
+    max-height: calc(100dvh - 32px);
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+    padding: 22px;
+  }
+}
+@media (max-width: 360px) {
+  body.site-page .cookie-notice { padding: 18px; }
+  body.site-page .cookie-notice .cookie-actions { gap: 10px; }
+  body.site-page .cookie-notice .cookie-actions button { padding: 12px 8px !important; }
 }
