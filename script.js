@@ -32,7 +32,8 @@ const navLinks = document.querySelector('.nav-links')
 if (menuBtn && navLinks && menuBtn.dataset.cr8Bound !== 'true') {
   menuBtn.dataset.cr8Bound = 'true'
   menuBtn.addEventListener('click', () => {
-    navLinks.classList.toggle('open')
+    const isOpen = navLinks.classList.toggle('open')
+    menuBtn.setAttribute('aria-expanded', String(isOpen))
   })
 }
 
