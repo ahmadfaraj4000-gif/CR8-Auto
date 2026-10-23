@@ -4102,7 +4102,7 @@ body.site-page-index #damage-estimator { order: 3; }
 body.site-page-index .shop-intro { order: 4; }
 body.site-page-index #services-section { order: 5; }
 body.site-page-index .local-seo-section { order: 6; }
-body.site-page-index #page-home > .blog-links-grid { order: 6; }
+body.site-page-index #page-home > .blog-links-grid { order: 7; }
 body.site-page-index .home-hero {
   width: min(100%, 1240px) !important;
   margin: 0 auto !important;
@@ -5363,7 +5363,7 @@ body.site-page .service-book-link:focus-visible, body.site-page .repair-faq summ
 @media (max-width: 480px) {
 }
 
-body.site-page-index .repair-faq { order: 7; }
+body.site-page-index .repair-faq { order: 6; }
 
 /* Homepage internal links stay on one row. */
 body.site-page-index .blog-links-grid {
