@@ -5384,7 +5384,7 @@ body.site-page-index .blog-link-content { padding: 24px; }
 body.site-page-index .blog-link-title { font-size: clamp(1.25rem, 1.8vw, 1.7rem); }
 body.site-page-index .home-hero-buttons {
   display: grid !important;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   gap: 8px !important;
   width: 100%;
 }
